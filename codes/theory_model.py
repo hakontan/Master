@@ -15,16 +15,32 @@ import scipy.integrate as integrate
 
 class TheoryModel():
     """
-    Doc-string here
+    Module for calculating the theoretical model for the correlation function between voids in realspace
+    and galaxies in redshiftspace and related functions as described in S.Nadathur et al 2019.
 
+    Dependencies:
+    ------------
+    * This module relies on the pyCUTE library for calculating 2-point correlation functions from data.
+    Documentation for pyCUTE is found here https://github.com/seshnadathur/pyCUTE/tree/master/PythonCUTEbox.
+
+    * This module also relies on the periodic_kdtree module for calculating density profile and velocity dispersion.
+    Documentation for periodic_kdtree can be found here https://github.com/patvarilly/periodic_kdtree.
     """
-    def __init__(self, N, box_size, radius, bias, f, void_cat, galaxy_cat):
-        self.N = N
-        self.box_size = box_size
-        self.radius = radius
-        self.bias = bias
+    
+    def __init__(self, N, box_size, radius, bias, f, Omega_m, Omega_Lambda, z, void_cat, galaxy_cat):
+        self.N = N # Number of iterations for creating splines
+        self.box_size = box_size # Size of simulation box
+        self.radius = radius #
+        self.bias = bias # Dark matter bias
         self.f = f # Growth factor
+        self.Omega_m = Omega_m 
+        self.Omega_Lambda = Omega_Lambda
+        self.z = z # Redshift
 
+        Mpc_to_m = 3.08567758e22 
+        km_over_Mpc = 1000.0 / Mpc_to_m
+        h = 0.7
+        self.H0 = 100 * h * km_over_Mpc # 1/s
 
         void_cat = np.loadtxt(void_cat, skiprows=2)
         
@@ -39,14 +55,18 @@ class TheoryModel():
         galaxy_y = galaxy_cat[:, 1]
         galaxy_z = galaxy_cat[:, 2]
         self.galaxy_vz = galaxy_cat[:, 5]
-        print np.shape(self.galaxy_vz)
+        #print np.shape(self.galaxy_vz)
         # Stacking galaxy and void catalogues as 2D arrays with x, y and z positions on
         # each column
         self.galaxy_cat = np.column_stack((galaxy_x, galaxy_y, galaxy_z))
         self.void_cat   = np.column_stack((void_x, void_y, void_z))
 
-    def delta_galaxy(self):
-        
+    def delta_and_sigma_vz_galaxy(self):
+        """
+        Calculates the density profile and velocity dispersion of voids in real space.
+        Requires xi_vg_real_func() to be run first as this gives the upper and lower bounds
+        for the radius array to avoid out of bounds for splines.
+        """
         bounds = np.array([self.box_size, self.box_size, self.box_size])
         tree = PeriodicCKDTree(bounds, self.galaxy_cat)
         radius_array = np.linspace(0, self.r_corr[-1], self.N + 1)
@@ -55,9 +75,9 @@ class TheoryModel():
         v_z   = np.zeros(self.N + 1) 
         E_vz  = np.zeros(self.N + 1)
         E_vz2 = np.zeros(self.N + 1)
-        sigma_vz = np.zeros(self.N+1)
+        sigma_vz = np.zeros(self.N + 1)
         galaxies_in_shell_arr = np.zeros(self.N + 1)
-        print "Starting density profile calculation"
+        print "Starting density profile and velocity dispersion calculation"
 
         for i in range(len(self.void_cat[:, 0])):
             current_number_of_galaxies = 0
@@ -67,9 +87,10 @@ class TheoryModel():
             E_vz_in_shell = 0
             E_vz2_in_shell = 0
             galaxy_prev_shell = 0
+            prev_indices = 0
 
             for j in range(1, self.N + 1):
-                # Find galaxie position and velocity in a given radius around the current void
+                # Find galaxy position and velocity in a given radius around the current void
                 neighbor_inds = tree.query_ball_point(self.void_cat[i, :], r=radius_array[j])
                 shell_volume = 4.0 * np.pi * (radius_array[j]**3 - radius_array[j-1]**3) / 3.0
                 
@@ -78,13 +99,16 @@ class TheoryModel():
                 velocity_near_point = self.galaxy_vz[neighbor_inds]
                 galaxies_near_point = self.galaxy_cat[neighbor_inds]
                 galaxies_near_point = len(galaxies_near_point[:,0])
+                galaxies_in_shell = galaxies_near_point - current_number_of_galaxies
+                
+
+
                 if galaxies_near_point > 0:
                     E_vz2_in_shell = (sum(velocity_near_point**2) - current_E_vz2)
                     E_vz_in_shell  = (sum(velocity_near_point)**2  - current_E_vz)
 
                 # Assigning density- and expectation values for velocity values around void in a given shell
                 
-                galaxies_in_shell = galaxies_near_point - current_number_of_galaxies
                 galaxies_in_shell_arr[j] += galaxies_in_shell
                 
                 E_vz [j] += E_vz_in_shell
@@ -123,6 +147,11 @@ class TheoryModel():
         return self.delta
 
     def contrast_galaxy(self):
+        """
+        Calculates the density contrast given by equation 4 in S.Nadathur et al 2019.
+        Requires the delta_and_sigma_vz_galaxy to be run first as this gives the density profile
+        required in the integral.
+        """
         r = np.linspace(self.r_corr[0], self.r_corr[-1], self.N)
         contrast = np.zeros(len(r))
         print "calculating density contrast"
@@ -153,9 +182,23 @@ class TheoryModel():
                                          do_CCF=1)
         return pycutebox.runCUTEbox()
     
-    def xi_vg_real_func(self, void_file, galaxy_file, output_filename):
+    def xi_vg_real_func(self, void_file, galaxy_file, output_filename="corr.txt"):
         """
-        Calculate the 
+        Calculate the correlation function between voids and galaxies in real space
+        used in the theoretical model. This function has to be run first as this determines the upper and lower
+        bounds for the radius array used in other calculations to prevent out of bounds for splines.
+
+        Parameters:
+        -------------
+        Void_file:
+            .txt file with void center positions.
+        galaxy_file:
+            .txt file with positon of galaxies.
+        output_filename:
+            name of the output filename: Not used in this module but required by the
+            CUTEbox module
+        
+        See CUTEbox documentation for format requirements of input files.
         """
         x, corr, paircounts = self.compute_angular_cross_correlation(void_file,
                                                                      galaxy_file,
@@ -175,11 +218,32 @@ class TheoryModel():
         plt.savefig("xi_vg_real_test.png")
         self.xi_vg_real = interpolate.interp1d(self.r_corr, xi_vg_real, kind="cubic")
         return self.xi_vg_real
+
+    def H_of_z_func(self):
+        """
+        Function return the Hubble parameter (H)
+        as a function of redshift z.
+        """
+
+        return self.H0 * np.sqrt(self.Omega_m * (1.0 + z)**3 + self.Omega_Lambda)
+
                                                           
     def correlation_rsd_theory(self, n_mu, n_s, streaming = False):
         """
         Calculate the theoretical model for the cross correlation function
-        between realspace voids and redshiftspace galaxies.
+        between realspace voids and redshiftspace galaxies and calculates multipoles.
+
+        Parameters:
+        -----------------
+
+        n_mu:
+            number of points for a linearly space array for mu between 0, 1. (mu = cos(theta))
+        n_s:
+            number of points for aa linearly space s array where s is distance in redshiftspace.
+            Upper and lower bounds is determined by the radius array given by the CUTEbox correlation function
+            in xi_vg_real_func().
+        streaming:
+            Determines wether on should use the full theory model with a gaussian streaming profile or the simpler theory model.
         """
         xi_vg_rsd = np.zeros(shape=(n_s, n_mu))
         s_array   = np.linspace(self.r_corr[0] + 1.0 , self.r_corr[-1] - 1.0, n_s) # +1 and -1 to prevent out of range on splines
@@ -189,14 +253,32 @@ class TheoryModel():
         self.xi_vg2 = np.zeros(len(s_array))
         print "Calculating theoretical model"
         if streaming:
-            print 3
-        else:
+            # Calculate equation 7 in S.Nadathur et al 2019
+            aH = (1.0 / (1+z)) * self.H_of_z_func # Hubble parameter times scale factor (a = 1 / (1 + z))
             for i in range(len(s_array)):
                 s = s_array[i]
                 for j in range(len(mu_array)):
                     mu = mu_array[j]
 
-                    # Hvor kommer disse likningene fra?
+                    # Length coordinates in real- and redshiftspace
+                    s_par  = s * mu
+                    s_perp = s * np.sqrt(1 - mu**2)
+
+                    r_par  = s_par + s * self.f * self.delta(s) * mu / (3.0 * self.bias) - y
+                    r_perp = s_perp
+                    r      = np.sqrt(r_par**2 + s_perp**2)
+
+                    sigma_tilde = self.sigma_v(r) / aH
+                    integrand = 0#
+                    xi_vg_rsd[i, j] = np.trapz(integrand, y) - 1
+
+        else:
+            # Calculate equation 6 in S.Nadathur et al 2019
+            for i in range(len(s_array)):
+                s = s_array[i]
+                for j in range(len(mu_array)):
+                    mu = mu_array[j]
+
                     # Length coordinates in real- and redshiftspace
                     s_par  = s * mu
                     s_perp = s * np.sqrt(1 - mu**2)
@@ -233,9 +315,9 @@ class TheoryModel():
 if __name__=="__main__":
     void_file = "../350ksample/zobov-void_cat.txt"
     galaxy_file  = "../../summerproject/Haakon/galaxies_realspace_z0.42.txt"
-    model = TheoryModel(50, 1024.0, 100.0, 2.0, 0.69, void_file, galaxy_file)
+    model = TheoryModel(50, 1024.0, 100.0, 2.0, 0.69, 0.307, 1.0 - 0.307, 0.42, void_file, galaxy_file)
     model.xi_vg_real_func("void_cat_cutebox.txt", "galaxy_cat_cutebox.txt", "corr.txt")
-    model.delta_galaxy()
+    model.delta_and_sigma_vz_galaxy()
     model.contrast_galaxy()
     s, xi0, xi2 = model.correlation_rsd_theory(100, 50)
 
