@@ -17,12 +17,10 @@ class TheoryModel():
     """
     Module for calculating the theoretical model for the correlation function between voids in realspace
     and galaxies in redshiftspace and related functions as described in S.Nadathur et al 2019.
-
     Dependencies:
     ------------
     * This module relies on the pyCUTE library for calculating 2-point correlation functions from data.
     Documentation for pyCUTE is found here https://github.com/seshnadathur/pyCUTE/tree/master/PythonCUTEbox.
-
     * This module also relies on the periodic_kdtree module for calculating density profile and velocity dispersion.
     Documentation for periodic_kdtree can be found here https://github.com/patvarilly/periodic_kdtree.
     """
@@ -105,7 +103,7 @@ class TheoryModel():
 
                 if galaxies_near_point > 0:
                     E_vz2_in_shell = (sum(velocity_near_point**2) - current_E_vz2)
-                    E_vz_in_shell  = (sum(velocity_near_point)**2  - current_E_vz)
+                    E_vz_in_shell  = (sum(velocity_near_point)  - current_E_vz)
 
                 # Assigning density- and expectation values for velocity values around void in a given shell
                 
@@ -115,7 +113,7 @@ class TheoryModel():
                 E_vz2[j] += E_vz2_in_shell
                 delta[j] += galaxies_in_shell / shell_volume
                 
-                #galaxies_in_shell_arr[j] = galaxies_in_shell
+                
 
                 current_E_vz += E_vz_in_shell
                 current_E_vz2 += E_vz2_in_shell
@@ -125,16 +123,17 @@ class TheoryModel():
 
         delta /= (len(self.void_cat[:, 0]) * len(self.galaxy_cat[:,0]) / self.box_size ** 3)
         delta -= 1
-        E_vz /= len(self.void_cat[:, 0])
-        E_vz2 /= len(self.void_cat[:, 0])
-        galaxies_in_shell_arr /= len(self.void_cat[:,0])
+        #E_vz /= len(self.void_cat[:, 0])
+        #E_vz2 /= len(self.void_cat[:, 0])
         for j in range(self.N + 1):
             if galaxies_in_shell_arr[j] > 0:
-                E_vz[j] /= galaxies_in_shell_arr[j]**2
+                E_vz[j] /= galaxies_in_shell_arr[j]
                 E_vz2[j] /= galaxies_in_shell_arr[j]
-        self.sigma_vz = np.sqrt(E_vz2 - E_vz)
+        self.sigma_vz = np.sqrt(E_vz2 - E_vz**2)
         
-
+        # Replacing zero values to avoid division by zero later
+        self.sigma_vz[np.where(sigma_vz > 10)] = np.mean(self.sigma_vz > 0)
+        print self.sigma_vz
         fig, ax = plt.subplots()
         ax.plot(radius_array, delta)
         fig.savefig("delta_test.png")
@@ -187,7 +186,6 @@ class TheoryModel():
         Calculate the correlation function between voids and galaxies in real space
         used in the theoretical model. This function has to be run first as this determines the upper and lower
         bounds for the radius array used in other calculations to prevent out of bounds for splines.
-
         Parameters:
         -------------
         Void_file:
@@ -225,17 +223,15 @@ class TheoryModel():
         as a function of redshift z.
         """
 
-        return self.H0 * np.sqrt(self.Omega_m * (1.0 + z)**3 + self.Omega_Lambda)
+        return self.H0 * np.sqrt(self.Omega_m * (1.0 + self.z)**3 + self.Omega_Lambda)
 
                                                           
     def correlation_rsd_theory(self, n_mu, n_s, streaming = False):
         """
         Calculate the theoretical model for the cross correlation function
         between realspace voids and redshiftspace galaxies and calculates multipoles.
-
         Parameters:
         -----------------
-
         n_mu:
             number of points for a linearly space array for mu between 0, 1. (mu = cos(theta))
         n_s:
@@ -254,21 +250,27 @@ class TheoryModel():
         print "Calculating theoretical model"
         if streaming:
             # Calculate equation 7 in S.Nadathur et al 2019
-            aH = (1.0 / (1+z)) * self.H_of_z_func # Hubble parameter times scale factor (a = 1 / (1 + z))
+            aH = (1.0 / (1 + self.z)) * self.H_of_z_func # Hubble parameter times scale factor (a = 1 / (1 + z))
             for i in range(len(s_array)):
                 s = s_array[i]
                 for j in range(len(mu_array)):
                     mu = mu_array[j]
 
+                    # Performing change of variable where y = v_par / (a * H)
+                    # Giving dv_par = a*H*dy
+                    sigma_tilde_real = self.sigma_v(s) / aH
+                    y = np.linspace(-5.0 * sigma_tilde_real, 5.0 * sigma_tilde_real, 100) # Integration domain determined by gaussian 
+                                                                                            # part of the integrand. It is basically zero elsewhere
+                                                                                                          
                     # Length coordinates in real- and redshiftspace
                     s_par  = s * mu
                     s_perp = s * np.sqrt(1 - mu**2)
 
                     r_par  = s_par + s * self.f * self.delta(s) * mu / (3.0 * self.bias) - y
                     r_perp = s_perp
-                    r      = np.sqrt(r_par**2 + s_perp**2)
+                    r      = np.sqrt(r_par**2 + r_perp**2)
 
-                    sigma_tilde = self.sigma_v(r) / aH
+                    sigma_tilde_rsd = self.sigma_v(r) / aH
                     integrand = 0#
                     xi_vg_rsd[i, j] = np.trapz(integrand, y) - 1
 
@@ -285,7 +287,7 @@ class TheoryModel():
 
                     r_par  = s_par + s * self.f * self.delta(s) * mu / (3.0 * self.bias)
                     r_perp = s_perp
-                    r      = np.sqrt(r_par**2 + s_perp**2)
+                    r      = np.sqrt(r_par**2 + r_perp**2)
 
                     # Base theory model for cross correlation between voids in
                     # realspace and galaxies in redshiftspace
@@ -351,10 +353,6 @@ if __name__=="__main__":
     
 
     fig, ax = plt.subplots()
-    ax.plot(s, xi2, label="Theroy model")
-    ax.plot(r, xi2_rsd, label="Computed model")
-    ax.legend()
-    fig.savefig("test_xi_rsd.pdf")
     ax.plot(s, xi2, label="Theroy model")
     ax.plot(r, xi2_rsd, label="Computed model")
     ax.legend()
