@@ -129,21 +129,22 @@ class TheoryModel():
             if galaxies_in_shell_arr[j] > 0:
                 E_vz[j] /= galaxies_in_shell_arr[j]
                 E_vz2[j] /= galaxies_in_shell_arr[j]
-        self.sigma_vz = np.sqrt(E_vz2 - E_vz**2)
+        sigma_vz = np.sqrt(E_vz2 - E_vz**2)
         
         # Replacing zero values to avoid division by zero later
-        self.sigma_vz[np.where(sigma_vz > 10)] = np.mean(self.sigma_vz > 0)
-        print self.sigma_vz
+        sigma_vz[np.where(sigma_vz < 10)] = np.mean(sigma_vz)
+        
         fig, ax = plt.subplots()
         ax.plot(radius_array, delta)
         fig.savefig("delta_test.png")
         fig, ax = plt.subplots()
-        ax.plot(radius_array, self.sigma_vz)
+        ax.plot(radius_array, sigma_vz)
         fig.savefig("sigmavz_test.png")
         print "Splining density profile"
         self.delta = interpolate.interp1d(radius_array, delta, kind="cubic")
+        self.sigma_vz = interpolate.interp1d(radius_array, sigma_vz, kind="cubic")
         
-        return self.delta
+        return self.delta, self.sigma_vz
 
     def contrast_galaxy(self):
         """
@@ -222,7 +223,7 @@ class TheoryModel():
         Function return the Hubble parameter (H)
         as a function of redshift z.
         """
-
+        print(self.H0)
         return self.H0 * np.sqrt(self.Omega_m * (1.0 + self.z)**3 + self.Omega_Lambda)
 
                                                           
@@ -250,28 +251,35 @@ class TheoryModel():
         print "Calculating theoretical model"
         if streaming:
             # Calculate equation 7 in S.Nadathur et al 2019
-            aH = (1.0 / (1 + self.z)) * self.H_of_z_func # Hubble parameter times scale factor (a = 1 / (1 + z))
+            aH = (1.0 / (1 + self.z)) * self.H_of_z_func() # Hubble parameter times scale factor (a = 1 / (1 + z))
             for i in range(len(s_array)):
                 s = s_array[i]
                 for j in range(len(mu_array)):
                     mu = mu_array[j]
 
                     # Performing change of variable where y = v_par / (a * H)
-                    # Giving dv_par = a*H*dy
-                    sigma_tilde_real = self.sigma_v(s) / aH
+                    # giving dv_par = a*H*dy
+                    
+                    sigma_tilde_real = self.sigma_vz(s) / aH
                     y = np.linspace(-5.0 * sigma_tilde_real, 5.0 * sigma_tilde_real, 100) # Integration domain determined by gaussian 
-                                                                                            # part of the integrand. It is basically zero elsewhere
+                                                                                         # part of the integrand. It is basically zero elsewhere
                                                                                                           
                     # Length coordinates in real- and redshiftspace
+                    
                     s_par  = s * mu
                     s_perp = s * np.sqrt(1 - mu**2)
 
                     r_par  = s_par + s * self.f * self.delta(s) * mu / (3.0 * self.bias) - y
                     r_perp = s_perp
                     r      = np.sqrt(r_par**2 + r_perp**2)
-
-                    sigma_tilde_rsd = self.sigma_v(r) / aH
-                    integrand = 0#
+                
+                    # Collecting terms with velocity dispersion added.
+                    sigma_tilde_rsd = self.sigma_vz(r) / aH
+                    xi_s_perp_s_par = ((1 + self.xi_vg_real(r)) * (1 + (self.f / self.bias * self.contrast(r)/ 3.0
+                                        - y * mu / r) * (1 - mu**2)
+                                        + self.f * (self.delta(r) - 2 * self.contrast(r) / 3.0) / self.bias * mu**2))
+                    integrand = (1 + xi_s_perp_s_par) / (np.sqrt(2 * np.pi) * sigma_tilde_rsd)
+                    integrand *= np.exp(-0.5 * y**2 / sigma_tilde_rsd**2)
                     xi_vg_rsd[i, j] = np.trapz(integrand, y) - 1
 
         else:
@@ -322,6 +330,7 @@ if __name__=="__main__":
     model.delta_and_sigma_vz_galaxy()
     model.contrast_galaxy()
     s, xi0, xi2 = model.correlation_rsd_theory(100, 50)
+    s_s, xi0_s, xi2_s = model.correlation_rsd_theory(100, 50, streaming=True)
 
 
     rsd_galaxy_file = "../../summerproject/Haakon/galaxies_redshiftspace_z0.42.txt"
@@ -353,7 +362,8 @@ if __name__=="__main__":
     
 
     fig, ax = plt.subplots()
-    ax.plot(s, xi2, label="Theroy model")
+    ax.plot(s, xi2, label="Theroy model, no streaming")
+    ax.plot(s_s, xi2, label="Theory model, streaming")
     ax.plot(r, xi2_rsd, label="Computed model")
     ax.legend()
     fig.savefig("test_xi_rsd.pdf")
