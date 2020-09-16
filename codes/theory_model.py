@@ -260,8 +260,9 @@ class TheoryModel():
                     # Performing change of variable where y = v_par / (a * H)
                     # giving dv_par = a*H*dy
                     
-                    sigma_tilde_real = self.sigma_vz(s) / aH
-                    y = np.linspace(-5.0 * sigma_tilde_real, 5.0 * sigma_tilde_real, 100) # Integration domain determined by gaussian 
+                    sigma_tilde = self.sigma_vz(s) * self.H0 / aH
+                    
+                    y = np.linspace(-5.0 * sigma_tilde, 5.0 * sigma_tilde, 100) # Integration domain determined by gaussian 
                                                                                          # part of the integrand. It is basically zero elsewhere
                                                                                                           
                     # Length coordinates in real- and redshiftspace
@@ -274,12 +275,11 @@ class TheoryModel():
                     r      = np.sqrt(r_par**2 + r_perp**2)
                 
                     # Collecting terms with velocity dispersion added.
-                    sigma_tilde_rsd = self.sigma_vz(r) / aH
                     xi_s_perp_s_par = ((1 + self.xi_vg_real(r)) * (1 + (self.f / self.bias * self.contrast(r)/ 3.0
                                         - y * mu / r) * (1 - mu**2)
                                         + self.f * (self.delta(r) - 2 * self.contrast(r) / 3.0) / self.bias * mu**2))
-                    integrand = (1 + xi_s_perp_s_par) / (np.sqrt(2 * np.pi) * sigma_tilde_rsd)
-                    integrand *= np.exp(-0.5 * y**2 / sigma_tilde_rsd**2)
+                    integrand = (1 + xi_s_perp_s_par) / ((np.sqrt(2 * np.pi) * sigma_tilde))
+                    integrand *= np.exp(-0.5 * y**2 / sigma_tilde**2)
                     xi_vg_rsd[i, j] = np.trapz(integrand, y) - 1
 
         else:
@@ -363,7 +363,7 @@ if __name__=="__main__":
 
     fig, ax = plt.subplots()
     ax.plot(s, xi2, label="Theroy model, no streaming")
-    ax.plot(s_s, xi2, label="Theory model, streaming")
+    ax.plot(s_s, xi2_s, label="Theory model, streaming")
     ax.plot(r, xi2_rsd, label="Computed model")
     ax.legend()
     fig.savefig("test_xi_rsd.pdf")
