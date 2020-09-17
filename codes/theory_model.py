@@ -25,20 +25,20 @@ class TheoryModel():
     Documentation for periodic_kdtree can be found here https://github.com/patvarilly/periodic_kdtree.
     """
     
-    def __init__(self, N, box_size, radius, bias, f, Omega_m, Omega_Lambda, z, void_cat, galaxy_cat):
+    def __init__(self, N, box_size, z, void_cat, galaxy_cat):
+        
         self.N = N # Number of iterations for creating splines
-        self.box_size = box_size # Size of simulation box
-        self.radius = radius #
-        self.bias = bias # Dark matter bias
-        self.f = f # Growth factor
-        self.Omega_m = Omega_m 
-        self.Omega_Lambda = Omega_Lambda
-        self.z = z # Redshift
 
-        Mpc_to_m = 3.08567758e22 
-        km_over_Mpc = 1000.0 / Mpc_to_m
-        h = 0.7
+        # catalogue specific parameters
+        self.box_size = box_size # Size of simulation box
+        self.z = z # Redshift
+        
+        
+        self.h = 0.7
         self.H0 = 100 # km/s/ h Mpc
+
+        self.converted = False # Used to check wether splines have been converted to r_real coordinates
+                               # So that it will not be run multiple times.
 
         void_cat = np.loadtxt(void_cat, skiprows=2)
         
@@ -207,40 +207,93 @@ class TheoryModel():
         self.xi_vg_real = interpolate.interp1d(self.r_corr, xi_vg_real, kind="cubic")
         return self.xi_vg_real
 
-    def H_of_z_func(self):
+    def H_of_z_func(self, omega_m, Omega_Lambda):
         """
         Function return the Hubble parameter (H)
         as a function of redshift z.
         """
         print(self.H0)
-        return self.H0 * np.sqrt(self.Omega_m * (1.0 + self.z)**3 + self.Omega_Lambda)
+        return self.H0 * np.sqrt(Omega_m * (1.0 + self.z)**3 + Omega_Lambda)
 
-                                                          
-    def correlation_rsd_theory(self, n_mu, n_s, streaming = False):
+
+    def convert_splines(self, r_real):
+        """
+        Converts the splines for delta, sigma_vz, density contrast and
+        xi_vg_real to use the rescaled radius r_real in correspondance with
+        equation 12 in S.Nadathur et al 2019. This method should only be called
+        by correlation_rsd_theory() function.
+        Parameters:
+        ---------------
+        r_real:
+            Rescaled radius array. 
+        """
+        
+        # Avoid out of range on splines
+        r_real[np.where(r > self.r_corr[-1])] = self.r_corr[-1]
+        r_real[np.where(r < self.r_corr[0])] = self.r_corr[0]
+
+        xi_vg_real = self.xi_vg_real(r_real)
+        delta = self.delta(r_real)
+        contrast = self.contrast(r_real)
+        sigma_vz = self.sigma_vz(r_real)
+
+        self.xi_vg_real = interpolate.interp1d(r_real, xi_vg_real, kind="cubic")
+        self.delta = interpolate.interp1d(r_real, delta, kind="cubic")
+        self.contrast = interpolate.interp1d(r_real, contrast, kind="cubic")
+        self.sigma_vz = interpolate.interp1d(r_real, sigma_vz, kind="cubic")
+        
+
+
+    def correlation_rsd_theory(self, f, bias, Omega_m, Omega_Lambda, alpha_par, alpha_perp, n_mu, n_s, streaming = False):
         """
         Calculate the theoretical model for the cross correlation function
         between realspace voids and redshiftspace galaxies and calculates multipoles.
         Parameters:
         -----------------
+        f:
+            growth rate for galaxy catalogue
+        bias:
+            dark matter bias for galaxy catalogue
+        Omega_m:
+            density parameter for matter
+        Omega_Lambda:
+            density parameter for cosmological constant
+        Alpha_par:
+            parallel component of Alcock-Paczynski parameter
+        Alpha_perp:
+            perpendicual component of Alcock-Paczynski parameter
         n_mu:
             number of points for a linearly space array for mu between 0, 1. (mu = cos(theta))
         n_s:
             number of points for aa linearly space s array where s is distance in redshiftspace.
             Upper and lower bounds is determined by the radius array given by the CUTEbox correlation function
             in xi_vg_real_func().
+
         streaming:
             Determines wether on should use the full theory model with a gaussian streaming profile or the simpler theory model.
         """
         xi_vg_rsd = np.zeros(shape=(n_s, n_mu))
         s_array   = np.linspace(self.r_corr[0] + 1.0 , self.r_corr[-1] - 1.0, n_s) # +1 and -1 to prevent out of range on splines
         mu_array  = np.linspace(0.0, 1.0, n_mu)
+        r_fid = np.linspace(self.r_corr[0], self.r_corr[-1], n_s)
+        
+        # Rescaling radius in correspondance with equation 12 is S.Nadathur et
+        # al 2019
+        r_integrand = alpha_par * np.sqrt(1 + (1 - mu_array**2) * ((alpha_par/alpha_perp)**2) - 1)
+        r_factor = np.trapz(r_integrand, mu_array)
+        r_real  = r_fid * r_factor
+
+        # Since splines are stored as class variables, they should only be
+        # converted once.
+        if not self.converted:
+            self.convert_splines(r_real)
         
         xi_vg0 = np.zeros(len(s_array))
         xi_vg2 = np.zeros(len(s_array))
         print "Calculating theoretical model"
         if streaming:
             # Calculate equation 7 in S.Nadathur et al 2019
-            aH = (1.0 / (1.0 + self.z)) * self.H_of_z_func() # Hubble parameter times scale factor (a = 1 / (1 + z))
+            aH = (1.0 / (1.0 + self.z)) * self.H_of_z_func(Omega_m, Omega_Lambda) # Hubble parameter times scale factor (a = 1 / (1 + z))
             for i in range(len(s_array)):
                 s = s_array[i]
                 for j in range(len(mu_array)):
@@ -258,7 +311,7 @@ class TheoryModel():
                     s_par  = s * mu
                     s_perp = s * np.sqrt(1 - mu**2)
 
-                    r_par  = s_par + s * self.f * self.delta(s) * mu / (3.0 * self.bias) - y
+                    r_par  = s_par + s * f * self.delta(s) * mu / (3.0 * bias) - y
                     r_perp = s_perp
                     r      = np.sqrt(r_par**2 + r_perp**2)
 
@@ -268,9 +321,9 @@ class TheoryModel():
                     #print r
                 
                     # Collecting terms with velocity dispersion added.
-                    xi_s_perp_s_par = ((1 + self.xi_vg_real(r)) * (1 + (self.f / self.bias * self.contrast(r)/ 3.0
+                    xi_s_perp_s_par = ((1 + self.xi_vg_real(r)) * (1 + (f / bias * self.contrast(r)/ 3.0
                                         - y * mu / r) * (1 - mu**2)
-                                        + self.f * (self.delta(r) - 2 * self.contrast(r) / 3.0) / self.bias * mu**2))
+                                        + f * (self.delta(r) - 2 * self.contrast(r) / 3.0) / bias * mu**2))
                     integrand = (1 + xi_s_perp_s_par) / ((np.sqrt(2 * np.pi) * sigma_tilde))
                     integrand *= np.exp(-0.5 * y**2 / sigma_tilde**2)
                     xi_vg_rsd[i, j] = np.trapz(integrand, y) - 1
@@ -318,13 +371,14 @@ class TheoryModel():
 if __name__=="__main__":
     void_file = "../350ksample/zobov-void_cat.txt"
     galaxy_file  = "../../summerproject/Haakon/galaxies_realspace_z0.42.txt"
-    model = TheoryModel(50, 1024.0, 100.0, 2.0, 0.69, 0.307, 1.0 - 0.307, 0.42, void_file, galaxy_file)
+    model = TheoryModel(50, 1024.0, 0.42, void_file, galaxy_file)
     model.xi_vg_real_func("void_cat_cutebox.txt", "galaxy_cat_cutebox.txt", "corr.txt")
     model.delta_and_sigma_vz_galaxy()
     model.contrast_galaxy()
-    s, xi0, xi2 = model.correlation_rsd_theory(100, 50)
-    s_s, xi0_s, xi2_s = model.correlation_rsd_theory(100, 50, streaming=True)
 
+
+    s, xi0, xi2 = model.correlation_rsd_theory(2.0, 0.69, 0.307, 1.0 - 0.307, alpha_par, alpha_perp, 100, 100)
+    s_s, xi0_s, xi2_s = model.correlation_rsd_theory(2.0, 0.69, 0.307, 1.0 - 0.307, alpha_par, alpha_perp, 100, 100, streaming=True)
 
     rsd_galaxy_file = "../../summerproject/Haakon/galaxies_redshiftspace_z0.42.txt"
     x, corr, paircounts = model.compute_angular_cross_correlation("void_cat_cutebox.txt",
