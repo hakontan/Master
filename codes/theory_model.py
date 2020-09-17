@@ -38,7 +38,7 @@ class TheoryModel():
         Mpc_to_m = 3.08567758e22 
         km_over_Mpc = 1000.0 / Mpc_to_m
         h = 0.7
-        self.H0 = 100 * h * km_over_Mpc # 1/s
+        self.H0 = 100 # km/s/ h Mpc
 
         void_cat = np.loadtxt(void_cat, skiprows=2)
         
@@ -53,7 +53,7 @@ class TheoryModel():
         galaxy_y = galaxy_cat[:, 1]
         galaxy_z = galaxy_cat[:, 2]
         self.galaxy_vz = galaxy_cat[:, 5]
-        #print np.shape(self.galaxy_vz)
+       
         # Stacking galaxy and void catalogues as 2D arrays with x, y and z positions on
         # each column
         self.galaxy_cat = np.column_stack((galaxy_x, galaxy_y, galaxy_z))
@@ -75,37 +75,29 @@ class TheoryModel():
         E_vz2 = np.zeros(self.N + 1)
         sigma_vz = np.zeros(self.N + 1)
         galaxies_in_shell_arr = np.zeros(self.N + 1)
-        print "Starting density profile and velocity dispersion calculation"
 
+        print "Starting density profile and velocity dispersion calculation"
         for i in range(len(self.void_cat[:, 0])):
             current_number_of_galaxies = 0
-            current_vel = 0
             current_E_vz = 0
             current_E_vz2 = 0
             E_vz_in_shell = 0
             E_vz2_in_shell = 0
-            galaxy_prev_shell = 0
-            prev_indices = 0
-
+           
             for j in range(1, self.N + 1):
                 # Find galaxy position and velocity in a given radius around the current void
                 neighbor_inds = tree.query_ball_point(self.void_cat[i, :], r=radius_array[j])
                 shell_volume = 4.0 * np.pi * (radius_array[j]**3 - radius_array[j-1]**3) / 3.0
-                
-                    
-                #print velocity_in_shell
                 velocity_near_point = self.galaxy_vz[neighbor_inds]
                 galaxies_near_point = self.galaxy_cat[neighbor_inds]
                 galaxies_near_point = len(galaxies_near_point[:,0])
-                galaxies_in_shell = galaxies_near_point - current_number_of_galaxies
+                galaxies_in_shell = galaxies_near_point - current_number_of_galaxies # Subtracting previous sphere to get galaxies in current shell.
                 
-
-
+                # calulcating terms used in expectation values E[v_z**2] and E[v_z]**2
                 if galaxies_near_point > 0:
                     E_vz2_in_shell = (sum(velocity_near_point**2) - current_E_vz2)
                     E_vz_in_shell  = (sum(velocity_near_point)  - current_E_vz)
-
-                # Assigning density- and expectation values for velocity values around void in a given shell
+               
                 
                 galaxies_in_shell_arr[j] += galaxies_in_shell
                 
@@ -118,13 +110,10 @@ class TheoryModel():
                 current_E_vz += E_vz_in_shell
                 current_E_vz2 += E_vz2_in_shell
                 current_number_of_galaxies += galaxies_in_shell
-                prev_indices = neighbor_inds
             
 
         delta /= (len(self.void_cat[:, 0]) * len(self.galaxy_cat[:,0]) / self.box_size ** 3)
         delta -= 1
-        #E_vz /= len(self.void_cat[:, 0])
-        #E_vz2 /= len(self.void_cat[:, 0])
         for j in range(self.N + 1):
             if galaxies_in_shell_arr[j] > 0:
                 E_vz[j] /= galaxies_in_shell_arr[j]
@@ -194,7 +183,7 @@ class TheoryModel():
         galaxy_file:
             .txt file with positon of galaxies.
         output_filename:
-            name of the output filename: Not used in this module but required by the
+            name of the output filename. Not used in this module but required by the
             CUTEbox module
         
         See CUTEbox documentation for format requirements of input files.
@@ -246,12 +235,12 @@ class TheoryModel():
         s_array   = np.linspace(self.r_corr[0] + 1.0 , self.r_corr[-1] - 1.0, n_s) # +1 and -1 to prevent out of range on splines
         mu_array  = np.linspace(0.0, 1.0, n_mu)
         
-        self.xi_vg0 = np.zeros(len(s_array))
-        self.xi_vg2 = np.zeros(len(s_array))
+        xi_vg0 = np.zeros(len(s_array))
+        xi_vg2 = np.zeros(len(s_array))
         print "Calculating theoretical model"
         if streaming:
             # Calculate equation 7 in S.Nadathur et al 2019
-            aH = (1.0 / (1 + self.z)) * self.H_of_z_func() # Hubble parameter times scale factor (a = 1 / (1 + z))
+            aH = (1.0 / (1.0 + self.z)) * self.H_of_z_func() # Hubble parameter times scale factor (a = 1 / (1 + z))
             for i in range(len(s_array)):
                 s = s_array[i]
                 for j in range(len(mu_array)):
@@ -260,19 +249,23 @@ class TheoryModel():
                     # Performing change of variable where y = v_par / (a * H)
                     # giving dv_par = a*H*dy
                     
-                    sigma_tilde = self.sigma_vz(s) * self.H0 / aH
+                    sigma_tilde = self.sigma_vz(s) / aH
                     
                     y = np.linspace(-5.0 * sigma_tilde, 5.0 * sigma_tilde, 100) # Integration domain determined by gaussian 
-                                                                                         # part of the integrand. It is basically zero elsewhere
+                                                                                # part of the integrand. It is basically zero elsewhere
                                                                                                           
                     # Length coordinates in real- and redshiftspace
-                    
                     s_par  = s * mu
                     s_perp = s * np.sqrt(1 - mu**2)
 
                     r_par  = s_par + s * self.f * self.delta(s) * mu / (3.0 * self.bias) - y
                     r_perp = s_perp
                     r      = np.sqrt(r_par**2 + r_perp**2)
+
+                    # Avoid out of range on splines
+                    r[np.where(r > self.r_corr[-1])] = self.r_corr[-1]
+                    r[np.where(r < self.r_corr[0])] = self.r_corr[0]
+                    #print r
                 
                     # Collecting terms with velocity dispersion added.
                     xi_s_perp_s_par = ((1 + self.xi_vg_real(r)) * (1 + (self.f / self.bias * self.contrast(r)/ 3.0
@@ -309,16 +302,16 @@ class TheoryModel():
         print "Computing multipoles"
         # Compute multipoles for the theory model i redshiftspace
         for index, value in enumerate(s_array):
-            self.xi_vg0[index] = integrate.quad(lambda mu: 1.0*xi_vg_rsd_spline(mu, value)*1.0,
+            xi_vg0[index] = integrate.quad(lambda mu: 1.0*xi_vg_rsd_spline(mu, value)*1.0,
                                                 0,
                                                 1,
                                                 full_output=1)[0]
-            self.xi_vg2[index] = integrate.quad(lambda mu: 5.0*xi_vg_rsd_spline(mu, value) * 0.5 * (3 * mu * mu - 1),
+            xi_vg2[index] = integrate.quad(lambda mu: 5.0*xi_vg_rsd_spline(mu, value) * 0.5 * (3 * mu * mu - 1),
                                                 0,
                                                 1,
                                                 full_output=1)[0]
             
-        return s_array, self.xi_vg0, self.xi_vg2
+        return s_array, xi_vg0, xi_vg2
         
 
 
@@ -356,9 +349,9 @@ if __name__=="__main__":
                               1,
                               full_output=1)[0]
       xi2_rsd[index] = integrate.quad(lambda mu: 5.0*corr_of_mu_s(mu, value) * 0.5 *(3 * mu * mu -1 ),
-                                0,
-                              1,
-                              full_output=1)[0]
+                                      0,
+                                      1,
+                                       full_output=1)[0]
     
 
     fig, ax = plt.subplots()
