@@ -129,6 +129,8 @@ class TheoryModel():
             fig, ax = plt.subplots()
             ax.plot(radius_array, sigma_vz)
             fig.savefig("sigmavz_test.png")
+            np.save("delta" + self.handle, delta)
+            np.save("sigma_vz" + self.handle, sigma_vz)
         else:
             delta = np.load(array_files[0])
             sigma_vz = np.load(array_files[1])
@@ -166,7 +168,7 @@ class TheoryModel():
             fig.savefig("contrast_test.png")
             np.save("contrast" + self.handle, contrast)
         else:
-            contrast = np.load(Array_file)
+            contrast = np.load(array_file)
         self.contrast = interpolate.interp1d(r, contrast, kind="cubic")
         return self.contrast
 
@@ -218,7 +220,7 @@ class TheoryModel():
             plt.savefig("xi_vg_real_test.png")
         else:
             xi_vg_real = np.load(array_file)
-            self.r_corr = np.load("r_corr" + self.handle)
+            self.r_corr = np.load("r_corr" + self.handle + ".npy")
 
         self.xi_vg_real = interpolate.interp1d(self.r_corr, xi_vg_real, kind="cubic")
         return self.xi_vg_real
@@ -232,7 +234,7 @@ class TheoryModel():
         return self.H0 * np.sqrt(Omega_m * (1.0 + self.z)**3 + Omega_Lambda)
 
 
-    def convert_splines(self, r_real):
+    def convert_splines(self, r_real, r_fid):
         """
         Converts the splines for delta, sigma_vz, density contrast and
         xi_vg_real to use the rescaled radius r_real in correspondance with
@@ -245,14 +247,14 @@ class TheoryModel():
         """
         
         # Avoid out of range on splines
-        r_real[np.where(r_real > self.r_corr[-1])] = self.r_corr[-1]
-        r_real[np.where(r_real < self.r_corr[0])] = self.r_corr[0]
+        #r_real[np.where(r_real > self.r_corr[-1])] = self.r_corr[-1]
+        #r_real[np.where(r_real < self.r_corr[0])] = self.r_corr[0]
 
-        xi_vg_real = self.xi_vg_real(r_real)
-        delta = self.delta(r_real)
-        contrast = self.contrast(r_real)
-        sigma_vz = self.sigma_vz(r_real)
-
+        xi_vg_real = self.xi_vg_real(r_fid)
+        delta = self.delta(r_fid)
+        contrast = self.contrast(r_fid)
+        sigma_vz = self.sigma_vz(r_fid)
+        print r_real
         xi_vg_real = interpolate.interp1d(r_real, xi_vg_real, kind="cubic")
         delta = interpolate.interp1d(r_real, delta, kind="cubic")
         contrast = interpolate.interp1d(r_real, contrast, kind="cubic")
@@ -293,25 +295,26 @@ class TheoryModel():
         # al 2019
         mu_array  = np.linspace(0.0, 1.0, n_mu)
         r_fid = np.linspace(self.r_corr[0], self.r_corr[-1], n_s)
-        r_integrand = alpha_par * np.sqrt(1 + (1 - mu_array**2) * ((alpha_par/alpha_perp)**2) - 1)
+        r_integrand = alpha_par * np.sqrt(1 + (1 - mu_array**2) * ((alpha_par/alpha_perp)**2 - 1))
         r_factor = np.trapz(r_integrand, mu_array)
         r_real  = r_fid * r_factor
+        print r_factor
         # Since splines are stored as class variables, they should only be
         # converted once.
         
-        xi_vg_real, delta, contrast, sigma_vz = self.convert_splines(r_real)
-
+        xi_vg_real, delta, contrast, sigma_vz = self.convert_splines(r_real, r_fid)
         xi_vg_rsd = np.zeros(shape=(n_s, n_mu))
 
         s_array   = np.linspace(r_real[0] + 1.0 , r_real[-1] - 1.0, n_s) # +1 and -1 to prevent out of range on splines
-        print s_array
         
+    
         xi_vg0 = np.zeros(len(s_array))
         xi_vg2 = np.zeros(len(s_array))
         print "Calculating theoretical model"
         if streaming:
             # Calculate equation 7 in S.Nadathur et al 2019
             aH = (1.0 / (1.0 + self.z)) * self.H_of_z_func(Omega_m, Omega_Lambda) # Hubble parameter times scale factor (a = 1 / (1 + z))
+            aH /= alpha_par
             for i in range(len(s_array)):
                 s = s_array[i]
                 for j in range(len(mu_array)):
@@ -326,17 +329,17 @@ class TheoryModel():
                                                                                 # part of the integrand. It is basically zero elsewhere
                                                                                                           
                     # Length coordinates in real- and redshiftspace
-                    s_par  = s * mu
-                    s_perp = s * np.sqrt(1 - mu**2)
+                    s_par  = s * mu * alpha_par
+                    s_perp = s * np.sqrt(1 - mu**2) * alpha_perp
 
                     r_par  = s_par + s * f * delta(s) * mu / (3.0 * bias) - y
                     r_perp = s_perp
                     r      = np.sqrt(r_par**2 + r_perp**2)
 
+                    
                     # Avoid out of range on splines
                     r[np.where(r > r_real[-1])] = r_real[-1]
                     r[np.where(r < r_real[0])] = r_real[0]
-                    
                 
                     # Collecting terms with velocity dispersion added.
                     xi_s_perp_s_par = ((1 + xi_vg_real(r)) * (1 + (f / bias * contrast(r)/ 3.0
@@ -354,8 +357,8 @@ class TheoryModel():
                     mu = mu_array[j]
 
                     # Length coordinates in real- and redshiftspace
-                    s_par  = s * mu
-                    s_perp = s * np.sqrt(1 - mu**2)
+                    s_par  = s * mu * alpha_par
+                    s_perp = s * np.sqrt(1 - mu**2) * alpha_perp
 
                     r_par  = s_par + s * f * delta(s) * mu / (3.0 * bias)
                     r_perp = s_perp
@@ -387,23 +390,39 @@ class TheoryModel():
 
 
 if __name__=="__main__":
-    void_file = "../350ksample/zobov-void_cat.txt"
-    galaxy_file  = "../../summerproject/Haakon/galaxies_realspace_z0.42.txt"
-    model = TheoryModel(50, 1024.0, 0.42, void_file, galaxy_file, "350ksample")
-    model.xi_vg_real_func("void_cat_cutebox.txt", "galaxy_cat_cutebox.txt")
+    
+    void_file = "../MD2/zobov-void_cat.txt"
+    galaxy_file  = "../../summerproject/Haakon/MultiDarkSimulations/HaloSample2/halos_realspace_z1.txt"
+    """
+    model = TheoryModel(50, 2500.0, 1.0, void_file, galaxy_file, "MD2")
+    model.xi_vg_real_func("MD2void_real.txt", "MD2galaxy_real.txt")
     model.delta_and_sigma_vz_galaxy()
     model.contrast_galaxy()
 
-    alpha_par = 1.0
-    alpha_perp = 1.0
-    s, xi0, xi2 = model.correlation_rsd_theory(0.69, 2.0, 0.307, 1.0 - 0.307, alpha_par, alpha_perp, 100, 100)
-    s_s, xi0_s, xi2_s = model.correlation_rsd_theory(0.69, 2.0, 0.307, 1.0 - 0.307, alpha_par, alpha_perp, 100, 100, streaming=True)
+    """
+    
+    model = TheoryModel(50, 2500.0, 1.0, void_file, galaxy_file, "MD3")
+    model.xi_vg_real_func("MD2void_real.txt", "MD2galaxy_real.txt", "xi_vg_realMD2.npy")
+    model.delta_and_sigma_vz_galaxy(["deltaMD2.npy", "sigma_vzMD2.npy"])
+    model.contrast_galaxy("contrastMD2.npy")
 
-    rsd_galaxy_file = "../../summerproject/Haakon/galaxies_redshiftspace_z0.42.txt"
-    x, corr, paircounts = model.compute_angular_cross_correlation("void_cat_cutebox.txt",
+    alpha_perp = np.array([0.95**(2./3), 1.0**(2./3), 1.05**(2./3)])
+    alpha_par = alpha_perp**(-1./3)
+    
+    fig, ax = plt.subplots()
+    for i in range(len(alpha_par)):
+        perp = alpha_perp[i]
+        par = alpha_par[i]
+        #s, xi0, xi2 = model.correlation_rsd_theory(0.872, 2.40, 0.307, 0.692, alpha_par, alpha_perp, 100, 100)
+        s_s, xi0_s, xi2_s = model.correlation_rsd_theory(0.872, 2.77, 0.307, 0.692, par, perp, 100, 100, streaming=True)
+        ax.plot(s_s, xi2_s, label=r"$\alpha_\bot/\alpha_\parallel=${0:.2f}".format(perp/par))
+
+
+    rsd_galaxy_file = "../../summerproject/Haakon/MultiDarkSimulations/HaloSample2/halos_redshiftspace_z1.txt"
+    x, corr, paircounts = model.compute_angular_cross_correlation("MD2void_real.txt",
                                                                   rsd_galaxy_file,
                                                                   "corr.txt",
-                                                                  1024.0)
+                                                                  2500.0)
     
     # Fetch the data
     r  = x[0]
@@ -427,9 +446,7 @@ if __name__=="__main__":
                                        full_output=1)[0]
     
 
-    fig, ax = plt.subplots()
-    ax.plot(s, xi2, label="Theroy model, no streaming")
-    ax.plot(s_s, xi2_s, label="Theory model, streaming")
+    #ax.plot(s, xi2, label="Theroy model, no streaming")
     ax.plot(r, xi2_rsd, label="Computed model")
     ax.legend()
-    fig.savefig("test_xi_rsd.pdf")
+    fig.savefig("test_xi_rsd_MD2_alpha.pdf")
