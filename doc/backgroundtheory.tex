@@ -148,5 +148,89 @@ Where $b$ represents baryonic matter and $r$ is radiation
 (Her trengs det kanskje mer forklaring og er kanskje ikke den riktige versjonen
 av likningen.) 
 
+\subsection{Growth of matter perturbations in linear perturbation theory.}
+As i have previously stated, the universe is isotropic and homogenous. This
+however was for sufficiently large scales at around $100$ Mpc and larger. On
+smaller scales the universe is not isotropic and homogenous. A single galaxy,
+for example, is denser than the intergalactic medium that separates it from other
+galaxies. The anisotropy in temperature of the cosmic microwave background (CMB), as measured by
+the Planck satellite and its predecessor CMB experiments, is measured to be
+around $\Delta T/T=10^{-5}$. This shows that at around redshift $z=1000$, we had
+relatively small fluctuations while we today observe galaxy clusters which has around
+$200$ times larger density than the average density of an equal sphere in the
+universe (SChneider side 342.). This suggests that the original density
+perturbations grow over time. To describe this evolution, one defines the relative density
+contrast as
+\begin{equation}
+    \delta(\vec{r}, t) \equiv \frac{\rho(\vec{r}, t) - \bar{\rho}(t)}{\bar{\rho}(t)}.
+\end{equation}
+Here $\bar{\rho}{t}$ denotes the mean matter density of the whole universe at
+time $t$, while $\rho(\vec{r}, t)$ denotes the local density at position
+$\vec{r}$ at time $t$.\\
 
+The growth of these perturbations can, on scales substantially smaller than the
+hubble radius, which is the radius of the observable universe, be described in
+the framework of linear perturbation theory. On these scales Newtonian gravity
+is sufficient to describe the nature of structure growth. With the approximation
+that the universe only consists of pressureless matter, which is the case for
+cold dark matter in which is the main constituent of the matter in the universe, we
+will model the matter dsitribution as a pressureless fluid. The equations of
+motion for such a fluid is given by the equations
+\begin{equation}\label{eq:continuuity}
+    \frac{\partial \rho}{\partial t} + \nabla\cdot(\rho \vec{v})=0,
+\end{equation}
+\begin{equation}\label{eq:eulereq}
+    \frac{\partial \vec{v}}{\partial t} + (\vec{v}\cdot\nabla)\vec{v}=-\frac{\nabla P}{\rho}-\nabla \Phi,
+\end{equation}
+\begin{equation}\label{eq:poisson}
+    \nabla ^2\Phi=4\pi G\rho.
+\end{equation}
+Here $\vec{v}=\vec{v}(\vec{r},t)$ is the velocity field of the fluid and $\Phi=\Phi(\vec{r},t)$
+is the newtonian gravitational potential. $P$ is the pressure of the fluid. Equation \ref{eq:continuuity} is the
+continuuity equation which tells us that the density changes with the flow of
+mass. Equation \ref{eq:eulereq}, which is the Euler equation, describes the
+behaviour of the fluid under the influence of an external force. The last
+equation, equation \ref{eq:poisson}, is the Poisson equation which relates the
+gravitational potential to the density field. These equations are solvable in
+the limit $\vert\delta\vert \ll 1$, and can then be used to derive an expression
+for relatively small density contrasts, which can be used to describe the
+evolution of density perturbations on large scales (SJekk opp om dette er
+riktig.). We can model small perturbations to first order by substituing $\rho =
+\rho_0 + \delta \rho$, $\vec{v} =\vec{v_0} + \delta \vec{v}$, $\vec{v} =\vec{v_0}
++ \delta \vec{v}$, $P = P_o + \delta P$ and $\Phi = \Phi_0 +\delta\Phi$. Here
+$\delta$ is used to assign small perturbations to the physical quantities and should not be
+confused with the previously defined density contrast. The velocity also has to
+take into account the expansion of the universe in addition to the peculiar
+velocity of the particles giving $\vec{v} = H(t)\vec{r} + \vec{v}_{pec}$. After a
+thorough calculation, and transforming the solution to comoving coordinates $\vec{x}$, (Kanskje sitere dette? Den er veldig lang) one will arrive at the following expression for the
+evolution of the density contrast
+\begin{equation}
+    \frac{\partial^2 \delta}{\partial t^2} + 2H(t) \frac{d \delta}{dt}=4\pi G\bar{\rho}\delta.
+\end{equation}
+This equation only contains time derivatives, and all the coefficients does not
+depend on $\vec{x}$. Therefore $\delta(\vec{x}, t)$ can then be expressed a spatial and time
+dependent expression on the form 
+\begin{equation}
+    \delta(\vec{x}, t) = D(t)g(\vec{x}).
+\end{equation}
+Here $g(\vec{x})$ is an arbitrary function of the spatial comoving coordinate
+$\vec{x}$, and $D(t)$ satisfies
+\begin{equation}
+    \frac{\partial^2 D}{\partial t^2} + 2H(t) \frac{d D}{dt}=4\pi G\bar{\rho}D.
+\end{equation}
+This equation has two solutions. One solution is strictly increasing and one is
+strictly decreasing. As time evolves the decreasing solution will become negligible
+and the increasing solution will dominate. This solution, denoted as $D_+(t)$,
+is called the growth factor and determines the amplitude of structure growth as
+a function of time. Since $t\propto a$, one can then model the growth factor for
+a given cosmological model. We will lastly define the function
+\begin{equation}
+    f(a) \equiv \frac{d log D_+}{d log a},
+\end{equation}
+to quantify the relationship between the growth of structure and the expansion
+of the universe.
 
+\subsection{Two point correlation functions and the matter power spectrum.}
+
+The matter power spectrum $P(k)$ provides a statistical description of the
+distribution of matter in the universe.
