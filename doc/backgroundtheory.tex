@@ -231,6 +231,22 @@ to quantify the relationship between the growth of structure and the expansion
 of the universe.
 
 \subsection{Two point correlation functions and the matter power spectrum.}
+Matter in the universe is not randomly distributed. As a result of how structure in the universe evolves, galaxies for example,
+does spread out randomly but they gather in groups or clusters. This means that given a random point in space, the probability of finding
+a galaxy in the vicinity of that point is higher if the randomly chosen point by chance landed on a galaxy. The probability of finding a galaxy
+at point $\vec{x}$ is not independent of wether there is a galaxy at an neighbouring point $\vec{y}$. This is a statistical property of the distribution
+of galaxies and can be described by a two point correlation function. The two point correlation function for galaxies $\xi_{g}(r)$ describes the excess probability
+over random for finding two galaxies separated by a distance $r$. The correlation is related to the density contrast as
+\begin{equation}
+    \xi(\vert\vec{r_1}-\vec{r_2}\vert)=\langle\delta(\vec{r_1})\delta(\vec{r_2})\rangle
+\end{equation}
+\\
 
 The matter power spectrum $P(k)$ provides a statistical description of the
-distribution of matter in the universe.
+distribution of matter in the universe, but in fourier space. The matter power spectrum describes the amplitude of 
+the density contrast on different length scales $L=\frac{2\pi}{k}$, where $k$ is the fourier wave number. The matter power spectrum is 
+related to the two point correlation function as a fourier transform given by
+\begin{equation}
+    P(k)=2\pi\int_0^\infty x^2\frac{sin(kx)}{kx}\xi(x)dx.
+\end{equation}
+Both of these s
