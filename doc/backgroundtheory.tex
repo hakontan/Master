@@ -322,17 +322,44 @@ zero giving an unreasonably high force calculation. To counteract this problem
 force softening is introduced. A way to do this is to modify the denomenator of
 equation $\ref{eq:newtongravacc}$ by including a small factor $\epsilon$
 replacing $\Delta r_{i,j}=\vert\vec{r_j}-\vec{r_i}\vert$ with $\sqrt{\Delta
-r_{i,j}^2+\epsilon^2}$. We now have an expression for the acceleration of each
-object, we will now use the following notation $\frac{d^2r}{dt^2}=a(t)$ for
-acceleration and $\frac{dr}{dt}=v_i(t)$. The simplest way to update the position
-of each particle is to apply Eulers method and integrate the acceleration twice.
-Eulers method applied to this problem takes the following form (sjekk dette)
+r_{i,j}^2+\epsilon^2}$(Siter klypin). We will now use the notation where the acceleration is
+given as $a(t)=\frac{d^2r(t)}{dt}$ and the velocity $v(t)=\frac{dr(t)}{dt}$.
+From equation \ref{eq:newtongravacc} we now have an expression for the acceleration of each object.
+This gives us the the coupled system ODEs necessary to solve for the position as
+\begin{equation}
+    v(t)=\frac{dr(t)}{dt} \quad\mathrm{and}\quad a(t)=\frac{dv(t)}{dt}.
+\end{equation}
+We now discretize the time variable where $t_n$ is the time at a specific
+time point where $t_n=t_0+n\Delta t t$ where $\Delta t$ is an incremental
+timestep. With this we can also discretize our spatial variables as 
+By a Taylor expansion around $t_n$, one can approximate the time solution at
+timestep $t=t_n+\Delta t$ giving
+\begin{equation}
+    r(t_n+\Delta t) = r(t_n) + \frac{dr(t_n)}{dt}\Delta t + \frac{1}{2}\frac{d^2r(t_n)}{dt^2}\Delta t^2 +\ldots
+\end{equation}
+and
+\begin{equation}
+    v(t_n+\Delta t) = v(t_n) + \frac{dv(t_n)}{dt}\Delta t + \frac{1}{2}\frac{d^2v(t_n)}{dt^2}\Delta t^2 +\ldots.
+\end{equation}
+By discreting the spatial variables in the same way as the time variable one can
+write $r(t_n)=r_n$, $v(t_n)=v_n$ and $a(t_n)=a_n$ respectively for every particle.
+Similariliy we have $r_{n+1}=r(t_n + \Delta t)$ etc.
+By truncating the taylor expansion at the second order term one can then write
+an approximate solution to our problem as
+\begin{center}
 \begin{itemize}
-    \item $a_i(t)=-\sum_{i=1}^{N}\sum_{j\neq i}^N\frac{Gm_j}{(\Delta
+    \item $a_n=-\sum_{i=1}^{N}\sum_{j\neq i}^N\frac{Gm_j}{(\Delta
     r_{i,j}^2+\epsilon^2)^{2/3}}(\vec{r_j}-\vec{r_i})$
-    \item $v_i(t + \Delta t) = v(t) + a_i(t)\cdot\Delta t$
-    \item $r_i(t + \Delta t) = r(i) + v(t)\cdot\Delta t.$
+    \item $v_{n+1} = v_n + a_n\Delta t$
+    \item $r_{n+1} = r_n + v_n\Delta t.$
 \end{itemize}
+\end{center}
+This is done for every particle $i$ for every timestep $t+\Delta t$. This is one
+of the simplest ways of this system of coupled ODEs and is called the forward
+Euler method. This approach however is never used in practice as the error of
+the solution, as can be seen from the taylor expansion,
+$\epsilon\sim\mathcal{O}(\Delta t^2)$.
+
 
 
 
