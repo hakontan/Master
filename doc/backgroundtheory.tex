@@ -89,7 +89,7 @@ The cosmological principle states that on sufficiently
 large scales the universe is isotropic and homogenous. This means the universe
 looks the same in every direction for every observer at any point in space for
 sufficiently large scales. By sufficiently large scales one means
-distances roughly $100$Mpc or larger (Ryden). This has been proved to be a good
+distances roughly $100$Mpc or larger \cite[p.~12]{ryden2017introduction}. This has been proved to be a good
 assumption by surveys like the Sloan sky survey (svak formulering. Trenger ogsaa kilde). This was an important assumption
 for a particular solution of the Einstein field equation. This equation, first published by
 Albert Einstein in $1915$ in relation to his theory of general relativity. This equation
@@ -231,6 +231,139 @@ to quantify the relationship between the growth of structure and the expansion
 of the universe.
 
 \subsection{Two point correlation functions and the matter power spectrum.}
+Matter in the universe is not randomly distributed. As a result of how structure in the universe evolves, galaxies for example,
+does spread out randomly but they gather in groups or clusters. This means that given a random point in space, the probability of finding
+a galaxy in the vicinity of that point is higher if the randomly chosen point by chance landed on a galaxy. The probability of finding a galaxy
+at point $\vec{x}$ is not independent of wether there is a galaxy at an neighbouring point $\vec{y}$. This is a statistical property of the distribution
+of galaxies and can be described by a two point correlation function. The two point correlation function for galaxies $\xi_{g}(r)$ describes the excess probability
+over random for finding two galaxies separated by a distance $r$. The correlation is related to the density contrast as
+\begin{equation}
+    \xi(\vert\vec{r_1}-\vec{r_2}\vert)=\langle\delta(\vec{r_1})\delta(\vec{r_2})\rangle
+\end{equation}
+\\
 
 The matter power spectrum $P(k)$ provides a statistical description of the
-distribution of matter in the universe.
+distribution of matter in the universe, but in fourier space. The matter power spectrum describes the amplitude of 
+the density contrast on different length scales $L=\frac{2\pi}{k}$, where $k$ is
+the fourier wave number. The matter power spectrum is related to the two point
+correlation function as a fourier transform given by
+\begin{equation}
+    P(k)=2\pi\int_0^\infty x^2\frac{sin(kx)}{kx}\xi(x)dx.
+\end{equation}
+Both of these quantites are statistical properties and are of high importance
+when comparing models to observations or simulations. Since we only have one
+universe to sample from when doing observations, when we compare with the
+predictions from models a pure image comparison may not prove to give an
+accurate picture of the performance of our models(Må kanskje forklares bedre). It is therefore important to
+note that two universes are considered identical if they inhabit the same
+statistical properties. A simulation or calculation of structure growth may
+not look identical to anything anywhere in the universe (if it is not infinately
+large), but if the statistical properties are the same, then the models are
+correct. This makes the power spectrum and two point correlation function
+important vital tools when studying the universe.
+
+\section{Cosmological N-body simulations}
+Analytical approaches, such as linear perturbation theory has its limits.
+Especially when taking into consideration small scale interactions between
+galaxies. Using linear perturbation theory, gravitiational interactions on small scales can not be described in
+enough detail to accurately compare observational data to theoretical
+predictions. Therefore numerical simulations of structure formation is an
+important tool when studying the properties of the universe. Numerical
+simulations have been crucial for establishing $\Lambda CDM$ as the standard
+model for cosmology as through simulations it has become possible to separate
+the predictions of different models when comparing models to observations
+\cite[p.~361]{schneider2006extragalactic}. Due to the significant increase in
+computer power over the last few decades, one has been able to perform
+increasingly more detailed numerical simulations where one can afford to
+increase both the spatial and temporal dimension in the simulations.\\
+
+When simulating large scale structure formation in the universe, it is mostly
+sufficient to take into account dark matter, as this is the primary contributor
+to the mass in the univers. The size of dark matter particles, which is still an
+unobserved, and will be a lot smaller than the simulation volume. Therefore
+all the dark matter particles in the simulation is represented by point
+particles with mass $M$, where each point particle is a body of mass
+representing multiple dark matter particles. One also has to restrict the
+simulation volume of the simulation. The size of the universe is too large to
+simulate in detail. It may also be infinite. Therefore one has to select a
+simulation volume that is representative for the effects one wants to model. For
+simulations where one wants to examine large scale structures, the simulation
+volume is usually a box with size $L>200$Mpc as large scale structures are hardly present on
+scales smaller than this \cite[p.~362]{schneider2006extragalactic}. Due to
+restricting the simulation to a small box slice of the universe, problems with
+the boundaries of the simulation volume will rise. If not treated, particles at
+the boundary of the simulation volume will not be affected by gravity as many
+neighbouring particles as particles in the middle of the simulations volum. To
+account for the fact the universe should be isotropic and homogenous on large
+scales one has to apply periodic boundary conditions. This means that the cube
+is extended periodically. A particle leaving the volume in one end will reappear
+in the other end. Particles will also interact gravitationally in the same
+manner meaning that particles opposing sides of the simulation volume will
+effect each other as if the simulation volume was extended by adding an
+identical volume side by side.
+
+\subsection{pair wise summation}
+The simplest and most intuitive way of performing N-body simulations is by
+modelling gravity as a force and applying Newtons second law to calculate the
+acceleration vector of the particles. For every particle one calculates the
+force acting on it from all other particles by summing over the contribution
+from all other particles. The computational cost of this approach scales as
+$N^2$, where $N$ is the number of particles in the simulation. This makes this
+approach not feasible when including $N\gtrsim10^6$ particles (kanskje siter). However
+interesting problems can be studied by not exceeding this number of particles. This problem can be formulated mathematically as
+\begin{equation}\label{eq:newtongravacc}
+    \frac{d^2r_i}{dt^2}=-G\sum_{i=1}^{N}\sum_{j\neq i}^N\frac{m_j}{\vert\vec{r_j}-\vec{r_i}\vert^3}(\vec{r_j}-\vec{r_i}),
+\end{equation}
+where we calculated the acceleration on the $i$th particle with position
+$\vec{r}$ by summing over all particles $j\neq i$ with position $\vec{r_j}$.
+When studying equation \ref{eq:newtongravacc}, one can see that if two particles
+come very close numerical instability will occur in the form of a division by
+zero giving an unreasonably high force calculation. To counteract this problem
+force softening is introduced. A way to do this is to modify the denomenator of
+equation $\ref{eq:newtongravacc}$ by including a small factor $\epsilon$
+replacing $\Delta r_{i,j}=\vert\vec{r_j}-\vec{r_i}\vert$ with $\sqrt{\Delta
+r_{i,j}^2+\epsilon^2}$(Siter klypin). We will now use the notation where the acceleration is
+given as $a(t)=\frac{d^2r(t)}{dt}$ and the velocity $v(t)=\frac{dr(t)}{dt}$.
+From equation \ref{eq:newtongravacc} we now have an expression for the acceleration of each object.
+This gives us the the coupled system ODEs necessary to solve for the position as
+\begin{equation}
+    v(t)=\frac{dr(t)}{dt} \quad\mathrm{and}\quad a(t)=\frac{dv(t)}{dt}.
+\end{equation}
+We now discretize the time variable where $t_n$ is the time at a specific
+time point where $t_n=t_0+n\Delta t t$ where $\Delta t$ is an incremental
+timestep. With this we can also discretize our spatial variables as 
+By a Taylor expansion around $t_n$, one can approximate the time solution at
+timestep $t=t_n+\Delta t$ giving
+\begin{equation}
+    r(t_n+\Delta t) = r(t_n) + \frac{dr(t_n)}{dt}\Delta t + \frac{1}{2}\frac{d^2r(t_n)}{dt^2}\Delta t^2 +\ldots
+\end{equation}
+and
+\begin{equation}
+    v(t_n+\Delta t) = v(t_n) + \frac{dv(t_n)}{dt}\Delta t + \frac{1}{2}\frac{d^2v(t_n)}{dt^2}\Delta t^2 +\ldots.
+\end{equation}
+By discreting the spatial variables in the same way as the time variable one can
+write $r(t_n)=r_n$, $v(t_n)=v_n$ and $a(t_n)=a_n$ respectively for every particle.
+Similariliy we have $r_{n+1}=r(t_n + \Delta t)$ etc.
+By truncating the taylor expansion at the second order term one can then write
+an approximate solution to our problem as
+\begin{center}
+\begin{itemize}
+    \item $a_n=-\sum_{i=1}^{N}\sum_{j\neq i}^N\frac{Gm_j}{(\Delta
+    r_{i,j}^2+\epsilon^2)^{2/3}}(\vec{r_j}-\vec{r_i})$
+    \item $v_{n+1} = v_n + a_n\Delta t$
+    \item $r_{n+1} = r_n + v_n\Delta t.$
+\end{itemize}
+\end{center}
+This is done for every particle $i$ for every timestep $t+\Delta t$. This is one
+of the simplest ways of this system of coupled ODEs and is called the forward
+Euler method. This approach however is never used in practice as the error of
+the solution, as can be seen from the taylor expansion,
+$\epsilon\sim\mathcal{O}(\Delta t^2)$.
+
+
+
+
+
+
+
+\section{Statistics}
