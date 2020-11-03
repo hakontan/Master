@@ -406,17 +406,36 @@ reads
 where $\Delta x$ is the cell size.
 
 \section{Statistics}
-\subsection{Bayesian statistics.}
+\subsection{Bayes theorem}
 When studying and comparing our observations and simulations with theory one has
 to quantify the probability of our models parameter space given the data we use.
 I.e what parameters will make our model compare best with our observations or
-simulations. This is given by Bayes theorem
+simulations. Consider the probability $P(A, B)$, which is the probability for two events $A$ and $B$ occuring.
+If the two events $A$ and $B$ are independent of each other, the probability is simply given as $P(A, B) = P(A)P(B)$.
+This is however not the case if the events $A$ and $B$ are dependent on each other. Take for instance the probability
+of drawing two knights in a row from a deck of cards. The first draw alters number of cards in the deck and will therefore affected
+the probability of the other event. We write this as $P(A,B) = P(A)P(B\vert A)$. Here $P(B\vert A)$ denotes the probability of $B$ given the fact that 
+event $A$ has occured. We can likewise write $P(A,B) = P(B)P(A\vert B)$. Now lets consider the event $A$ being the parameters of our model $\theta$ and
+event $B$ being our data represented by $d$. We can then write $P(\theta,d) = P(\theta)P(d\vert \theta)=P(d)P(\theta\vert d)$. Rearranging terms we will get
+what is known as Bayes theorem (sitere probability in physics)
 \begin{equation}
     P(\theta\vert d) = \frac{P(d\vert \theta)P(\theta)}{P(d)}.
 \end{equation}
-Here $P(\theta/vert d)$ describes the probability of our parameter $\theta$
-given the condition that our data $d$ is true. likewise $P(d\vert\theta)$ is the
+$P(\theta\vert d)$ is what is known as the posterior and quantifies an
+important question one would ask when studying cosmolgy or physics in general. What is the probability
+of the parameters of the model being correct given the data one is studying? likewise $P(d\vert\theta)$ is the
 probability of our data given our parameters being true. $P(\theta)$ is what is
 known as the prior. This is used to quantify what we already know about our
 parameter space. $P(d)$ is what is known as the evidence and acts as a
-normalization factor.
+normalization factor. \\
+
+In most practical examples examples our model contains multiple parameters we want to fit. Lets say we have a model
+dependent on the parameters $\theta_0$ and $\theta_1$. We will then get the joint probability distribution $P(\theta_0, \theta_1)$
+If we want to know the probability of $\theta_0$ independently of $\theta_1$ we can get what is know as the marginal distribution given by
+\begin{equation}
+    P(\theta_0)=\int_{-\infty}^{\infty}P(\theta_0, \theta_1)d\theta_1
+\end{equation}
+
+\subsection{Parameter estimation}
+
+
