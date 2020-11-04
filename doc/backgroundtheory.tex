@@ -418,13 +418,14 @@ the probability of the other event. We write this as $P(A,B) = P(A)P(B\vert A)$.
 event $A$ has occured. We can likewise write $P(A,B) = P(B)P(A\vert B)$. Now lets consider the event $A$ being the parameters of our model $\theta$ and
 event $B$ being our data represented by $d$. We can then write $P(\theta,d) = P(\theta)P(d\vert \theta)=P(d)P(\theta\vert d)$. Rearranging terms we will get
 what is known as Bayes theorem (sitere probability in physics)
-\begin{equation}
+\begin{equation}\label{eq:bayes}
     P(\theta\vert d) = \frac{P(d\vert \theta)P(\theta)}{P(d)}.
 \end{equation}
 $P(\theta\vert d)$ is what is known as the posterior and quantifies an
 important question one would ask when studying cosmolgy or physics in general. What is the probability
 of the parameters of the model being correct given the data one is studying? likewise $P(d\vert\theta)$ is the
-probability of our data given our parameters being true. $P(\theta)$ is what is
+probability of getting our data given the parameters we have testet. This is what is known as
+the likelihood and is usually denoted as $\mathcal{L}(\theta)$. $P(\theta)$ is what is
 known as the prior. This is used to quantify what we already know about our
 parameter space. $P(d)$ is what is known as the evidence and acts as a
 normalization factor. \\
@@ -437,5 +438,65 @@ If we want to know the probability of $\theta_0$ independently of $\theta_1$ we 
 \end{equation}
 
 \subsection{Parameter estimation}
+When comparing models with data, one has to find an expression to quantify the
+agreement between the model and the data. An important statistical tool is what
+is called the $\chi^2$ test. Given two functions $y^{model}_i$ and $y^{data}_i$,
+representing the model and data respectively where $i$ is a given data point,
+the $\chi^2$ becomes
+\begin{equation}
+    \chi^2=\sum_{ij}(y^{model}_i-y^{data}_i)C_{ij}^{-1}(y^{model}_j-y^{data}_j),
+\end{equation}
+where $C_{ij}$ is the covariance matrix if the data is correlated. If the data
+is uncorrelated, the $\chi^2$ takes a simpler form
+\begin{equation}
+    \chi^2=\sum_{i}\frac{(y^{model}_i-y^{data}_i)^2}{\sigma_i^2},
+\end{equation}
+where $\sigma_i$ is the error estimate for the given data point $i$. This is a
+useful tool for testing the scatter of our data. The likelihood function
+$\mathcal{L}(\theta)=P(d\vert \theta)$ describes the probability of our dataset
+$d$ being true given our parameters. By holding our dataset constant one can
+maximize the likelihood function. In other words one can try to find the most
+probable value for $\theta$. If one assumes the data is given by a gaussian
+distribution, the likelihood function is defined by a multivariate gaussian
+\begin{equation}
+    \mathcal{L}(\theta) = \frac{1}{\sqrt{(2\pi)^n\vert C \vert}}\mathrm{exp}\big[{-\frac{1}{2}}\sum_{ij}(y^{model}_i-y^{data}_i)C_{ij}^{-1}(y^{model}_j-y^{data}_j)\big].
+\end{equation}
+From this we can see that the likelihood and the $\chi^2$ is related as
+$\mathcal{L}\propto \mathrm{exp}[-\frac{1}{2}\chi^2]$. From this it is also evident that
+minimizing the likelihood is the same as minimizing $\chi^2$ (bør ikke maksimere
+likelihood minimere chisquare?). Using bayes theorem given by equation
+\ref{eq:bayes} one can see that we now have an expression for the likelihood.
+The evidence $p(d)$, which acts as a normalization factor is not important as we
+want the relative probabilites of our parameters and therefore this term can be
+ignored \cite{heavens2010statistical}. If one chooses a flat prior, one where
+$p(\theta)$ is constant, one simply gets by adressing bayes theorem
+\begin{equation}
+    P(\theta\vert d) \propto \mathcal{L}(\theta).
+\end{equation}
+\subsection{Sampling and Metropolis hastings MCMC}
+When dealing with distributions $P(\vec{\theta},\vec{d})$, where there is a
+large amount of parameters $\vec{\theta}=(\theta_0, \theta_1,\dots, \theta_n)$,
+a simple gridding algorithm can prove to be both time and memory consuming. If
+we also take into account the fact that one may deal with gaussian
+distributions, there are large areas of parameter space where the probability of
+that particular configuration of parameters being true is slim to none.
+Therefore by gridding one spends a significant amount of time exploring a relatively
+uninteresting part of parameter space. Therefore it is useful to introduce the
+concept of sampling and the Metropolis-hastings Markov-Chain Monte Carlo
+method.\\
 
+The Monte Carlo principle states that if you take
+independent and identically distributed samples $\theta$ from an arbitrary
+function $f(\theta)$, as the number of samples increases, the distribution of
+samples will converge towards the function $f(\theta)$. This is expressed
+mathematically as
+\begin{align}
+    P_N(\theta) &= \frac{1}{N}\sum_{i=1}^N\delta(\theta)\\
+    &\rightarrow \lim_{n\to\infty}P_N(\theta)=p(\theta)
+\end{align}
+There is however a problem in that the function we want to calculate
+$P(\theta\vert d)$ is a distribution that is unknown to us.(sjekk opp dette). We
+know how to calculate it, but we cannot draw from it. Therefore one introduces a
+proposal distribution $q(\theta)$. This is a known function that one can easily
+evualuate and pick samples from.
 
