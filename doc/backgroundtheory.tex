@@ -1,5 +1,6 @@
 \chapter{Background Theory}
 \section{History of cosmology and how we model the universe}
+Skrive noe generelle ting om kosmologi og astronomi historie her.
 \subsection{Distances in the universe and cosmological redshift}
 Distances in an expanding universe can prove hard to fathom. In our everyday
 lives we are used to measuring distances in meters and kilometers. The
@@ -74,7 +75,7 @@ The flux $F$ is defined as
     F = \frac{L}{4\pi R^2},
 \end{equation}
 where $L$ is the luminosity and $R$ is the distance to the object. Luminosity is a measure
-of the absolute electromagnetic power emitted from and object. The flux however, measured in $W/m^2$, is simply the luminosity
+of the absolute electromagnetic power emitted from an astronomical object. The flux however, measured in $W/m^2$, is simply the luminosity
 divided by the area of a shell with a radius at which we observe the object, assuming the radiation is isotropically emitted. Some astronomical phenomena, like a type 1a supernova, have a fixed luminosity
 due to the characteristics of the process that creates it. This is called a standard candle. By measuring the observed flux from such a phenomena, one can then
 calculate the the luminosity distance as 
@@ -272,7 +273,9 @@ important tool when studying the properties of the universe. Numerical
 simulations have been crucial for establishing $\Lambda CDM$ as the standard
 model for cosmology as through simulations it has become possible to separate
 the predictions of different models when comparing models to observations
-\cite[p.~361]{schneider2006extragalactic}. Due to the significant increase in
+\cite[p.~361]{schneider2006extragalactic}. The first cosmological N-body
+simulation was conducted by \cite{PeeblesPJE1970SotC}, where the equations of
+motion for $300$ particles were solbed to study the formation of galaxy clusters. Due to the significant increase in
 computer power over the last few decades, one has been able to perform
 increasingly more detailed numerical simulations where one can afford to
 increase both the spatial and temporal dimension in the simulations.\\
@@ -323,7 +326,7 @@ force softening is introduced. A way to do this is to modify the denomenator of
 equation $\ref{eq:newtongravacc}$ by including a small factor $\epsilon$
 replacing $\Delta r_{i,j}=\vert\vec{r_j}-\vec{r_i}\vert$ with $\sqrt{\Delta
 r_{i,j}^2+\epsilon^2}$(Siter klypin). We will now use the notation where the acceleration is
-given as $a(t)=\frac{d^2r(t)}{dt}$ and the velocity $v(t)=\frac{dr(t)}{dt}$.
+given as $a(t)=d^2r(t)/dt^2$ and the velocity $v(t)=dr(t)/dt$.
 From equation \ref{eq:newtongravacc} we now have an expression for the acceleration of each object.
 This gives us the the coupled system ODEs necessary to solve for the position as
 \begin{equation}
@@ -331,9 +334,8 @@ This gives us the the coupled system ODEs necessary to solve for the position as
 \end{equation}
 We now discretize the time variable where $t_n$ is the time at a specific
 time point where $t_n=t_0+n\Delta t t$ where $\Delta t$ is an incremental
-timestep. With this we can also discretize our spatial variables as 
-By a Taylor expansion around $t_n$, one can approximate the time solution at
-timestep $t=t_n+\Delta t$ giving
+timestep. By a Taylor expansion around $t_n$, one can approximate the time
+solution at timestep $t=t_n+\Delta t$ giving
 \begin{equation}
     r(t_n+\Delta t) = r(t_n) + \frac{dr(t_n)}{dt}\Delta t + \frac{1}{2}\frac{d^2r(t_n)}{dt^2}\Delta t^2 +\ldots
 \end{equation}
@@ -356,14 +358,145 @@ an approximate solution to our problem as
 \end{center}
 This is done for every particle $i$ for every timestep $t+\Delta t$. This is one
 of the simplest ways of this system of coupled ODEs and is called the forward
-Euler method. This approach however is never used in practice as the error of
-the solution, as can be seen from the taylor expansion,
-$\epsilon\sim\mathcal{O}(\Delta t^2)$.
-
-
-
-
-
-
+Euler method. This approach however is never used in practice as the error $\epsilon$ of
+the solution, as can be seen from the taylor expansion, is of order
+$\epsilon\sim\mathcal{O}(\Delta t^2)$. Another significant disadvantage with this method is
+that when solving for physical systems, it will not conserve energy. A numerical
+integration scheme well suited for gravitational problems where energy is
+conserved is the Velocity verlet algorithm. This integration scheme is what is
+known as symplectic, meaning that it conserves the energy of the system
+\cite[p.~31]{holmes2007introduction}. The Velocity Verlet scheme updates its
+velocity and position as
+\begin{center}
+    \begin{itemize}
+        \item $r_{n+1} = r_n + v_n\Delta t+\frac{a_n}{2}\Delta t$
+        \item $v_{n+1} = v_n + \frac{\Delta t}{2}(a_{n+1}+a_n).$
+    \end{itemize}
+\end{center}
+This method, and its variations, that preserve energy over long time periods
+makes it a preferred method of choice for astrophysical gravitational problems.
+(Kanskje vise en figur som sammenlikner verlet of euler for å vise ikke konstant
+energi hos euler. Kanskje bytte ut verlet integrasjon med leapfrog istedenfor.)
+\subsection{Particle mesh}
+Another way of simulating a box with a large volume of particles is it to apply
+what is called a Particle Mesh code. This method is more computationally
+effective as the number of calculations scales as $\propto N$. However most of
+the information is stored on a $3D$ grid covering the whole simulation volume.
+This will require more memory as the resolution of the grid increases. Poissons equation for gravity reads
+\begin{equation}\label{eq:poissongrav}
+    \nabla^2\Phi=4\pi G\rho.
+\end{equation}
+(Kanskje bruke den formen av likningen alle andre bruker med rho-rho bakgrunn)This equation can be solved for the gravitational potential $\Phi$ and updates
+the force field as $\vec{F}=-\nabla\Phi$. This method is reliant on assigning a
+density field to the simulation volume of individual particles as a
+representation for $\rho$ in equation \ref{eq:poissongrav}. One popular method 
+for this is what is known as cloud in cell (CIC) (KLypin). (Det
+er her jeg har lest om det, men det er ikke de som har funnet det opp. Er det
+riktig aa sitere slik da?). One wants to calculate the density $S$ at a given
+distance given by the coordinate point $(x,y,z)$ from the particle. The density at a given point is given as
+$S(x)S(y)S(z)$, where the cloud in cell scheme for assigning a value to $S$
+reads
+\begin{equation}
+    S(x)=\frac{1}{\Delta x}
+    \begin{cases}
+        1, &\quad\text{if }\vert x \vert < \Delta x/2\\
+        0, &\quad\text{otherwise},
+      \end{cases}
+\end{equation}
+where $\Delta x$ is the cell size.
 
 \section{Statistics}
+\subsection{Bayes theorem}
+When studying and comparing our observations and simulations with theory one has
+to quantify the probability of our models parameter space given the data we use.
+I.e what parameters will make our model compare best with our observations or
+simulations. Consider the probability $P(A, B)$, which is the probability for two events $A$ and $B$ occuring.
+If the two events $A$ and $B$ are independent of each other, the probability is simply given as $P(A, B) = P(A)P(B)$.
+This is however not the case if the events $A$ and $B$ are dependent on each other. Take for instance the probability
+of drawing two knights in a row from a deck of cards. The first draw alters number of cards in the deck and will therefore affected
+the probability of the other event. We write this as $P(A,B) = P(A)P(B\vert A)$. Here $P(B\vert A)$ denotes the probability of $B$ given the fact that 
+event $A$ has occured. We can likewise write $P(A,B) = P(B)P(A\vert B)$. Now lets consider the event $A$ being the parameters of our model $\theta$ and
+event $B$ being our data represented by $d$. We can then write $P(\theta,d) = P(\theta)P(d\vert \theta)=P(d)P(\theta\vert d)$. Rearranging terms we will get
+what is known as Bayes theorem (sitere probability in physics)
+\begin{equation}\label{eq:bayes}
+    P(\theta\vert d) = \frac{P(d\vert \theta)P(\theta)}{P(d)}.
+\end{equation}
+$P(\theta\vert d)$ is what is known as the posterior and quantifies an
+important question one would ask when studying cosmolgy or physics in general. What is the probability
+of the parameters of the model being correct given the data one is studying? likewise $P(d\vert\theta)$ is the
+probability of getting our data given the parameters we have testet. This is what is known as
+the likelihood and is usually denoted as $\mathcal{L}(\theta)$. $P(\theta)$ is what is
+known as the prior. This is used to quantify what we already know about our
+parameter space. $P(d)$ is what is known as the evidence and acts as a
+normalization factor. \\
+
+In most practical examples examples our model contains multiple parameters we want to fit. Lets say we have a model
+dependent on the parameters $\theta_0$ and $\theta_1$. We will then get the joint probability distribution $P(\theta_0, \theta_1)$
+If we want to know the probability of $\theta_0$ independently of $\theta_1$ we can get what is know as the marginal distribution given by
+\begin{equation}
+    P(\theta_0)=\int_{-\infty}^{\infty}P(\theta_0, \theta_1)d\theta_1
+\end{equation}
+
+\subsection{Parameter estimation}
+When comparing models with data, one has to find an expression to quantify the
+agreement between the model and the data. An important statistical tool is what
+is called the $\chi^2$ test. Given two functions $y^{model}_i$ and $y^{data}_i$,
+representing the model and data respectively where $i$ is a given data point,
+the $\chi^2$ becomes
+\begin{equation}
+    \chi^2=\sum_{ij}(y^{model}_i-y^{data}_i)C_{ij}^{-1}(y^{model}_j-y^{data}_j),
+\end{equation}
+where $C_{ij}$ is the covariance matrix if the data is correlated. If the data
+is uncorrelated, the $\chi^2$ takes a simpler form
+\begin{equation}
+    \chi^2=\sum_{i}\frac{(y^{model}_i-y^{data}_i)^2}{\sigma_i^2},
+\end{equation}
+where $\sigma_i$ is the error estimate for the given data point $i$. This is a
+useful tool for testing the scatter of our data. The likelihood function
+$\mathcal{L}(\theta)=P(d\vert \theta)$ describes the probability of our dataset
+$d$ being true given our parameters. By holding our dataset constant one can
+maximize the likelihood function. In other words one can try to find the most
+probable value for $\theta$. If one assumes the data is given by a gaussian
+distribution, the likelihood function is defined by a multivariate gaussian
+\begin{equation}
+    \mathcal{L}(\theta) = \frac{1}{\sqrt{(2\pi)^n\vert C \vert}}\mathrm{exp}\big[{-\frac{1}{2}}\sum_{ij}(y^{model}_i-y^{data}_i)C_{ij}^{-1}(y^{model}_j-y^{data}_j)\big].
+\end{equation}
+From this we can see that the likelihood and the $\chi^2$ is related as
+$\mathcal{L}\propto \mathrm{exp}[-\frac{1}{2}\chi^2]$. From this it is also evident that
+minimizing the likelihood is the same as minimizing $\chi^2$ (bør ikke maksimere
+likelihood minimere chisquare?). Using bayes theorem given by equation
+\ref{eq:bayes} one can see that we now have an expression for the likelihood.
+The evidence $p(d)$, which acts as a normalization factor is not important as we
+want the relative probabilites of our parameters and therefore this term can be
+ignored \cite{heavens2010statistical}. If one chooses a flat prior, one where
+$p(\theta)$ is constant, one simply gets by adressing bayes theorem
+\begin{equation}
+    P(\theta\vert d) \propto \mathcal{L}(\theta).
+\end{equation}
+\subsection{Sampling and Metropolis hastings MCMC}
+When dealing with distributions $P(\vec{\theta},\vec{d})$, where there is a
+large amount of parameters $\vec{\theta}=(\theta_0, \theta_1,\dots, \theta_n)$,
+a simple gridding algorithm can prove to be both time and memory consuming. If
+we also take into account the fact that one may deal with gaussian
+distributions, there are large areas of parameter space where the probability of
+that particular configuration of parameters being true is slim to none.
+Therefore by gridding one spends a significant amount of time exploring a relatively
+uninteresting part of parameter space. Therefore it is useful to introduce the
+concept of sampling and the Metropolis-hastings Markov-Chain Monte Carlo
+method.\\
+
+The Monte Carlo principle states that if you take
+independent and identically distributed samples $\theta$ from an arbitrary
+function $f(\theta)$, as the number of samples increases, the distribution of
+samples will converge towards the function $f(\theta)$. This is expressed
+mathematically as
+\begin{align}
+    P_N(\theta) &= \frac{1}{N}\sum_{i=1}^N\delta(\theta)\\
+    &\rightarrow \lim_{n\to\infty}P_N(\theta)=p(\theta)
+\end{align}
+There is however a problem in that the function we want to calculate
+$P(\theta\vert d)$ is a distribution that is unknown to us.(sjekk opp dette). We
+know how to calculate it, but we cannot draw from it. Therefore one introduces a
+proposal distribution $q(\theta)$. This is a known function that one can easily
+evualuate and pick samples from.
+
