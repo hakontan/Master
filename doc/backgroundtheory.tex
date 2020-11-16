@@ -497,6 +497,42 @@ mathematically as
 There is however a problem in that the function we want to calculate
 $P(\theta\vert d)$ is a distribution that is unknown to us.(sjekk opp dette). We
 know how to calculate it, but we cannot draw from it. Therefore one introduces a
-proposal distribution $q(\theta)$. This is a known function that one can easily
-evualuate and pick samples from.
-
+proposal distribution $Q(\theta)$. This is a known function that one can easily
+evualuate and pick samples from. The proposal distribution can be any function,
+but it is usually a gaussian or any other function enclosing the parameter space
+of the target function. The target function is the function one wants to
+represent, but it may be compuationally ineffective to use a brute force grid
+approach as many models contains a multitude of parameters. In our case the
+density distrubtion is the likelihood or the posterior distribution. One of the
+most popular algorithms for Monte Carlo Markov chain is the Metropolis hastings
+algorithm. The basic idea behind the Metropolis hastings algorithm is to draw a
+point $\theta^*$ from the proposal distribution $Q(\theta)$ based on the
+previous draw and and compare an acceptance criterion with a probability which
+can be drawn from a uniform distribution. The acceptance criterion in
+Metropolis-Hastings is given by
+\begin{equation}\label{eq:acceptance}
+    \alpha = min(1, \frac{P(\theta^*)Q(\theta^*\vert \theta)}{P(\theta)Q(\theta\vert\theta^*)}),
+\end{equation}
+where $Q(\theta^*\vert\theta)$ represents the proposal distribution for a new
+pick of parameters $\theta^*$ based on previous parameters $\theta$ and $P$ is
+the target density distribution. After
+drawing an initial value $\theta_0$ from the proposal distribution $Q$, the
+Metropolis Hastings algorithm is a repeatable sequence of the following
+\begin{itemize}
+    \item Sample $\theta^*$ from $Q(\theta^*\vert\theta)$ \\
+    \item Sample a number $u$ from the normal distribution \\
+    \item if $u < \alpha$, where is given by $\alpha$ given by equation \ref{eq:acceptance}: \\
+          \indent accept move and sample $\theta^*$\\
+    \item else:\\
+          \indent reject move and sample previous point $\theta$ instead.\\
+    \item Repeat untill you have a sufficient amount of samples to represent the
+    target distribution.
+\end{itemize}
+The idea with the acceptance criterion is that the algorithm will eventually
+converge toward the peak of the target density distribution. If one just
+accepted the next step without comparing to a random pick from the normal
+distribution, the algorithm would just converge to the closest peak. By
+comparing the acceptance criterion to a pick from the normal distribution, one
+would also in some cases accept picks with a less probable state. this makes the
+algorithm map the whole distribution, but it will quickly drift away from
+spending too much time where the target density distribution is negligible. 
