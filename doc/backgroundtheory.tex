@@ -1,6 +1,8 @@
 \chapter{Background Theory}
 \section{History of cosmology and how we model the universe}
-Skrive noe generelle ting om kosmologi og astronomi historie her.
+Skrive noe generelle ting om kosmologi og astronomi historie her.\\
+
+The following subsections are largely based on \cite[ch. 7]{schneider2006extragalactic}, \cite[ch. 2]{Dodelson:1282338} and \cite{ryden2017introduction} unless otherwise noted.
 \subsection{Distances in the universe and cosmological redshift}
 Distances in an expanding universe can prove hard to fathom. In our everyday
 lives we are used to measuring distances in meters and kilometers. The
@@ -92,22 +94,59 @@ looks the same in every direction for every observer at any point in space for
 sufficiently large scales. By sufficiently large scales one means
 distances roughly $100$Mpc or larger \cite[p.~12]{ryden2017introduction}. This has been proved to be a good
 assumption by surveys like the Sloan sky survey (svak formulering. Trenger ogsaa kilde). This was an important assumption
-for a particular solution of the Einstein field equation. This equation, first published by
-Albert Einstein in $1915$ in relation to his theory of general relativity. This equation
-relates the geometry of spacetime to the distribution of matter within it.
+for a particular solution of the Einstein field equation. 
+This particual equation, first published by Albert Einstein in $1915$ in relation to his theory of general relativity, is given as
+\begin{equation}\label{eq:einstein}
+    G_{\mu\nu}=8\pi GT_{\mu\nu}.
+\end{equation}
+This equation relates $G_{\mu\nu}$, which is the Einstein tensor in which describes the curvature of spacetime, with the energy momentum tensor
+$T_{\mu\nu}$, which describes the energy content of the universe.
 The Friedman-Lemaître-Robertson-Walker metric, which assumes the universe is
-homogenous, isotropic and expanding provides an analytical solution to the
-Einstein equation (kanskje forklare hva en metrikk er for noe). Using this
-metric together with the Einstein field equations results in the important
-equations known as the first and second Friedman equations respectively as
+homogenous, isotropic and expanding provides an analytical solution to equation \ref{eq:einstein}.
+The metric is a tool that allows us to calculate the physical distance in a coordinate system (Dette er kanskje veldig vagt).
+For an example for the Cartesian coordinate system we have the metric 
 \begin{equation}
-    \frac{\dot{a}^2 + kc^2}{a^2} = \frac{8\pi G\rho + \Lambda c^2}{3}
+    g_{ij}=
+    \begin{bmatrix}
+        1 & 0 \\
+        0 & 1 
+    \end{bmatrix}.
+\end{equation}
+The definition of the line element $ds^2$ in this case, is given as
+\begin{equation}
+    ds^2 = \sum_{i,j=0}^1g_{ij}dq^idq^j,
+\end{equation}
+where $q=(x, y)$ is a vector representing the spatial dimensions and $i$ and $j$ represents the indices.
+This gives the familiar line element $ds^2=dx^2+dy^2$.
+For a flat universe the Friedman-Lemaître-Robertson-Walker metric for four dimensional space time takes the following form
+\begin{equation}
+    g_{\mu\nu}=
+    \begin{bmatrix}
+        1 & 0 & 0 & 0\\
+        0 & -a^2 & 0 & 0\\
+        0 & 0 & -a^2 & 0\\
+        0 & 0 & 0 & -a^2 
+    \end{bmatrix}.
+\end{equation}
+The line element is now given as 
+\begin{equation}
+    ds^2 = \sum_{\mu,\nu=0}^3g_{\mu\nu}dx^\mu dx^\nu,
+\end{equation}
+where $dx^0=dt$ and the remaining three indices are for the three spatial coordinates.
+This gives us the following line element
+\begin{equation}
+    ds^2 = dt^2 -a^2(dx^2 + dy^2 + dz^2).
+\end{equation}
+Using this metric together with the Einstein field equations results in the important
+equations known as the first and second Friedman equations respectively as
+\begin{equation}\label{eq:F1}
+    \frac{\dot{a}^2}{a^2} = \frac{8\pi G\rho}{3}
 \end{equation}
 and
-\begin{equation}
-    \frac{\ddot{a}^2}{a^2} = -\frac{4\pi G}{3}(\rho + \frac{3p}{c^2}) + \frac{\Lambda c^2}{3}.
+\begin{equation}\label{eq:FII}
+    \frac{\ddot{a}^2}{a^2} = -\frac{4\pi G}{3}(\rho + \frac{3p}{c^2}).
 \end{equation}
-(Kanskje inkludere denne utledningen fra kosmo 2 i et appendiks)
+I refer the reader to \cite[ch. 2]{Dodelson:1282338} for an explanation on how to derive the Friedmann equations starting with the Friedman-Lemaître-Robertson-Walker metric.
 These differential equations relate evolution of the scale factor $a$ with the
 following properties of the universe density $\rho$, pressure $p$, cosmological constant $\Lambda$, gravitational
 constant $G$ and the speed of light $c$ (ikke glem k). For a flat universe $k=0$
@@ -117,7 +156,7 @@ function of time. \\
 
 In modern cosmology, the dominating model for describing the universe is the $\Lambda$CDM model. Its name is an abbreviation for what 
 is considered the main energy contributions governing the expansion of the universe. The cosmological constant $\Lambda$ represents dark energy, CDM is an abbrevation for cold dark matter
-and lastly we have ordinary matter which is what we interact with in our everyday lives. The current estimates suggest that approximately $69\%$ of the universe consists of dark energy while the remaining $31\%$ (Dette er hentet fra Planck 2018) is attributed to dark matter at around 
+and lastly we have ordinary matter which is what we interact with in our everyday lives. The current estimates suggest that approximately $69\%$ of the universe consists of dark energy while the remaining $31\%$ is attributed to dark matter at around 
 $27\%$ and $4\%$ for regular matter leaving only trace contributions from other energy contributing factors such as photons ($\gamma$) and neutrinos ($\nu$).(Kanskje vaere mer spesifikk her) When modelling the universe these quantites enter into 
 what is called density parameters $\Omega_i$, where $i$ represents a certain type of energy contribution to the universe i.e dark matter or CDM. The density parameter is defined as
 \begin{equation}
@@ -165,7 +204,7 @@ contrast as
 \begin{equation}
     \delta(\vec{r}, t) \equiv \frac{\rho(\vec{r}, t) - \bar{\rho}(t)}{\bar{\rho}(t)}.
 \end{equation}
-Here $\bar{\rho}{t}$ denotes the mean matter density of the whole universe at
+Here $\bar{\rho}(t)$ denotes the mean matter density of the whole universe at
 time $t$, while $\rho(\vec{r}, t)$ denotes the local density at position
 $\vec{r}$ at time $t$.\\
 
