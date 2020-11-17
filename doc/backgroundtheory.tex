@@ -198,8 +198,12 @@ the Planck satellite and its predecessor CMB experiments, is measured to be
 around $\Delta T/T=10^{-5}$. This shows that at around redshift $z=1000$, we had
 relatively small fluctuations while we today observe galaxy clusters which has around
 $200$ times larger density than the average density of an equal sphere in the
-universe (SChneider side 342.). This suggests that the original density
-perturbations grow over time. To describe this evolution, one defines the relative density
+universe \cite[p.~342]{schneider2006extragalactic}. This suggests that the original density
+perturbations grow over time. The small structure deviations at early times evolve through what is known as gravitational insatbility.
+Regions with higher density will attract more material through gravity giving a flow of material towards dense regions making them even more dense.
+This makes an already irregular distribution of matter become even more irregular with time, and will evolve from the small fluctuations at time of the CMB
+to the dense sctructures we observe in our universe today.
+To describe this evolution, one defines the relative density
 contrast as
 \begin{equation}
     \delta(\vec{r}, t) \equiv \frac{\rho(\vec{r}, t) - \bar{\rho}(t)}{\bar{\rho}(t)}.
@@ -215,7 +219,7 @@ is sufficient to describe the nature of structure growth. With the approximation
 that the universe only consists of pressureless matter, which is the case for
 cold dark matter in which is the main constituent of the matter in the universe, we
 will model the matter dsitribution as a pressureless fluid. The equations of
-motion for such a fluid is given by the equations
+motion for such a fluid is governed by the equations
 \begin{equation}\label{eq:continuuity}
     \frac{\partial \rho}{\partial t} + \nabla\cdot(\rho \vec{v})=0,
 \end{equation}
@@ -278,9 +282,8 @@ at point $\vec{x}$ is not independent of wether there is a galaxy at an neighbou
 of galaxies and can be described by a two point correlation function. The two point correlation function for galaxies $\xi_{g}(r)$ describes the excess probability
 over random for finding two galaxies separated by a distance $r$. The correlation is related to the density contrast as
 \begin{equation}
-    \xi(\vert\vec{r_1}-\vec{r_2}\vert)=\langle\delta(\vec{r_1})\delta(\vec{r_2})\rangle
+    \xi(\vert\vec{r_1}-\vec{r_2}\vert)=\langle\delta(\vec{r_1})\delta(\vec{r_2})\rangle.
 \end{equation}
-\\
 
 The matter power spectrum $P(k)$ provides a statistical description of the
 distribution of matter in the universe, but in fourier space. The matter power spectrum describes the amplitude of 
@@ -288,7 +291,7 @@ the density contrast on different length scales $L=\frac{2\pi}{k}$, where $k$ is
 the fourier wave number. The matter power spectrum is related to the two point
 correlation function as a fourier transform given by
 \begin{equation}
-    P(k)=2\pi\int_0^\infty x^2\frac{sin(kx)}{kx}\xi(x)dx.
+    P(k)=2\pi\int_0^\infty x^2\frac{\mathrm{sin}(kx)}{kx}\xi(x)dx.
 \end{equation}
 Both of these quantites are statistical properties and are of high importance
 when comparing models to observations or simulations. Since we only have one
@@ -502,8 +505,7 @@ distribution, the likelihood function is defined by a multivariate gaussian
 \end{equation}
 From this we can see that the likelihood and the $\chi^2$ is related as
 $\mathcal{L}\propto \mathrm{exp}[-\frac{1}{2}\chi^2]$. From this it is also evident that
-minimizing the likelihood is the same as minimizing $\chi^2$ (bør ikke maksimere
-likelihood minimere chisquare?). Using bayes theorem given by equation
+maximizing the likelihood is the same as minimizing $\chi^2$. Using bayes theorem given by equation
 \ref{eq:bayes} one can see that we now have an expression for the likelihood.
 The evidence $p(d)$, which acts as a normalization factor is not important as we
 want the relative probabilites of our parameters and therefore this term can be
