@@ -2,7 +2,7 @@
 \section{History of cosmology and how we model the universe}
 Skrive noe generelle ting om kosmologi og astronomi historie her.\\
 
-The following subsections are largely based on \cite[ch. 7]{schneider2006extragalactic}, \cite[ch. 2]{Dodelson:1282338} and \cite{ryden2017introduction} unless otherwise noted.
+The following subsections are largely based on \cite[ch.7]{schneider2006extragalactic}, \cite[ch.2]{Dodelson:1282338} and \cite{ryden2017introduction} unless otherwise noted.
 \subsection{Distances in the universe and cosmological redshift}
 Distances in an expanding universe can prove hard to fathom. In our everyday
 lives we are used to measuring distances in meters and kilometers. The
@@ -93,9 +93,16 @@ large scales the universe is isotropic and homogenous. This means the universe
 looks the same in every direction for every observer at any point in space for
 sufficiently large scales. By sufficiently large scales one means
 distances roughly $100$Mpc or larger \cite[p.~12]{ryden2017introduction}. This has been proved to be a good
-assumption by surveys like the Sloan sky survey (svak formulering. Trenger ogsaa kilde). This was an important assumption
+assumption by surveys like the Sloan sky survey (svak formulering. Trenger ogsaa
+kilde). Figure \ref{fig:sdssmap} shows a sky map from a survey released by the
+SDSS project.\\
+\begin{figure}[htbp]\label{fig:sdssmap}
+    \includegraphics[scale=0.4]{orangepie.jpg}
+    \caption{The SDSS (Sloan Digital Sky survey) map of the universe. Each dot represents a galaxy and the color scale represents the local density. Downloaded from the SDSS website. Image Credit: M. Blanton and SDSS (Vet ikke hvordan jeg skal sitere denne)}
+\end{figure}
+The fact that the universe was homogeneous and isotropic was an essential assumption
 for a particular solution of the Einstein field equation. 
-This particual equation, first published by Albert Einstein in $1915$ in relation to his theory of general relativity, is given as
+This particual equation, first published by Albert Einstein in $1915$ \cite{Einstein1915} in relation to his theory of general relativity, is given as
 \begin{equation}\label{eq:einstein}
     G_{\mu\nu}=8\pi GT_{\mu\nu}.
 \end{equation}
@@ -148,9 +155,8 @@ and
 \end{equation}
 I refer the reader to \cite[ch. 2]{Dodelson:1282338} for an explanation on how to derive the Friedmann equations starting with the Friedman-Lemaître-Robertson-Walker metric.
 These differential equations relate evolution of the scale factor $a$ with the
-following properties of the universe density $\rho$, pressure $p$, cosmological constant $\Lambda$, gravitational
-constant $G$ and the speed of light $c$ (ikke glem k). For a flat universe $k=0$
-(Hva er et flatt univers). In these equations $\dot{a}$ and $\ddot{a}$ dot denotes
+following properties of the universe density $\rho$, pressure $p$ and gravitational
+constant $G$. In these equations $\dot{a}$ and $\ddot{a}$ dot denotes
 derivative and double derivative with respect to time, meaning that $a=a(t)$ is a
 function of time. \\
 
@@ -159,34 +165,51 @@ is considered the main energy contributions governing the expansion of the unive
 and lastly we have ordinary matter which is what we interact with in our everyday lives. The current estimates suggest that approximately $69\%$ of the universe consists of dark energy while the remaining $31\%$ is attributed to dark matter at around 
 $27\%$ and $4\%$ for regular matter leaving only trace contributions from other energy contributing factors such as photons ($\gamma$) and neutrinos ($\nu$).(Kanskje vaere mer spesifikk her) When modelling the universe these quantites enter into 
 what is called density parameters $\Omega_i$, where $i$ represents a certain type of energy contribution to the universe i.e dark matter or CDM. The density parameter is defined as
-\begin{equation}
+\begin{equation}\label{eq:densityparameter}
     \Omega_{i,0} = \frac{\rho_{i,0}}{\rho_{c,0}},
 \end{equation}
-where $\rho_{i,0}i$ is the density of the current energy contribution and $\rho_{c,0}$ is
+where $\rho_{i,0}$ is the density of a given energy contribution and $\rho_{c,0}$ is
 the critical density of the universe. Subscript zero indicating these quantities
-measured at present time.The critical density is the density at
+measured at present time. The critical density is the density at
 which gravity counteracts the expansion and expansion will eventually stop
 (Dette er jeg veldig usikker på om er riktig å si). The critical density at a
 given time is given as $\rho_c=\frac{3H(t)^2}{8\pi G}$. For a flat universe we have
 \begin{equation}
     \sum_i \Omega_i = 1.
 \end{equation}
-A given energy density evolves through time with the scale
-factor as
+By combining both Friedmann equations (equations \ref{eq:F1} and \ref{eq:FII}),
+one can derive a following relation for the density $\rho$
+\begin{equation}\label{eq:rhoevolution}
+    \dot{\rho}=-3\frac{\dot{a}}{a}(\rho+\frac{p}{c^2}).
+\end{equation}
+By inserting the equation of state $p=w\rho c^2$, where $w$ is a constant,
+into equation \ref{eq:rhoevolution} one will get the following differential
+equation
 \begin{equation}
+    \dot{\rho}=-3\frac{\dot{a}}{a}(1+w)\rho.
+\end{equation}
+This equation can be integrated for an arbitrary $a$ and $\rho$ to present time
+giving
+\begin{equation}\label{eq:rho_i_evolution}
     \rho_i=\rho_{i,0}a^{-3(1+w_i)},
 \end{equation}
-where $w_i$ is a constant depending on what energy density contribution one is
-considering. Summing over all energy
-density contributions and using the fact that the Hubble parameter can be
-expressed as $H=\frac{\dot{a}}{a}$, one can rewrite the first friedman equation
-as
+where subscript $i$ is again added to denote a specific energy contribution to
+the universe. The constant $w_i$ takes different values when considering the
+different energy contributions. Giving. For CDM and baryons we have $w=0$, for
+radiation $w=\frac{1}{3}$ and for the cosmological constant we have $w=-1$. By
+taking into consideration equation \ref{eq:F1} and dividing both sides by $H_0^2$,
+and recognize the critical density $\rho_{c,0}=\frac{3H_0^2}{8\pi G}$, one can
+rewrite the first Friedmann equation as
 \begin{equation}
-    H(t)=H_0\sqrt{(\Omega_{CDM,0} + \Omega_{b})a^{-3} + \Omega_{r,0}a^{-4} + \Omega_{\Lambda,0}},
+    \frac{H(t)^2}{H_0^2}=\frac{\rho}{\rho_{c,0}}.
 \end{equation}
-Where $b$ represents baryonic matter and $r$ is radiation
-(Her trengs det kanskje mer forklaring og er kanskje ikke den riktige versjonen
-av likningen.) 
+By separating the density into its different components as $\rho=\sum_i\rho_i$
+and using \ref{eq:rho_i_evolution} for the different components, one can rewrite
+the first Friedmann equation using equation \ref{eq:densityparameter} as
+\begin{equation}
+    H(t)=H_0\sqrt{(\Omega_{CDM,0} + \Omega_{b,0})a^{-3} + \Omega_{r,0}a^{-4} + \Omega_{\Lambda,0}},
+\end{equation}
+Where $b$ represents baryonic matter and $r$ represents radiation.
 
 \subsection{Growth of matter perturbations in linear perturbation theory.}
 As i have previously stated, the universe is isotropic and homogenous. This
@@ -273,6 +296,10 @@ a given cosmological model. We will lastly define the function
 \end{equation}
 to quantify the relationship between the growth of structure and the expansion
 of the universe.
+\subsection{Spherical collapse models}
+Linear perturbation theory has its limitations. In particular it will not be
+able to accurately describe the formation of dark matter halos or galaxy
+clusters. These 
 
 \subsection{Two point correlation functions and the matter power spectrum.}
 Matter in the universe is not randomly distributed. As a result of how structure in the universe evolves, galaxies for example,
@@ -286,13 +313,19 @@ over random for finding two galaxies separated by a distance $r$. The correlatio
 \end{equation}
 
 The matter power spectrum $P(k)$ provides a statistical description of the
-distribution of matter in the universe, but in fourier space. The matter power spectrum describes the amplitude of 
+distribution of matter in the universe, but in fourier space. Figure
+\ref{matterpowerspec} shows the matter power spectrum inferred from a multitude
+of cosmological surveys. The matter power spectrum describes the amplitude of 
 the density contrast on different length scales $L=\frac{2\pi}{k}$, where $k$ is
 the fourier wave number. The matter power spectrum is related to the two point
 correlation function as a fourier transform given by
 \begin{equation}
     P(k)=2\pi\int_0^\infty x^2\frac{\mathrm{sin}(kx)}{kx}\xi(x)dx.
 \end{equation}
+\begin{figure}[htbp]\label{fig:matterpowerspec}
+    \includegraphics[scale=0.7]{matterpowerspec.pdf}
+    \caption{The matter power spectrum inferred from different cosmological surveys. Image credit: "ESA and the Planck Collaboration" \cite{2020}.}
+\end{figure}
 Both of these quantites are statistical properties and are of high importance
 when comparing models to observations or simulations. Since we only have one
 universe to sample from when doing observations, when we compare with the
@@ -304,6 +337,8 @@ not look identical to anything anywhere in the universe (if it is not infinately
 large), but if the statistical properties are the same, then the models are
 correct. This makes the power spectrum and two point correlation function
 important vital tools when studying the universe.
+\subsection{Real- vs Redshiftspace}
+
 
 \section{Cosmological N-body simulations}
 Analytical approaches, such as linear perturbation theory has its limits.
@@ -421,7 +456,7 @@ makes it a preferred method of choice for astrophysical gravitational problems.
 energi hos euler. Kanskje bytte ut verlet integrasjon med leapfrog istedenfor.)
 \subsection{Particle mesh}
 Another way of simulating a box with a large volume of particles is it to apply
-what is called a Particle Mesh code. This method is more computationally
+what is called a Particle Mesh code \cite{HockneyRW1981Csup} \cite{Fazio2309855}. This method is more computationally
 effective as the number of calculations scales as $\propto N$. However most of
 the information is stored on a $3D$ grid covering the whole simulation volume.
 This will require more memory as the resolution of the grid increases. Poissons equation for gravity reads
@@ -432,10 +467,10 @@ This will require more memory as the resolution of the grid increases. Poissons 
 the force field as $\vec{F}=-\nabla\Phi$. This method is reliant on assigning a
 density field to the simulation volume of individual particles as a
 representation for $\rho$ in equation \ref{eq:poissongrav}. One popular method 
-for this is what is known as cloud in cell (CIC) (KLypin). (Det
+for this is what is known as cloud in cell. (Det
 er her jeg har lest om det, men det er ikke de som har funnet det opp. Er det
 riktig aa sitere slik da?). One wants to calculate the density $S$ at a given
-distance given by the coordinate point $(x,y,z)$ from the particle. The density at a given point is given as
+distance given by the coordinate point $(x, y, z)$ from the particle. The density at a given point is given as
 $S(x)S(y)S(z)$, where the cloud in cell scheme for assigning a value to $S$
 reads
 \begin{equation}
@@ -445,7 +480,53 @@ reads
         0, &\quad\text{otherwise},
       \end{cases}
 \end{equation}
-where $\Delta x$ is the cell size.
+where $\Delta x$ is the cell size. The density assigned to the grid is defined
+by a product of three weighting functions $W(\vec{r}_p -\vec{r}_{ijk}) =
+W(x_p-x_i)W(y_p-y_j)W(z_p-z_k)$. Where subscript $p$ denotes particle position
+and subscript $i,j,k$ denotes a given grid index. A given $W$ is given as
+\begin{equation}
+    W(x)=\int_{x_i-\Delta x/2}^{x_i-\Delta x/2} S(x_p - x^\prime)dx^\prime,
+\end{equation}
+where $m_p$ is the mass of particle $p$. We then have that the given density assigned to a given grid point for a grid
+consisting of $N$ particles as is given as
+\begin{equation}
+    \rho_{ijk}=\sum_{p=1}^Nm_pW(\vec{r}_p-\vec{r}_{ijk}).
+\end{equation}
+With the density assigned one can solve the Poisson equation for gravity given
+by equation \ref{eq:poissongrav}. This is done by using a fast fourier transform
+(FFT) on the whole grid giving
+\begin{align}
+    \nabla^2\Phi&=4\pi G\rho\\
+    -k^2 \hat{\Phi}&=4\pi G \hat{\rho},
+\end{align}
+Where $\hat{\Phi}$ and $\hat{\rho}$ denotes the fourier transform of the given
+quantities. Dividing by $k^2$ and taking the inverse transform one solves the
+equation for the gravitational potential as
+\begin{equation}
+    \Phi = \mathrm{IFFT}[-\frac{4\pi G \hat{\rho}}{k^2}].
+\end{equation}
+With the gravitational potential one can calculate the force and interpolate
+forces to their respective particle positions in the grid. The particle mesh
+method follows the same algorithm as the pairwise summation method, but differs
+in the force calculation. Summarized the force calculation of the particle mesh
+method consists of three steps:
+\begin{itemize}
+    \item Assign density to grid. \\
+    \item Solve the Poisson equation given by equation \ref{eq:poissongrav}.\\
+    \item Compute the force and apply to particles in the grid.
+\end{itemize}
+While the compuation time is significantly increased the
+particle mesh method lacks in resolution. Increasing the resolution for a
+particle mesh code means increasing the number of bins in each direction. For a
+three dimensional grid this will quickly put constraints on the computer memory.
+
+\subsection{Initial conditions}
+When setting the initial conditions for cosmological simulations, one starts at
+a high redshift. The initial distribution of the particles resembles a gaussian
+random field with the theoretical matter power spectrum $P(k,z)$ for the given
+cosmological model. Choice of timestep is also important. One has to find a
+compromise between long computation time and accuracy between closely
+interacting particles.
 
 \section{Statistics}
 \subsection{Bayes theorem}
