@@ -1,6 +1,6 @@
 import numpy as np
 import sys
-sys.path.insert(1, '/uio/hume/student-u88/haakota/Documents/summerproject/Python3CUTEbox')
+sys.path.insert(1, '/mn/stornext/u3/haakota/Documents/summerproject/Python3CUTEbox')
 import pycutebox
 import scipy
 import scipy.spatial
@@ -51,12 +51,53 @@ class TheoryModel():
         galaxy_x = galaxy_cat[:, 0]
         galaxy_y = galaxy_cat[:, 1]
         galaxy_z = galaxy_cat[:, 2]
+        
+        
+        galaxy_vx = galaxy_cat[:, 3]
+        galaxy_vy = galaxy_cat[:, 4]
         self.galaxy_vz = galaxy_cat[:, 5]
        
         # Stacking galaxy and void catalogues as 2D arrays with x, y and z positions on
         # each column
         self.galaxy_cat = np.column_stack((galaxy_x, galaxy_y, galaxy_z))
         self.void_cat   = np.column_stack((void_x, void_y, void_z))
+        self.velocity_cat = np.column_stack((galaxy_vx, galaxy_vy, self.galaxy_vz))
+
+
+    def velocity_profile(self):
+        radius_array = np.linspace(0, 200, self.N + 1)
+        velocity_profile = np.zeros(self.N + 1)
+        N_in_velocity = np.zeros(self.N + 1)
+
+        bounds = np.array([self.box_size, self.box_size, self.box_size])
+        tree = PeriodicCKDTree(bounds, self.galaxy_cat)
+        print "Calculating velocity profile"
+        for i in range(len(self.void_cat[:, 0])):
+            print i
+            current_number_of_galaxies = 0
+            current_velocity = 0
+            for j in range(1, self.N + 1):
+                neighbor_inds = tree.query_ball_point(self.void_cat[i, :], r=radius_array[j])
+                r_void = self.void_cat[i]
+                galaxies_near_point = self.galaxy_cat[neighbor_inds]
+                v_galaxy = self.velocity_cat[neighbor_inds]
+                r_vec  = r_void - galaxies_near_point
+                galaxies_near_point = len(galaxies_near_point[:,0])
+                galaxies_in_shell = galaxies_near_point - current_number_of_galaxies
+
+                radial_velocity = (v_galaxy * r_vec).sum(axis=1) / np.linalg.norm(r_vec, axis= 1)
+                radial_velocity = np.sum(radial_velocity) - current_velocity
+
+                velocity_profile[j] += radial_velocity
+                N_in_velocity[j] += galaxies_in_shell
+
+                current_velocity += radial_velocity
+                current_number_of_galaxies += galaxies_in_shell
+        v_final = (velocity_profile / np.maximum(np.ones(self.N+1), N_in_velocity))
+        fig, ax = plt.subplots()
+        ax.plot(radius_array, v_final)
+        fig.savefig("velocity_profile.pdf")
+
 
     def delta_and_sigma_vz_galaxy(self, array_files=None):
         """
@@ -230,7 +271,7 @@ class TheoryModel():
         Function return the Hubble parameter (H)
         as a function of redshift z.
         """
-        print(self.H0)
+        #print(self.H0)
         return self.H0 * np.sqrt(Omega_m * (1.0 + self.z)**3 + Omega_Lambda)
 
 
@@ -254,7 +295,7 @@ class TheoryModel():
         delta = self.delta(r_fid)
         contrast = self.contrast(r_fid)
         sigma_vz = self.sigma_vz(r_fid)
-        print r_real
+        #print r_real
         xi_vg_real = interpolate.interp1d(r_real, xi_vg_real, kind="cubic")
         delta = interpolate.interp1d(r_real, delta, kind="cubic")
         contrast = interpolate.interp1d(r_real, contrast, kind="cubic")
@@ -298,7 +339,7 @@ class TheoryModel():
         r_integrand = alpha_par * np.sqrt(1 + (1 - mu_array**2) * ((alpha_par/alpha_perp)**2 - 1))
         r_factor = np.trapz(r_integrand, mu_array)
         r_real  = r_fid * r_factor
-        print r_factor
+    
         # Since splines are stored as class variables, they should only be
         # converted once.
         
@@ -310,7 +351,7 @@ class TheoryModel():
     
         xi_vg0 = np.zeros(len(s_array))
         xi_vg2 = np.zeros(len(s_array))
-        print "Calculating theoretical model"
+        #print "Calculating theoretical model"
         if streaming:
             # Calculate equation 7 in S.Nadathur et al 2019
             aH = (1.0 / (1.0 + self.z)) * self.H_of_z_func(Omega_m, Omega_Lambda) # Hubble parameter times scale factor (a = 1 / (1 + z))
@@ -373,7 +414,7 @@ class TheoryModel():
 
         xi_vg_rsd_spline = interpolate.interp2d(mu_array, s_array, xi_vg_rsd, kind="cubic")
         
-        print "Computing multipoles"
+        #print "Computing multipoles"
         # Compute multipoles for the theory model i redshiftspace
         for index, value in enumerate(s_array):
             xi_vg0[index] = integrate.quad(lambda mu: 1.0*xi_vg_rsd_spline(mu, value)*1.0,
@@ -391,8 +432,8 @@ class TheoryModel():
 
 if __name__=="__main__":
     
-    void_file = "../MD2/zobov-void_cat.txt"
-    galaxy_file  = "../../summerproject/Haakon/MultiDarkSimulations/HaloSample2/halos_realspace_z1.txt"
+    void_file = "../MD3/zobov-void_cat.txt"
+    galaxy_file  = "../../summerproject/Haakon/MultiDarkSimulations/HaloSample3/halos_realspace_z1.txt"
     """
     model = TheoryModel(50, 2500.0, 1.0, void_file, galaxy_file, "MD2")
     model.xi_vg_real_func("MD2void_real.txt", "MD2galaxy_real.txt")
@@ -401,8 +442,10 @@ if __name__=="__main__":
 
     """
     
-    model = TheoryModel(50, 2500.0, 1.0, void_file, galaxy_file, "MD3")
-    model.xi_vg_real_func("MD2void_real.txt", "MD2galaxy_real.txt", "xi_vg_realMD2.npy")
+    model = TheoryModel(30, 2500.0, 1.0, void_file, galaxy_file, "MD2")
+    #model.xi_vg_real_func("MD2void_real.txt", "MD2galaxy_real.txt", "xi_vg_realMD2.npy")
+    model.velocity_profile()
+    """
     model.delta_and_sigma_vz_galaxy(["deltaMD2.npy", "sigma_vzMD2.npy"])
     model.contrast_galaxy("contrastMD2.npy")
 
@@ -450,3 +493,4 @@ if __name__=="__main__":
     ax.plot(r, xi2_rsd, label="Computed model")
     ax.legend()
     fig.savefig("test_xi_rsd_MD2_alpha.pdf")
+    """
