@@ -3,7 +3,7 @@
 Skrive noe generelle ting om kosmologi og astronomi historie her.\\
 
 The following subsections are largely based on \cite[ch.7]{schneider2006extragalactic}, \cite[ch.2]{Dodelson:1282338} and \cite{ryden2017introduction} unless otherwise noted.
-\subsection{Distances in the universe and cosmological redshift}
+\subsection{Distances in the universe and cosmological redshift}\label{sec:sec_distance}
 Distances in an expanding universe can prove hard to fathom. In our everyday
 lives we are used to measuring distances in meters and kilometers. The
 average distance from the earth to the sun however is approximately $1.49\cdot10^{11}$m.
@@ -162,8 +162,14 @@ function of time. \\
 
 In modern cosmology, the dominating model for describing the universe is the $\Lambda$CDM model. Its name is an abbreviation for what 
 is considered the main energy contributions governing the expansion of the universe. The cosmological constant $\Lambda$ represents dark energy, CDM is an abbrevation for cold dark matter
-and lastly we have ordinary matter which is what we interact with in our everyday lives. The current estimates suggest that approximately $69\%$ of the universe consists of dark energy while the remaining $31\%$ is attributed to dark matter at around 
-$27\%$ and $4\%$ for regular matter leaving only trace contributions from other energy contributing factors such as photons ($\gamma$) and neutrinos ($\nu$).(Kanskje vaere mer spesifikk her) When modelling the universe these quantites enter into 
+and lastly we have ordinary matter which is what we interact with in our
+everyday lives. The current estimates suggest that approximately $69\%$ of the
+universe consists of dark energy while the remaining $31\%$ is attributed to
+dark matter at around 
+$27\%$ and $4\%$ for regular matter leaving only trace contributions from other
+energy contributing factors such as photons ($\gamma$) and neutrinos ($\nu$)
+\cite{planckparameters}. When modelling the universe these quantites
+enter into 
 what is called density parameters $\Omega_i$, where $i$ represents a certain type of energy contribution to the universe i.e dark matter or CDM. The density parameter is defined as
 \begin{equation}\label{eq:densityparameter}
     \Omega_{i,0} = \frac{\rho_{i,0}}{\rho_{c,0}},
@@ -211,7 +217,7 @@ the first Friedmann equation using equation \ref{eq:densityparameter} as
 \end{equation}
 Where $b$ represents baryonic matter and $r$ represents radiation.
 
-\subsection{Growth of matter perturbations in linear perturbation theory.}
+\subsection{Growth of matter perturbations in linear perturbation theory.}\label{sec:linpert}
 As i have previously stated, the universe is isotropic and homogenous. This
 however was for sufficiently large scales at around $100$ Mpc and larger. On
 smaller scales the universe is not isotropic and homogenous. A single galaxy,
@@ -291,7 +297,7 @@ and the increasing solution will dominate. This solution, denoted as $D_+(t)$,
 is called the growth factor and determines the amplitude of structure growth as
 a function of time. Since $t\propto a$, one can then model the growth factor for
 a given cosmological model. We will lastly define the function
-\begin{equation}
+\begin{equation}\label{eq:growthfac}
     f(a) \equiv \frac{d log D_+}{d log a},
 \end{equation}
 to quantify the relationship between the growth of structure and the expansion
@@ -338,8 +344,75 @@ large), but if the statistical properties are the same, then the models are
 correct. This makes the power spectrum and two point correlation function
 important vital tools when studying the universe.
 \subsection{Real- vs Redshiftspace}
+As mentioned earlier in section \ref{sec:sec_distance}, due to the fact that the
+universe is expanding, galacies we observe in the universe on cosmological scales
+move away from us and appear redshifted. In addition galaxies also have peculiar
+velocities, which is their velocity when subtracting the hubble flow. This results in an effect that when observing galaxies
+as a function of redshift, their spatial distribution appear squashed. As most
+cosmological surveys of galaxies are done by measuring their redshift,
+understanding how this effects their spatial distribution is crucial.
+We will now denote realspace coordinates by subscript $r$ and redshiftspace
+coordinates by subscript $s$. By taking into account the peculiar velocity of
+galaxies and the hubble flow, we can express their redshift as a sum of two
+terms
+\begin{equation}\label{eq:losrs}
+    cz=H_0d_p+v_{pec}.
+\end{equation}
+Here the first term represents the hubble flow and the second term is the
+peculiar velocity along the line of sight. For most galaxies, only the redshift
+can be measured and not the proper distance. Therefore, by dividing equation
+\ref{eq:losrs} by $H_0$, it is usefull to define
+the redshift distance $s$ as
+\begin{equation}
+    s = \frac{cz}{H_0}=d_p+\frac{v_{pec}}{H_0}.
+\end{equation}
+\\
 
+The peculiar velocity of galaxies can also have a profound effect on how their
+spatial distributions appear in redshiftspace. Matter will cluster and move
+towards overdensities. This means that the velocity component of galaxies in a
+cluster will essentialy point towards the center of the galaxy cluster. This
+will give an effect that when viewing a galaxy cluster, the galaxies closest to
+us in realspace will have their peculiar velocity move away from the observer.
+From equation \ref{eq:losrs} one can see that this will give an additional
+contribution in addition to the hubble flow and the measured redshift will be
+higher. Galaxies on the opposite side of the cluster as seen by the observer
+will have their peculiar velocity point towards the observer. This will cause
+the peculiar velocity to contribute with a blueshift, and likewise the measured
+redshift will appear smaller than if one could only measure the redshift due to
+the hubble flow. This effect will cause galaxy cluster to appear squashed in
+redshiftspace. This effect will also cause the overdensity to appear much larger
+in the center of a collapsed object than in realspace. This is illustrated in
+figure \ref{fig:rsddistortion}\\
 
+\begin{figure}[htbp]\label{fig:rsddistortion}
+    \begin{tikzpicture}
+        \draw (5,0) circle (3cm) node[above] {Realspace};
+        \draw (13,0) ellipse (3cm and 1cm) node[above] {Redshiftspace};
+        \draw[line width=0.5mm][->] (5,3cm) -- (5,1.5cm);
+        \draw[line width=0.5mm][->] (5,-3cm) -- (5,-1.5cm);
+        \draw[line width=0.5mm][->] (5+1.8cm,0) -- (5+3.5cm,0);
+        \draw[line width=0.5mm][->] (5+7.8cm,0) -- (5+5.8cm,0);
+    \end{tikzpicture}
+    \caption{Figure illustrating a collapsing halo in realspace and redshiftspace. The vector pointers represent the direction of the peculiar velocity. In this illustration both circles are meant to contain the same number density of galaxies thereby giving the apparent overdensity appear much higher in redshiftspace than in realspace. The observer sitting at the bottom of the page with the line of sight direction being parallell to the plane spanned by the circle and the ellipse.}
+\end{figure}
+The effect of redshiftspace distortions causes the correalation function and thereby
+matter powerspectrum to be slightly altered when observed in redshiftspace. In
+fourier space, the overdensity recieves a correction term as
+\begin{equation}
+    \delta_s(\vec{k})=(1+\beta\mu)\delta(\vec{k})
+\end{equation}
+\cite[p.~279]{Dodelson:1282338}. Here $\mu=\vec{z}\cdot\vec{k}$ is the angle
+between the line of sight and the fourier wave vector. The factor $\beta$ can be
+seen as the growth factor $f$ introduced in equation \ref{eq:growthfac} from
+section \ref{sec:linpert}. However since the overdensity of galaxies does not
+necesarilly follow the overdensity of dark matter, in which linear perturbation
+theory is derived, it is scaled by a bias factor
+\begin{equation}
+    b=\frac{\delta_g}{\delta_{dm}},
+\end{equation}
+where subscript $g$ is for galaxies and $dm$ is for dark matter. We then have
+that $\beta=f/b$.
 \section{Cosmological N-body simulations}
 Analytical approaches, such as linear perturbation theory has its limits.
 Especially when taking into consideration small scale interactions between
