@@ -217,6 +217,52 @@ the first Friedmann equation using equation \ref{eq:densityparameter} as
 \end{equation}
 Where $b$ represents baryonic matter and $r$ represents radiation.
 
+\subsection{Einstein-de Sitter model}
+While the $\Lambda$CDM model is the leading model for describing the evolution
+of our universe, other universe models, being simpler to work with, will also
+prove beneficiary for approximating and describing multiple phenomena. One of
+these models is the Einstein-de Sitter model \cite{1932PNAS...18..213E} proposed
+by Albert Einstein and Willem de Sitter in 1932. This model contains only matter
+making $\Omega_m=1$. After learning of the expansion
+of the universe from the observations of Edwin Hubble, Einstein removed the
+cosmological constant from his equation as this was first proposed to keep the
+universe static. After the discovery that the expansion of the universe is
+accelerating \cite{Goldhaber_2009}\cite{Filippenko_1998} the cosmological
+constant was reintroduced. While this universe model is long discarded it is
+still usefull as it is easy to work with in an analytical framework and provides
+good approximations for different applications. In a universe containing only
+matter, the first Friedmann equation with $w=1$ takes the form
+\begin{equation}
+    \frac{\dot{a}^2}{a^2} = \frac{8\pi G}{3}\rho_{m,0}(a)^{-3}.
+\end{equation}
+By multiplying with $H_0^2/H_0^2$ and remembering that $\rho_{c,0}=\frac{3H_0^2}{8\pi
+G}$, one gets
+\begin{equation}
+    a\dot{a}^2=H_0^2\frac{\rho_{m,0}}{\rho_{c,0}}.
+\end{equation}
+Since we consider a flat universe conatining only matter we have
+$\frac{\rho_{m,0}}{\rho_{c,0}}=\Omega_{m,0}=1$. Taking the square root of both
+sides, we get
+\begin{equation}
+    a^{1/2}\dot{a}=H_0.
+\end{equation}
+This gives us a differential equation in which we can integrate as
+\begin{equation}
+    \int_{a_0}^a a^{1/2}\mathrm{d}a=H_0\int_{t_0}^t \mathrm{d}t,
+\end{equation}
+which gives the solution
+\begin{equation}
+    \frac{2}{3}(a^{3/2}-a_0^{3/2})=H_0(t-t_0).
+\end{equation}
+By choosing time $t=0$ at with $a=0$ and using that $a_0=1$, we get
+\begin{equation}
+    \frac{2}{3}=H_0t_0.
+\end{equation}
+By imposing this boundary condition we find that
+\begin{equation}
+    a(t)\propto(\frac{t}{t_0})^\frac{2}{3}.
+\end{equation}
+
 \subsection{Growth of matter perturbations in linear perturbation theory.}\label{sec:linpert}
 As i have previously stated, the universe is isotropic and homogenous. This
 however was for sufficiently large scales at around $100$ Mpc and larger. On
@@ -305,7 +351,8 @@ of the universe.
 \subsection{Spherical collapse models}
 Linear perturbation theory has its limitations. In particular it will not be
 able to accurately describe the formation of dark matter halos or galaxy
-clusters. These 
+clusters. The evolution of denisty contrasts of order higher than unity requires
+different techniques to model in a reasonable way.
 
 \subsection{Two point correlation functions and the matter power spectrum.}
 Matter in the universe is not randomly distributed. As a result of how structure in the universe evolves, galaxies for example,
