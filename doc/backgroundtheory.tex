@@ -231,9 +231,9 @@ accelerating \cite{Goldhaber_2009}\cite{Filippenko_1998} the cosmological
 constant was reintroduced. While this universe model is long discarded it is
 still usefull as it is easy to work with in an analytical framework and provides
 good approximations for different applications. In a universe containing only
-matter, the first Friedmann equation with $w=1$ takes the form
+matter, the first Friedmann equation with $w=0$ takes the form
 \begin{equation}
-    \frac{\dot{a}^2}{a^2} = \frac{8\pi G}{3}\rho_{m,0}(a)^{-3}.
+    \frac{\dot{a}^2}{a^2} = \frac{8\pi G}{3}\rho_{m,0}a^{-3}.
 \end{equation}
 By multiplying with $H_0^2/H_0^2$ and remembering that $\rho_{c,0}=\frac{3H_0^2}{8\pi
 G}$, one gets
@@ -260,7 +260,7 @@ By choosing time $t=0$ at with $a=0$ and using that $a_0=1$, we get
 \end{equation}
 By imposing this boundary condition we find that
 \begin{equation}
-    a(t)\propto(\frac{t}{t_0})^\frac{2}{3}.
+    a(t)=\frac{3H_0}{2}(\frac{t}{t_0})^\frac{2}{3}.
 \end{equation}
 
 \subsection{Growth of matter perturbations in linear perturbation theory.}\label{sec:linpert}
@@ -351,8 +351,68 @@ of the universe.
 \subsection{Spherical collapse models}
 Linear perturbation theory has its limitations. In particular it will not be
 able to accurately describe the formation of dark matter halos or galaxy
-clusters. The evolution of denisty contrasts of order higher than unity requires
-different techniques to model in a reasonable way.
+clusters. The evolution of density contrasts of order higher than unity requires
+different techniques to model in a reasonable way. The spherical top-hat model
+is one of the most fundamental frameworks to analytically model the non linear
+collapse of an overdensites in the universe.
+\begin{figure}\label{fig:tophat}
+    \tdplotsetmaincoords{80}{20}
+    \begin{tikzpicture}[tdplot_main_coords]
+        \coordinate (O) at (0,0,0);
+        \fill[blue!50,opacity=0.5] (1,1,0) -- (10,1,0) -- (10,10,0) -- (1,10,0) -- cycle;
+        \node [cylinder, shape border rotate=90, draw,minimum height=3cm,minimum
+        width=4cm, fill=blue!50, opacity=0.30] at (5,6,1) (A) {};
+        \draw[dashed]
+        let \p1 = ($ (A.after bottom) - (A.before bottom) $),
+            \n1 = {0.5*veclen(\x1,\y1)-\pgflinewidth},
+            \p2 = ($ (A.bottom) - (A.after bottom)!.5!(A.before bottom) $),
+            \n2 = {veclen(\x2,\y2)-\pgflinewidth}
+         in
+         (A.before bottom) arc [start angle=0, end angle=180,
+         x radius=\n1, y radius=\n2];
+
+        \draw[->] (O) --++ (1,0,0) node[below] {$x$};
+        \draw[->] (O) --++ (0,1,0) node[below] {$y$};
+        \draw[->] (O) --++ (0,0,1) node[right] {$\rho$};    
+    \end{tikzpicture}
+    \caption{A simple illustriation of the spherical top hat model.}
+\end{figure}
+The spherical top-hat model gets its name from how its density profile is
+defined. The following derivation assumes an Einstein-de Sitter universe.
+For the spherical top-hat model we have
+\begin{equation}
+    \rho(\vec{r},t) =
+    \begin{cases} 
+        \bar{\rho}(1+\delta_i), & \vert\vec{r}-\vec{r}_c\vert\leq R \\
+        \bar{\rho}, & \vert\vec{r}-\vec{r}_c\vert \textgreater R,
+     \end{cases} 
+\end{equation}
+where $\vec{r}_c$ is the center of the overdensity and $R$ is the radius.
+$\delta_i$ is a factor determining the size of a given overdensity. Figure
+\ref{fig:tophat} gives a simple graphical illustration of the model, hence why
+it has the name spherical top-hat model. For a spherical shell with the given
+density we have the mass
+\begin{equation}
+    M=\frac{4}{3}\pi R^3\bar{\rho}(1+\delta_i).
+\end{equation}
+The evolution of the radius $R$ can be modelled through Newtons second law as
+\begin{equation}
+    \frac{d^2R}{dt^2}=-\frac{GM}{R^2}.
+\end{equation}
+By multiplying both sides of this equation with $\frac{dR}{dt}$ and integrating
+one gets
+\begin{equation}\label{eq:kinpot}
+    \frac{1}{2}\frac{dR}{dt}-\frac{GM}{R}=E.
+\end{equation}
+Here it is worth noting that the left hand side of \ref{eq:kinpot} is the sum of
+the kinetic and potential energy. Therefore the integration constant $E$ can be
+interpreted as the total energy. It can be shown that this equation has the
+parametrised solution
+\begin{align}
+    R&=A(1-\mathrm{cos}\theta)\\
+    t&=B(\theta-\mathrm{sin}\theta)\\
+    A^3&=GMB^2.
+\end{align}
 
 \subsection{Two point correlation functions and the matter power spectrum.}
 Matter in the universe is not randomly distributed. As a result of how structure in the universe evolves, galaxies for example,
