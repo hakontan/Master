@@ -2,21 +2,105 @@
 \section{DisPerSE-"Discrete Persistent Structures Extractor"}
 In this work identification of the filamentary structure of the cosmic web in
 data sets is crucial. To achieve this the code
-DisPerSE is utilized.
+DisPerSE\cite{2011MNRAS.414..350S}\cite{2011MNRAS.414..384S} is utilized.
 DisPerSE is a code that was developed to identify topological features of the
 cosmic web in cosmological particle distributions. DisPerSE utilized discrete
 Morse Theory to identify the topological structures of the cosmic web in data
-sets. In this section i will give a brief overview of how DisPerSE works to
-identify the filamentary structure from a particle distribution.
+sets. In this section i will give a brief intuitive overview of how DisPerSE works to
+identify the filamentary structure from a particle distribution. For a thorough
+review i recommend the paper \cite{2011MNRAS.414..350S}, in which the following
+chapter is based on, describing the theory behind DisPerSE and the
+references therein.
 \subsection{Morse-Theory}
 To identify the features of the cosmic web from the density field of our
 particle distribution, DisPerSE relies on Morse Theory \cite{Morse}. Morse
 theory is a mathematical framework used to relate the geometrical and
-topological properties of a function.
+topological properties of a function. In our case we utilize morse theory to
+study the relation between the density field and topological features such as
+filaments, voids and walls.
 This is done by studying the gradient of a smooth function $f$. By studying the
 gradient of the said function $f$, one can analyze the topological features of
-the manifold. In order to apply Morse theory one needs a smooth function $f$
-that is twice differentiable.
+the manifold. In general, to apply Morse theory one needs a smooth scalar function $f$
+that is twice differentiable. In our case this scalar function is the density
+field of our simulation volume. In Morse theory the gradient of the function $f$
+is defined as $\nabla_xf(\vec{x})=df(\vec{x})/d\vec{x}$. This function
+specifies the direction of steepest ascent for our scalar density function. The
+points where $\nabla_xf=0$ are called critical points. These critical
+points can be classified by studying the Hessian matrix of $f$ given as
+\begin{equation}
+    \mathcal{H}_f(\vec{x})=d^2f(\vec{x})/dx_idx_j.
+\end{equation}
+The critical points are classified by studying the eigenvalues of the Hessian
+matrix. A critical point is of order $k$ when the Hessian matrix has exactly $k$
+negative eigenvalues. This way one can classify the critical points as maxima
+with $k=2$, saddle point with $k=1$ and a minima with $k=0$. This analysis also
+implies that for morse theory to be applicable, the function $f$ has to satisfy
+the condition $\mathcal{H}_f(\vec{x})\neq 0$ where $\nabla_xf=0$. From this it
+follows that any function that satisfies this condition is called a Morse
+function.\\
+ 
+It is previously stated that the gradient points in a preferred direction for any non-critical
+point. From the gradient one can therefore define integral lines between the critical
+points. An integral lines is a parametrised curve $L(t)\in\mathbb{R}^n$ that satisfies
+\begin{equation}
+    \frac{dL(t)}{dt}=\nabla_xf(\vec{x}).
+\end{equation}
+These integral lines will always have critical points as their origin and
+destination. An important property of these integral lines is that they cover
+all of $\mathbb{R}^d$, but they never intersect eachother. They can however
+share the same origin or destination. With these integral lines one can define
+ascending and descending n-manifolds. If one consider a critical point $P$ of
+order $k$ on the Morse function living in $\mathbb{R}^d$, we have an ascending manifold of
+$d-k$ dimensions. This ascending manifold is constructed by the set of points reached by
+all integral lines with origin at the critical point $P$. The descending
+manifold is a $k-$dimensional region of space defined by all integral lines with
+destination at point $P$. This leads to the definition of the Morse-complex.
+The Morse complex is simply the set of all the ascending or descending
+manifolds.\\
+\subsection{Discrete Morse-theory}
+The formality currently introduced deals with smooth continuous functions. This
+however is rarely applicable to measured data or simulations. For an example the density field
+of our simulation volume is derived from a discrete set of
+point particles. Therefore discrete
+Morse-theory\cite{FORMAN199890} is applied as to utilize Morse-theory on
+discrete data. Instead of working on smooth functions discrete Morse-theory is
+applied to what is called a simplicial complex. A simplicial complex is a space made up
+of simplices. A simplex is a generalization of
+a triangle to an arbitrary number of dimensions. For example a k-dimensional
+simplex, reffered to as k-simplex, is represented as
+\begin{itemize}
+    \item a $0$-simplex is a point
+    \item a $1$-simplex is a line segment
+    \item a $2$-simplex is a triangle
+    \item a $3$-simplex is a tetrahedron/pyramid etc.
+\end{itemize}
+A k-simplex will be denoted as $\sigma_k$ defined by the set of points
+$\sigma_k=\{p_0, \dots,p_k\}$. Similarily one can define the face of a simplex
+to be a subset of the original k-simplex. We can define the face as an
+l-simplex $\gamma_l=\{p_0,\dots,p_l\}$ with $l\leq k$. If $\gamma_l$ is a face
+of $\sigma_k$, then $\sigma_k$ is called a coface of $\gamma_l$. When $k$ and
+$l$ only differs by one, a face is called a facet and a coface is called a cofacet. These simplices make up
+what is called a simplicial complex in which a discrete Morse-function is
+defined and discrete Morse-theory is applied. A simplicial complex $K$ are made
+up of a finite set of simplices such that $\sigma_k\in K$. With this one can
+define a discrete Morse-function $f$ as a function that maps a real value
+$f(\sigma_k)$ for each simplex in the simplicial complex $K$. As for the
+Morse-function defined in. regular Morse-theory, the discrete counterpart also has
+to be differentiable and the gradient can only flow towards one preferred direction
+locally. For this to occur and a Morse-function to be defined on the simplicial
+complex it has to satisfy the following criteria
+\begin{itemize}
+    \item there exists at most one facet $\xi_{k-1}$ of $\sigma_{k}$ such
+    that $f(\sigma_k)\leq f(\xi_{k-1})$, and
+    \item there exists at most one cofacet $\chi_{k+1}$ of $\sigma_{k}$ such
+    that $f(\sigma_k)\geq f(\chi_{k+1})$.
+\end{itemize}
+This criteria states that locally a simplex has a lower value than its facet and
+a higher value than its cofacet.
+
+
+
+
 \subsection{Topological Persistence}
 
 \section{REVOLVER-REal-space VOid Locations from surVEy Reconstruction}
