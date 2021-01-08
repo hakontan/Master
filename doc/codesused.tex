@@ -2,14 +2,15 @@
 \section{DisPerSE-"Discrete Persistent Structures Extractor"}
 In this work identification of the filamentary structure of the cosmic web in
 data sets is crucial. To achieve this the code
-DisPerSE\cite{2011MNRAS.414..350S}\cite{2011MNRAS.414..384S} is utilized.
+DisPerSE\cite{2011MNRAS.414..350S}\cite{2011MNRAS.414..384S} is utilized. The
+code is publicly available at \url{http://www2.iap.fr/users/sousbie/web/html/indexd41d.html?}.
 DisPerSE is a code that was developed to identify topological features of the
 cosmic web in cosmological particle distributions. DisPerSE utilized discrete
 Morse Theory to identify the topological structures of the cosmic web in data
-sets. In this section i will give a brief intuitive overview of how DisPerSE works to
+sets. In this section i will give a brief overview of how DisPerSE works to
 identify the filamentary structure from a particle distribution. For a thorough
 review i recommend the paper \cite{2011MNRAS.414..350S}, in which the following
-chapter is based on, describing the theory behind DisPerSE and the
+chapter is based and much notation is borrowed, describing the theory behind DisPerSE and the
 references therein.
 \subsection{Morse-Theory}
 To identify the features of the cosmic web from the density field of our
@@ -96,11 +97,95 @@ complex it has to satisfy the following criteria
     that $f(\sigma_k)\geq f(\chi_{k+1})$.
 \end{itemize}
 This criteria states that locally a simplex has a lower value than its facet and
-a higher value than its cofacet.
+a higher value than its cofacet. On a discrete morse function one defines a
+gradient field. This is done by comparing a K-simplex with its facets or
+cofacets. One can couple a K-simplex with its facets or cofacet and identify a
+preferential flow direction through gradient pairs
+\begin{itemize}
+    \item If a simplex $\sigma_k$ has exactly one lower valued cofacet $\chi_{k+1}$, then
+          $\{\sigma_k,\chi_{k+1}\}$ defines a gradient pair
+    \item If a simplex $\sigma_k$ has exactly one higher valued facet $\xi_{k-1}$, then
+          $\{\xi_{k-1},\sigma_{k}\}$ defines a gradient pair.
+\end{itemize}
+Gradient pairs define gradient arrows and define the preferred flow direction in
+the discrete vector field. As for the regular Morse-theory, the discrete
+counterpart also requires an analogy to a critical point. These are called
+critical k-simplices. A k-simplex $\sigma_k$ is critical if the following
+critera are satisfied
+\begin{itemize}
+    \item there exists no facet $\xi_{k-1}$ of $\sigma_{k}$ such
+    that $f(\sigma_k)\leq f(\xi_{k-1})$, and
+    \item there exists no cofacet $\chi_{k+1}$ of $\sigma_{k}$ such
+    that $f(\sigma_k)\geq f(\chi_{k+1})$.
+\end{itemize}
+In regular morse theory the integral lines were crucial in representing the
+manifolds in which the morse complex is defined. Their discrete counterpart
+is what is called a V-path. If one considers k-simplexes $\alpha^i_k$ and
+$(k+1)$ simplexes $\beta^j_{k+1}$, where $\alpha a^{i+1}_k$ is a facet of $\beta^i_{k+1}$, a
+V-path is a strictly decreasing an alternating sequence such that
+\begin{equation}
+    \alpha^0_k, \beta^0_{k+1},\alpha^1_k,\beta^1_{k+1},\dots,\alpha^n_k,\alpha^n_{k+1}.
+\end{equation}
+Each pair ${\alpha^i_k,\beta^i_{k+1}}$ forms a gradient pair. A V-path is a set
+of all continuous gradient pairs through the simplicials complex $K$.
+With V-paths one can define discrete n-manifolds that make up the discrete
+morse-complex. A discrete n-manifold is the set of k-simplices that belongs to a
+V-path with either origin or destination at the critical simplex $\sigma_k$.
+The n-manifolds are either ascending if their origin is $\sigma_k$. Likewise,
+the n-manifolds are descending if ther destionation is $\sigma_k$. These
+manifolds make up what is called the discrete Morse-complex.
 
-
-
+\subsection{Delaunay Tesselation Field Estimator}
+In order to compute a density field from a set of point particles, in which one
+can compute the discrete Morse-complex, DisPerSE utilizes
+Delaunay-tesselation\cite{2000A&A...363L..29S}. The Delaunay Tesselation Field
+Estimator (DTFE) uses Delaunay triangulation. The Delaunay triangulation
+divides the volume containing the particles into a set of triangles in 2D or
+tetrahedrons 3D. The volume is divided such that no particle resides inside the
+circumcircle of the assigned triangles. The vertices of the triangles are made
+up of the point distribution and no particles reside inside the area or volume
+of the triangles. This triangulation captures the density of the field in such a
+way that if the triangles are small there are many particles close to eachother
+and the density is high. Likewise larger triangles are made up of a point
+distribution with a larger distance between the particles and the density is
+lower. After assigning a density to each triangle, one can use linear
+interpolation, assuming the density changes linearly between each bin, to assign
+a density to all bins in the assigned computational grid.
 
 \subsection{Topological Persistence}
+When identifying the structures of the cosmic web from a density field derived
+from a point distribution, one may
+encounter noise. Structures not supposed to be significant may be inerpreted as
+so and provide noise for later analysis. To deal with noise DisPerSE utilzies
+persistence theory \cite{persistence}. Persistence theory studies the evolution
+of what is called excursion sets. An excursion set, or a sub level set, is given as
+\begin{equation}
+    (x_1,\dots, x_n)\vert\rho(x_1,\dots, x_n)\geq\rho_0.
+\end{equation}
+This is the set of points $(x_1,\dots, x_n)$ where $\rho(x_1,\dots, x_n)$ is
+larger than some threshold value $\rho_0$. Persistence theory measures the so
+called lifetime of the excursion set. This is a measure of the absolute
+difference in value between a pair of two critical points. By cycling through
+values for $\rho_0$ one may measure the lifetime of the topological features.
+One can imagine a function of one variable $\rho(x)$ with peaks and throughs as
+mountains submerged under a water level set by $\rho_0$. This is illustrated in
+figure \ref{fig:persistence}
+When the whole function is submerged under water the excursion set is empty. As
+the water level $\rho_0$ decrease the first highest peak of the function will
+eventually become visible and a new component of the excursion set will start to
+grow. Eventually the second peak will appear and a new independent component
+will start to grow. These two components are independent of each other because,
+as seen from above the surface of the water they are still separated. These two
+components will grow untill the through separating the two peaks will become
+visible. If the persistence of the pair is lower than a given threshold the two independent components of the excursion set will now merge
+together and form a persistence pair. When two components merge one is
+destroyed. In this case the second maximum is destroyed by the minimum as is
+illustrated in figure \ref{fig:persistence}. Denne subseksjonen er uferdig
 
+
+
+\begin{figure}\label{fig:persistence}
+   \includegraphics[scale=0.6]{persistence.pdf}
+   \caption{Må lage bedre figur.}
+\end{figure}
 \section{REVOLVER-REal-space VOid Locations from surVEy Reconstruction}
