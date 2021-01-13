@@ -25,14 +25,15 @@ class TheoryModel():
     Documentation for periodic_kdtree can be found here https://github.com/patvarilly/periodic_kdtree.
     """
     
-    def __init__(self, N, box_size, z, void_cat, galaxy_cat, handle=None):
+    def __init__(self, N, box_size, z, void_cat, galaxy_cat, handle=None, min_r = 0.0, max_r = 1000.0):
         
         self.N = N # Number of iterations for creating splines
 
         # catalogue specific parameters
         self.box_size = box_size # Size of simulation box
         self.z = z # Redshift
-        
+        self.min_r = min_r # Minimum radius for void cut
+        self.max_r = max_r # Maximum radius for void cut
         
         self.h = 0.7
         self.H0 = 100 # km/s/ h Mpc
@@ -44,6 +45,7 @@ class TheoryModel():
         void_x = void_cat[:, 1]
         void_y = void_cat[:, 2]
         void_z = void_cat[:, 3]
+        void_radius = void_cat[:, 4]
 
         print "Reading galaxy catalogue"
         galaxy_cat = np.loadtxt(galaxy_cat)
@@ -60,7 +62,11 @@ class TheoryModel():
         # Stacking galaxy and void catalogues as 2D arrays with x, y and z positions on
         # each column
         self.galaxy_cat = np.column_stack((galaxy_x, galaxy_y, galaxy_z))
-        self.void_cat   = np.column_stack((void_x, void_y, void_z))
+        void_cat   = np.column_stack((void_x, void_y, void_z))
+        fig, ax = plt.subplots()
+        ax.hist(void_radius,50)
+        fig.savefig("Void_histogram" + self.handle +".pdf")
+        self.void_cat = void_cat[np.logical_and(void_radius>min_r, void_radius<max_r)] # Applying cuts to the void catalog
         self.velocity_cat = np.column_stack((galaxy_vx, galaxy_vy, self.galaxy_vz))
 
 
@@ -96,6 +102,7 @@ class TheoryModel():
         v_final = (velocity_profile / np.maximum(np.ones(self.N+1), N_in_velocity))
         fig, ax = plt.subplots()
         ax.plot(radius_array, v_final)
+        np.save("velocity_profile" + self.handle, v_final)
         fig.savefig("velocity_profile.pdf")
 
 
@@ -105,7 +112,8 @@ class TheoryModel():
         Requires xi_vg_real_func() to be run first as this gives the upper and lower bounds
         for the radius array to avoid out of bounds for splines.
         """
-        radius_array = np.linspace(0, self.r_corr[-1], self.N + 1)
+        #radius_array = np.linspace(0, self.r_corr[-1], self.N + 1)
+        radius_array = np.linspace(0, 200, self.N + 1)
         if array_files == None:
             bounds = np.array([self.box_size, self.box_size, self.box_size])
             tree = PeriodicCKDTree(bounds, self.galaxy_cat)
@@ -180,7 +188,8 @@ class TheoryModel():
         print "Splining density profile"
         self.delta = interpolate.interp1d(radius_array, delta, kind="cubic")
         self.sigma_vz = interpolate.interp1d(radius_array, sigma_vz, kind="cubic")
-        
+    
+
         return self.delta, self.sigma_vz
 
     def contrast_galaxy(self, array_file=None):
@@ -189,7 +198,8 @@ class TheoryModel():
         Requires the delta_and_sigma_vz_galaxy to be run first as this gives the density profile
         required in the integral.
         """
-        r = np.linspace(self.r_corr[0], self.r_corr[-1], self.N)
+        #r = np.linspace(self.r_corr[0], self.r_corr[-1], self.N)
+        r = np.linspace(1, 200, self.N)
         if array_file == None:
             contrast = np.zeros(len(r))
             print "calculating density contrast"
@@ -432,18 +442,18 @@ class TheoryModel():
 
 if __name__=="__main__":
     
-    void_file = "../MD3/zobov-void_cat.txt"
-    galaxy_file  = "../../summerproject/Haakon/MultiDarkSimulations/HaloSample3/halos_realspace_z1.txt"
+    void_file = "../MD2/zobov-void_cat.txt"
+    galaxy_file  = "../../summerproject/Haakon/MultiDarkSimulations/HaloSample2/halos_realspace_z1.txt"
     """
     model = TheoryModel(50, 2500.0, 1.0, void_file, galaxy_file, "MD2")
     model.xi_vg_real_func("MD2void_real.txt", "MD2galaxy_real.txt")
-    model.delta_and_sigma_vz_galaxy()
-    model.contrast_galaxy()
 
     """
     
-    model = TheoryModel(30, 2500.0, 1.0, void_file, galaxy_file, "MD2")
+    model = TheoryModel(30, 2500.0, 1.0, void_file, galaxy_file, "MD2_60_100", min_r=60.0, max_r=100.0)
     #model.xi_vg_real_func("MD2void_real.txt", "MD2galaxy_real.txt", "xi_vg_realMD2.npy")
+    model.delta_and_sigma_vz_galaxy()
+    model.contrast_galaxy()
     model.velocity_profile()
     """
     model.delta_and_sigma_vz_galaxy(["deltaMD2.npy", "sigma_vzMD2.npy"])
