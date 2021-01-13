@@ -1,7 +1,10 @@
 \chapter{Background Theory}
 \section{History of cosmology and how we model the universe}
 Skrive noe generelle ting om kosmologi og astronomi historie her.
-\subsection{Distances in the universe and cosmological redshift}
+Følgende kapittel viser grunnleggende bakgrunnsteori som tesen bygger på.\\
+
+The following subsections are largely based on \cite[ch.7]{schneider2006extragalactic}, \cite[ch.2]{Dodelson:1282338} and \cite{ryden2017introduction} unless otherwise noted.
+\subsection{Distances in the universe and cosmological redshift}\label{sec:sec_distance}
 Distances in an expanding universe can prove hard to fathom. In our everyday
 lives we are used to measuring distances in meters and kilometers. The
 average distance from the earth to the sun however is approximately $1.49\cdot10^{11}$m.
@@ -91,65 +94,177 @@ large scales the universe is isotropic and homogenous. This means the universe
 looks the same in every direction for every observer at any point in space for
 sufficiently large scales. By sufficiently large scales one means
 distances roughly $100$Mpc or larger \cite[p.~12]{ryden2017introduction}. This has been proved to be a good
-assumption by surveys like the Sloan sky survey (svak formulering. Trenger ogsaa kilde). This was an important assumption
-for a particular solution of the Einstein field equation. This equation, first published by
-Albert Einstein in $1915$ in relation to his theory of general relativity. This equation
-relates the geometry of spacetime to the distribution of matter within it.
+assumption by surveys like the Sloan sky survey (svak formulering. Trenger ogsaa
+kilde). Figure \ref{fig:sdssmap} shows a sky map from a survey released by the
+SDSS project.\\
+\begin{figure}[htbp]\label{fig:sdssmap}
+    \includegraphics[scale=0.4]{orangepie.jpg}
+    \caption{The SDSS (Sloan Digital Sky survey) map of the universe. Each dot represents a galaxy and the color scale represents the local density. Downloaded from the SDSS website. Image Credit: M. Blanton and SDSS (Vet ikke hvordan jeg skal sitere denne)}
+\end{figure}
+The fact that the universe was homogeneous and isotropic was an essential assumption
+for a particular solution of the Einstein field equation. 
+This particual equation, first published by Albert Einstein in $1915$ \cite{Einstein1915} in relation to his theory of general relativity, is given as
+\begin{equation}\label{eq:einstein}
+    G_{\mu\nu}=8\pi GT_{\mu\nu}.
+\end{equation}
+This equation relates $G_{\mu\nu}$, which is the Einstein tensor in which describes the curvature of spacetime, with the energy momentum tensor
+$T_{\mu\nu}$, which describes the energy content of the universe.
 The Friedman-Lemaître-Robertson-Walker metric, which assumes the universe is
-homogenous, isotropic and expanding provides an analytical solution to the
-Einstein equation (kanskje forklare hva en metrikk er for noe). Using this
-metric together with the Einstein field equations results in the important
-equations known as the first and second Friedman equations respectively as
+homogenous, isotropic and expanding provides an analytical solution to equation \ref{eq:einstein}.
+The metric is a tool that allows us to calculate the physical distance in a coordinate system (Dette er kanskje veldig vagt).
+For an example for the Cartesian coordinate system we have the metric 
 \begin{equation}
-    \frac{\dot{a}^2 + kc^2}{a^2} = \frac{8\pi G\rho + \Lambda c^2}{3}
+    g_{ij}=
+    \begin{bmatrix}
+        1 & 0 \\
+        0 & 1 
+    \end{bmatrix}.
+\end{equation}
+The definition of the line element $ds^2$ in this case, is given as
+\begin{equation}
+    ds^2 = \sum_{i,j=0}^1g_{ij}dq^idq^j,
+\end{equation}
+where $q=(x, y)$ is a vector representing the spatial dimensions and $i$ and $j$ represents the indices.
+This gives the familiar line element $ds^2=dx^2+dy^2$.
+For a flat universe the Friedman-Lemaître-Robertson-Walker metric for four dimensional space time takes the following form
+\begin{equation}
+    g_{\mu\nu}=
+    \begin{bmatrix}
+        1 & 0 & 0 & 0\\
+        0 & -a^2 & 0 & 0\\
+        0 & 0 & -a^2 & 0\\
+        0 & 0 & 0 & -a^2 
+    \end{bmatrix}.
+\end{equation}
+The line element is now given as 
+\begin{equation}
+    ds^2 = \sum_{\mu,\nu=0}^3g_{\mu\nu}dx^\mu dx^\nu,
+\end{equation}
+where $dx^0=dt$ and the remaining three indices are for the three spatial coordinates.
+This gives us the following line element
+\begin{equation}
+    ds^2 = dt^2 -a^2(dx^2 + dy^2 + dz^2).
+\end{equation}
+Using this metric together with the Einstein field equations results in the important
+equations known as the first and second Friedman equations respectively as
+\begin{equation}\label{eq:F1}
+    \frac{\dot{a}^2}{a^2} = \frac{8\pi G\rho}{3}
 \end{equation}
 and
-\begin{equation}
-    \frac{\ddot{a}^2}{a^2} = -\frac{4\pi G}{3}(\rho + \frac{3p}{c^2}) + \frac{\Lambda c^2}{3}.
+\begin{equation}\label{eq:FII}
+    \frac{\ddot{a}^2}{a^2} = -\frac{4\pi G}{3}(\rho + \frac{3p}{c^2}).
 \end{equation}
-(Kanskje inkludere denne utledningen fra kosmo 2 i et appendiks)
+I refer the reader to \cite[ch. 2]{Dodelson:1282338} for an explanation on how to derive the Friedmann equations starting with the Friedman-Lemaître-Robertson-Walker metric.
 These differential equations relate evolution of the scale factor $a$ with the
-following properties of the universe density $\rho$, pressure $p$, cosmological constant $\Lambda$, gravitational
-constant $G$ and the speed of light $c$ (ikke glem k). For a flat universe $k=0$
-(Hva er et flatt univers). In these equations $\dot{a}$ and $\ddot{a}$ dot denotes
+following properties of the universe density $\rho$, pressure $p$ and gravitational
+constant $G$. In these equations $\dot{a}$ and $\ddot{a}$ dot denotes
 derivative and double derivative with respect to time, meaning that $a=a(t)$ is a
 function of time. \\
 
 In modern cosmology, the dominating model for describing the universe is the $\Lambda$CDM model. Its name is an abbreviation for what 
 is considered the main energy contributions governing the expansion of the universe. The cosmological constant $\Lambda$ represents dark energy, CDM is an abbrevation for cold dark matter
-and lastly we have ordinary matter which is what we interact with in our everyday lives. The current estimates suggest that approximately $69\%$ of the universe consists of dark energy while the remaining $31\%$ (Dette er hentet fra Planck 2018) is attributed to dark matter at around 
-$27\%$ and $4\%$ for regular matter leaving only trace contributions from other energy contributing factors such as photons ($\gamma$) and neutrinos ($\nu$).(Kanskje vaere mer spesifikk her) When modelling the universe these quantites enter into 
+and lastly we have ordinary matter which is what we interact with in our
+everyday lives. The current estimates suggest that approximately $69\%$ of the
+universe consists of dark energy while the remaining $31\%$ is attributed to
+dark matter at around 
+$27\%$ and $4\%$ for regular matter leaving only trace contributions from other
+energy contributing factors such as photons ($\gamma$) and neutrinos ($\nu$)
+\cite{planckparameters}. When modelling the universe these quantites
+enter into 
 what is called density parameters $\Omega_i$, where $i$ represents a certain type of energy contribution to the universe i.e dark matter or CDM. The density parameter is defined as
-\begin{equation}
+\begin{equation}\label{eq:densityparameter}
     \Omega_{i,0} = \frac{\rho_{i,0}}{\rho_{c,0}},
 \end{equation}
-where $\rho_{i,0}i$ is the density of the current energy contribution and $\rho_{c,0}$ is
+where $\rho_{i,0}$ is the density of a given energy contribution and $\rho_{c,0}$ is
 the critical density of the universe. Subscript zero indicating these quantities
-measured at present time.The critical density is the density at
+measured at present time. The critical density is the density at
 which gravity counteracts the expansion and expansion will eventually stop
 (Dette er jeg veldig usikker på om er riktig å si). The critical density at a
 given time is given as $\rho_c=\frac{3H(t)^2}{8\pi G}$. For a flat universe we have
 \begin{equation}
     \sum_i \Omega_i = 1.
 \end{equation}
-A given energy density evolves through time with the scale
-factor as
+By combining both Friedmann equations (equations \ref{eq:F1} and \ref{eq:FII}),
+one can derive a following relation for the density $\rho$
+\begin{equation}\label{eq:rhoevolution}
+    \dot{\rho}=-3\frac{\dot{a}}{a}(\rho+\frac{p}{c^2}).
+\end{equation}
+By inserting the equation of state $p=w\rho c^2$, where $w$ is a constant,
+into equation \ref{eq:rhoevolution} one will get the following differential
+equation
 \begin{equation}
+    \dot{\rho}=-3\frac{\dot{a}}{a}(1+w)\rho.
+\end{equation}
+This equation can be integrated for an arbitrary $a$ and $\rho$ to present time
+giving
+\begin{equation}\label{eq:rho_i_evolution}
     \rho_i=\rho_{i,0}a^{-3(1+w_i)},
 \end{equation}
-where $w_i$ is a constant depending on what energy density contribution one is
-considering. Summing over all energy
-density contributions and using the fact that the Hubble parameter can be
-expressed as $H=\frac{\dot{a}}{a}$, one can rewrite the first friedman equation
-as
+where subscript $i$ is again added to denote a specific energy contribution to
+the universe. The constant $w_i$ takes different values when considering the
+different energy contributions. Giving. For CDM and baryons we have $w=0$, for
+radiation $w=\frac{1}{3}$ and for the cosmological constant we have $w=-1$. By
+taking into consideration equation \ref{eq:F1} and dividing both sides by $H_0^2$,
+and recognize the critical density $\rho_{c,0}=\frac{3H_0^2}{8\pi G}$, one can
+rewrite the first Friedmann equation as
 \begin{equation}
-    H(t)=H_0\sqrt{(\Omega_{CDM,0} + \Omega_{b})a^{-3} + \Omega_{r,0}a^{-4} + \Omega_{\Lambda,0}},
+    \frac{H(t)^2}{H_0^2}=\frac{\rho}{\rho_{c,0}}.
 \end{equation}
-Where $b$ represents baryonic matter and $r$ is radiation
-(Her trengs det kanskje mer forklaring og er kanskje ikke den riktige versjonen
-av likningen.) 
+By separating the density into its different components as $\rho=\sum_i\rho_i$
+and using \ref{eq:rho_i_evolution} for the different components, one can rewrite
+the first Friedmann equation using equation \ref{eq:densityparameter} as
+\begin{equation}
+    H(t)=H_0\sqrt{(\Omega_{CDM,0} + \Omega_{b,0})a^{-3} + \Omega_{r,0}a^{-4} + \Omega_{\Lambda,0}},
+\end{equation}
+Where $b$ represents baryonic matter and $r$ represents radiation.
 
-\subsection{Growth of matter perturbations in linear perturbation theory.}
+\subsection{Einstein-de Sitter model}
+While the $\Lambda$CDM model is the leading model for describing the evolution
+of our universe, other universe models, being simpler to work with, will also
+prove beneficiary for approximating and describing multiple phenomena. One of
+these models is the Einstein-de Sitter model \cite{1932PNAS...18..213E} proposed
+by Albert Einstein and Willem de Sitter in 1932. This model contains only matter
+making $\Omega_m=1$. After learning of the expansion
+of the universe from the observations of Edwin Hubble, Einstein removed the
+cosmological constant from his equation as this was first proposed to keep the
+universe static. After the discovery that the expansion of the universe is
+accelerating \cite{Goldhaber_2009}\cite{Filippenko_1998} the cosmological
+constant was reintroduced. While this universe model is long discarded it is
+still usefull as it is easy to work with in an analytical framework and provides
+good approximations for different applications. In a universe containing only
+matter, the first Friedmann equation with $w=0$ takes the form
+\begin{equation}
+    \frac{\dot{a}^2}{a^2} = \frac{8\pi G}{3}\rho_{m,0}a^{-3}.
+\end{equation}
+By multiplying with $H_0^2/H_0^2$ and remembering that $\rho_{c,0}=\frac{3H_0^2}{8\pi
+G}$, one gets
+\begin{equation}
+    a\dot{a}^2=H_0^2\frac{\rho_{m,0}}{\rho_{c,0}}.
+\end{equation}
+Since we consider a flat universe conatining only matter we have
+$\frac{\rho_{m,0}}{\rho_{c,0}}=\Omega_{m,0}=1$. Taking the square root of both
+sides, we get
+\begin{equation}
+    a^{1/2}\dot{a}=H_0.
+\end{equation}
+This gives us a differential equation in which we can integrate as
+\begin{equation}
+    \int_{a_0}^a a^{1/2}\mathrm{d}a=H_0\int_{t_0}^t \mathrm{d}t,
+\end{equation}
+which gives the solution
+\begin{equation}
+    \frac{2}{3}(a^{3/2}-a_0^{3/2})=H_0(t-t_0).
+\end{equation}
+By choosing time $t=0$ at with $a=0$ and using that $a_0=1$, we get
+\begin{equation}
+    \frac{2}{3}=H_0t_0.
+\end{equation}
+By imposing this boundary condition we find that
+\begin{equation}
+    a(t)=\frac{3H_0}{2}(\frac{t}{t_0})^\frac{2}{3}.
+\end{equation}
+
+\subsection{Growth of matter perturbations in linear perturbation theory.}\label{sec:linpert}
 As i have previously stated, the universe is isotropic and homogenous. This
 however was for sufficiently large scales at around $100$ Mpc and larger. On
 smaller scales the universe is not isotropic and homogenous. A single galaxy,
@@ -159,13 +274,17 @@ the Planck satellite and its predecessor CMB experiments, is measured to be
 around $\Delta T/T=10^{-5}$. This shows that at around redshift $z=1000$, we had
 relatively small fluctuations while we today observe galaxy clusters which has around
 $200$ times larger density than the average density of an equal sphere in the
-universe (SChneider side 342.). This suggests that the original density
-perturbations grow over time. To describe this evolution, one defines the relative density
+universe \cite[p.~342]{schneider2006extragalactic}. This suggests that the original density
+perturbations grow over time. The small structure deviations at early times evolve through what is known as gravitational insatbility.
+Regions with higher density will attract more material through gravity giving a flow of material towards dense regions making them even more dense.
+This makes an already irregular distribution of matter become even more irregular with time, and will evolve from the small fluctuations at time of the CMB
+to the dense sctructures we observe in our universe today.
+To describe this evolution, one defines the relative density
 contrast as
 \begin{equation}
     \delta(\vec{r}, t) \equiv \frac{\rho(\vec{r}, t) - \bar{\rho}(t)}{\bar{\rho}(t)}.
 \end{equation}
-Here $\bar{\rho}{t}$ denotes the mean matter density of the whole universe at
+Here $\bar{\rho}(t)$ denotes the mean matter density of the whole universe at
 time $t$, while $\rho(\vec{r}, t)$ denotes the local density at position
 $\vec{r}$ at time $t$.\\
 
@@ -176,7 +295,7 @@ is sufficient to describe the nature of structure growth. With the approximation
 that the universe only consists of pressureless matter, which is the case for
 cold dark matter in which is the main constituent of the matter in the universe, we
 will model the matter dsitribution as a pressureless fluid. The equations of
-motion for such a fluid is given by the equations
+motion for such a fluid is governed by the equations
 \begin{equation}\label{eq:continuuity}
     \frac{\partial \rho}{\partial t} + \nabla\cdot(\rho \vec{v})=0,
 \end{equation}
@@ -225,11 +344,76 @@ and the increasing solution will dominate. This solution, denoted as $D_+(t)$,
 is called the growth factor and determines the amplitude of structure growth as
 a function of time. Since $t\propto a$, one can then model the growth factor for
 a given cosmological model. We will lastly define the function
-\begin{equation}
+\begin{equation}\label{eq:growthfac}
     f(a) \equiv \frac{d log D_+}{d log a},
 \end{equation}
 to quantify the relationship between the growth of structure and the expansion
 of the universe.
+\subsection{Spherical collapse models}
+Linear perturbation theory has its limitations. In particular it will not be
+able to accurately describe the formation of dark matter halos or galaxy
+clusters. The evolution of density contrasts of order higher than unity requires
+different techniques to model in a reasonable way. The spherical top-hat model
+is one of the most fundamental frameworks to analytically model the non linear
+collapse of an overdensites in the universe.
+\begin{figure}\label{fig:tophat}
+    \tdplotsetmaincoords{80}{20}
+    \begin{tikzpicture}[tdplot_main_coords]
+        \coordinate (O) at (0,0,0);
+        \fill[blue!50,opacity=0.5] (1,1,0) -- (10,1,0) -- (10,10,0) -- (1,10,0) -- cycle;
+        \node [cylinder, shape border rotate=90, draw,minimum height=3cm,minimum
+        width=4cm, fill=blue!50, opacity=0.30] at (5,6,1) (A) {};
+        \draw[dashed]
+        let \p1 = ($ (A.after bottom) - (A.before bottom) $),
+            \n1 = {0.5*veclen(\x1,\y1)-\pgflinewidth},
+            \p2 = ($ (A.bottom) - (A.after bottom)!.5!(A.before bottom) $),
+            \n2 = {veclen(\x2,\y2)-\pgflinewidth}
+         in
+         (A.before bottom) arc [start angle=0, end angle=180,
+         x radius=\n1, y radius=\n2];
+
+        \draw[->] (O) --++ (1,0,0) node[below] {$x$};
+        \draw[->] (O) --++ (0,1,0) node[below] {$y$};
+        \draw[->] (O) --++ (0,0,1) node[right] {$\rho$};    
+    \end{tikzpicture}
+    \caption{A simple illustriation of the spherical top hat model.}
+\end{figure}
+The spherical top-hat model gets its name from how its density profile is
+defined. The following derivation assumes an Einstein-de Sitter universe.
+For the spherical top-hat model we have
+\begin{equation}
+    \rho(\vec{r},t) =
+    \begin{cases} 
+        \bar{\rho}(1+\delta_i), & \vert\vec{r}-\vec{r}_c\vert\leq R \\
+        \bar{\rho}, & \vert\vec{r}-\vec{r}_c\vert \textgreater R,
+     \end{cases} 
+\end{equation}
+where $\vec{r}_c$ is the center of the overdensity and $R$ is the radius.
+$\delta_i$ is a factor determining the size of a given overdensity. Figure
+\ref{fig:tophat} gives a simple graphical illustration of the model, hence why
+it has the name spherical top-hat model. For a spherical shell with the given
+density we have the mass
+\begin{equation}
+    M=\frac{4}{3}\pi R^3\bar{\rho}(1+\delta_i).
+\end{equation}
+The evolution of the radius $R$ can be modelled through Newtons second law as
+\begin{equation}
+    \frac{d^2R}{dt^2}=-\frac{GM}{R^2}.
+\end{equation}
+By multiplying both sides of this equation with $\frac{dR}{dt}$ and integrating
+one gets
+\begin{equation}\label{eq:kinpot}
+    \frac{1}{2}\frac{dR}{dt}-\frac{GM}{R}=E.
+\end{equation}
+Here it is worth noting that the left hand side of \ref{eq:kinpot} is the sum of
+the kinetic and potential energy. Therefore the integration constant $E$ can be
+interpreted as the total energy. It can be shown that this equation has the
+parametrised solution
+\begin{align}
+    R&=A(1-\mathrm{cos}\theta)\\
+    t&=B(\theta-\mathrm{sin}\theta)\\
+    A^3&=GMB^2.
+\end{align}
 
 \subsection{Two point correlation functions and the matter power spectrum.}
 Matter in the universe is not randomly distributed. As a result of how structure in the universe evolves, galaxies for example,
@@ -239,18 +423,23 @@ at point $\vec{x}$ is not independent of wether there is a galaxy at an neighbou
 of galaxies and can be described by a two point correlation function. The two point correlation function for galaxies $\xi_{g}(r)$ describes the excess probability
 over random for finding two galaxies separated by a distance $r$. The correlation is related to the density contrast as
 \begin{equation}
-    \xi(\vert\vec{r_1}-\vec{r_2}\vert)=\langle\delta(\vec{r_1})\delta(\vec{r_2})\rangle
+    \xi(\vert\vec{r_1}-\vec{r_2}\vert)=\langle\delta(\vec{r_1})\delta(\vec{r_2})\rangle.
 \end{equation}
-\\
 
 The matter power spectrum $P(k)$ provides a statistical description of the
-distribution of matter in the universe, but in fourier space. The matter power spectrum describes the amplitude of 
+distribution of matter in the universe, but in fourier space. Figure
+\ref{matterpowerspec} shows the matter power spectrum inferred from a multitude
+of cosmological surveys. The matter power spectrum describes the amplitude of 
 the density contrast on different length scales $L=\frac{2\pi}{k}$, where $k$ is
 the fourier wave number. The matter power spectrum is related to the two point
 correlation function as a fourier transform given by
 \begin{equation}
-    P(k)=2\pi\int_0^\infty x^2\frac{sin(kx)}{kx}\xi(x)dx.
+    P(k)=2\pi\int_0^\infty x^2\frac{\mathrm{sin}(kx)}{kx}\xi(x)dx.
 \end{equation}
+\begin{figure}[htbp]\label{fig:matterpowerspec}
+    \includegraphics[scale=0.7]{matterpowerspec.pdf}
+    \caption{The matter power spectrum inferred from different cosmological surveys. Image credit: "ESA and the Planck Collaboration" \cite{2020}.}
+\end{figure}
 Both of these quantites are statistical properties and are of high importance
 when comparing models to observations or simulations. Since we only have one
 universe to sample from when doing observations, when we compare with the
@@ -262,7 +451,79 @@ not look identical to anything anywhere in the universe (if it is not infinately
 large), but if the statistical properties are the same, then the models are
 correct. This makes the power spectrum and two point correlation function
 important vital tools when studying the universe.
+\subsection{Real- vs Redshiftspace}
+As mentioned earlier in section \ref{sec:sec_distance}, due to the fact that the
+universe is expanding, galacies we observe in the universe on cosmological scales
+move away from us and appear redshifted. In addition galaxies also have peculiar
+velocities, which is their velocity when subtracting the hubble flow. This results in an effect that when observing galaxies
+as a function of redshift, their spatial distribution appear squashed. As most
+cosmological surveys of galaxies are done by measuring their redshift,
+understanding how this effects their spatial distribution is crucial.
+We will now denote realspace coordinates by subscript $r$ and redshiftspace
+coordinates by subscript $s$. By taking into account the peculiar velocity of
+galaxies and the hubble flow, we can express their redshift as a sum of two
+terms
+\begin{equation}\label{eq:losrs}
+    cz=H_0d_p+v_{pec}.
+\end{equation}
+Here the first term represents the hubble flow and the second term is the
+peculiar velocity along the line of sight. For most galaxies, only the redshift
+can be measured and not the proper distance. Therefore, by dividing equation
+\ref{eq:losrs} by $H_0$, it is usefull to define
+the redshift distance $s$ as
+\begin{equation}
+    s = \frac{cz}{H_0}=d_p+\frac{v_{pec}}{H_0}.
+\end{equation}
+\\
 
+The peculiar velocity of galaxies can also have a profound effect on how their
+spatial distributions appear in redshiftspace. Matter will cluster and move
+towards overdensities. This means that the velocity component of galaxies in a
+cluster will essentialy point towards the center of the galaxy cluster. This
+will give an effect that when viewing a galaxy cluster, the galaxies closest to
+us in realspace will have their peculiar velocity move away from the observer.
+From equation \ref{eq:losrs} one can see that this will give an additional
+contribution in addition to the hubble flow and the measured redshift will be
+higher. Galaxies on the opposite side of the cluster as seen by the observer
+will have their peculiar velocity point towards the observer. This will cause
+the peculiar velocity to contribute with a blueshift, and likewise the measured
+redshift will appear smaller than if one could only measure the redshift due to
+the hubble flow. This effect will cause galaxy cluster to appear squashed in
+redshiftspace. This effect will also cause the overdensity to appear much larger
+in the center of a collapsed object than in realspace. This is illustrated in
+figure \ref{fig:rsddistortion}\\
+
+\begin{figure}[htbp]\label{fig:rsddistortion}
+    \begin{tikzpicture}
+        \draw (5,0) circle (3cm) node[above] {Realspace};
+        \draw (13,0) ellipse (3cm and 1cm) node[above] {Redshiftspace};
+        \draw[line width=0.5mm][->] (5,3cm) -- (5,1.5cm);
+        \draw[line width=0.5mm][->] (5,-3cm) -- (5,-1.5cm);
+        \draw[line width=0.5mm][->] (5+1.8cm,0) -- (5+3.5cm,0);
+        \draw[line width=0.5mm][->] (5+7.8cm,0) -- (5+5.8cm,0);
+    \end{tikzpicture}
+    \caption{Figure illustrating a collapsing halo in realspace and redshiftspace. The vector pointers represent the direction of the peculiar velocity. In this illustration both circles are meant to contain the same number density of galaxies thereby giving the apparent overdensity appear much higher in redshiftspace than in realspace. The observer sitting at the bottom of the page with the line of sight direction being parallell to the plane spanned by the circle and the ellipse.}
+\end{figure}
+The effect of redshiftspace distortions causes the correalation function and thereby
+matter powerspectrum to be slightly altered when observed in redshiftspace. In
+fourier space, the overdensity recieves a correction term as
+\begin{equation}
+    \delta_s(\vec{k})=(1+\beta\mu)\delta(\vec{k})
+\end{equation}
+\cite[p.~279]{Dodelson:1282338}. Here $\mu=\vec{z}\cdot\vec{k}$ is the angle
+between the line of sight and the fourier wave vector. The factor $\beta$ can be
+seen as the growth factor $f$ introduced in equation \ref{eq:growthfac} from
+section \ref{sec:linpert}. However since the overdensity of galaxies does not
+necesarilly follow the overdensity of dark matter, in which linear perturbation
+theory is derived, it is scaled by a bias factor
+\begin{equation}\label{eq:bias}
+    b=\frac{\delta_g}{\delta_{dm}},
+\end{equation}
+where subscript $g$ is for galaxies and $dm$ is for dark matter. We then have
+that
+\begin{equation}\label{eq:beta}
+    \beta=f/b.
+\end{equation} 
 \section{Cosmological N-body simulations}
 Analytical approaches, such as linear perturbation theory has its limits.
 Especially when taking into consideration small scale interactions between
@@ -379,7 +640,7 @@ makes it a preferred method of choice for astrophysical gravitational problems.
 energi hos euler. Kanskje bytte ut verlet integrasjon med leapfrog istedenfor.)
 \subsection{Particle mesh}
 Another way of simulating a box with a large volume of particles is it to apply
-what is called a Particle Mesh code. This method is more computationally
+what is called a Particle Mesh code \cite{HockneyRW1981Csup} \cite{Fazio2309855}. This method is more computationally
 effective as the number of calculations scales as $\propto N$. However most of
 the information is stored on a $3D$ grid covering the whole simulation volume.
 This will require more memory as the resolution of the grid increases. Poissons equation for gravity reads
@@ -390,10 +651,10 @@ This will require more memory as the resolution of the grid increases. Poissons 
 the force field as $\vec{F}=-\nabla\Phi$. This method is reliant on assigning a
 density field to the simulation volume of individual particles as a
 representation for $\rho$ in equation \ref{eq:poissongrav}. One popular method 
-for this is what is known as cloud in cell (CIC) (KLypin). (Det
+for this is what is known as cloud in cell. (Det
 er her jeg har lest om det, men det er ikke de som har funnet det opp. Er det
 riktig aa sitere slik da?). One wants to calculate the density $S$ at a given
-distance given by the coordinate point $(x,y,z)$ from the particle. The density at a given point is given as
+distance given by the coordinate point $(x, y, z)$ from the particle. The density at a given point is given as
 $S(x)S(y)S(z)$, where the cloud in cell scheme for assigning a value to $S$
 reads
 \begin{equation}
@@ -403,7 +664,53 @@ reads
         0, &\quad\text{otherwise},
       \end{cases}
 \end{equation}
-where $\Delta x$ is the cell size.
+where $\Delta x$ is the cell size. The density assigned to the grid is defined
+by a product of three weighting functions $W(\vec{r}_p -\vec{r}_{ijk}) =
+W(x_p-x_i)W(y_p-y_j)W(z_p-z_k)$. Where subscript $p$ denotes particle position
+and subscript $i,j,k$ denotes a given grid index. A given $W$ is given as
+\begin{equation}
+    W(x)=\int_{x_i-\Delta x/2}^{x_i-\Delta x/2} S(x_p - x^\prime)dx^\prime,
+\end{equation}
+where $m_p$ is the mass of particle $p$. We then have that the given density assigned to a given grid point for a grid
+consisting of $N$ particles as is given as
+\begin{equation}
+    \rho_{ijk}=\sum_{p=1}^Nm_pW(\vec{r}_p-\vec{r}_{ijk}).
+\end{equation}
+With the density assigned one can solve the Poisson equation for gravity given
+by equation \ref{eq:poissongrav}. This is done by using a fast fourier transform
+(FFT) on the whole grid giving
+\begin{align}
+    \nabla^2\Phi&=4\pi G\rho\\
+    -k^2 \hat{\Phi}&=4\pi G \hat{\rho},
+\end{align}
+Where $\hat{\Phi}$ and $\hat{\rho}$ denotes the fourier transform of the given
+quantities. Dividing by $k^2$ and taking the inverse transform one solves the
+equation for the gravitational potential as
+\begin{equation}
+    \Phi = \mathrm{IFFT}[-\frac{4\pi G \hat{\rho}}{k^2}].
+\end{equation}
+With the gravitational potential one can calculate the force and interpolate
+forces to their respective particle positions in the grid. The particle mesh
+method follows the same algorithm as the pairwise summation method, but differs
+in the force calculation. Summarized the force calculation of the particle mesh
+method consists of three steps:
+\begin{itemize}
+    \item Assign density to grid. \\
+    \item Solve the Poisson equation given by equation \ref{eq:poissongrav}.\\
+    \item Compute the force and apply to particles in the grid.
+\end{itemize}
+While the compuation time is significantly increased the
+particle mesh method lacks in resolution. Increasing the resolution for a
+particle mesh code means increasing the number of bins in each direction. For a
+three dimensional grid this will quickly put constraints on the computer memory.
+
+\subsection{Initial conditions}
+When setting the initial conditions for cosmological simulations, one starts at
+a high redshift. The initial distribution of the particles resembles a gaussian
+random field with the theoretical matter power spectrum $P(k,z)$ for the given
+cosmological model. Choice of timestep is also important. One has to find a
+compromise between long computation time and accuracy between closely
+interacting particles.
 
 \section{Statistics}
 \subsection{Bayes theorem}
@@ -463,8 +770,7 @@ distribution, the likelihood function is defined by a multivariate gaussian
 \end{equation}
 From this we can see that the likelihood and the $\chi^2$ is related as
 $\mathcal{L}\propto \mathrm{exp}[-\frac{1}{2}\chi^2]$. From this it is also evident that
-minimizing the likelihood is the same as minimizing $\chi^2$ (bør ikke maksimere
-likelihood minimere chisquare?). Using bayes theorem given by equation
+maximizing the likelihood is the same as minimizing $\chi^2$. Using bayes theorem given by equation
 \ref{eq:bayes} one can see that we now have an expression for the likelihood.
 The evidence $p(d)$, which acts as a normalization factor is not important as we
 want the relative probabilites of our parameters and therefore this term can be
@@ -497,6 +803,42 @@ mathematically as
 There is however a problem in that the function we want to calculate
 $P(\theta\vert d)$ is a distribution that is unknown to us.(sjekk opp dette). We
 know how to calculate it, but we cannot draw from it. Therefore one introduces a
-proposal distribution $q(\theta)$. This is a known function that one can easily
-evualuate and pick samples from.
-
+proposal distribution $Q(\theta)$. This is a known function that one can easily
+evualuate and pick samples from. The proposal distribution can be any function,
+but it is usually a gaussian or any other function enclosing the parameter space
+of the target function. The target function is the function one wants to
+represent, but it may be compuationally ineffective to use a brute force grid
+approach as many models contains a multitude of parameters. In our case the
+density distrubtion is the likelihood or the posterior distribution. One of the
+most popular algorithms for Monte Carlo Markov chain is the Metropolis hastings
+algorithm. The basic idea behind the Metropolis hastings algorithm is to draw a
+point $\theta^*$ from the proposal distribution $Q(\theta)$ based on the
+previous draw and and compare an acceptance criterion with a probability which
+can be drawn from a uniform distribution. The acceptance criterion in
+Metropolis-Hastings is given by
+\begin{equation}\label{eq:acceptance}
+    \alpha = min(1, \frac{P(\theta^*)Q(\theta^*\vert \theta)}{P(\theta)Q(\theta\vert\theta^*)}),
+\end{equation}
+where $Q(\theta^*\vert\theta)$ represents the proposal distribution for a new
+pick of parameters $\theta^*$ based on previous parameters $\theta$ and $P$ is
+the target density distribution. After
+drawing an initial value $\theta_0$ from the proposal distribution $Q$, the
+Metropolis Hastings algorithm is a repeatable sequence of the following
+\begin{itemize}
+    \item Sample $\theta^*$ from $Q(\theta^*\vert\theta)$ \\
+    \item Sample a number $u$ from the normal distribution \\
+    \item if $u < \alpha$, where is given by $\alpha$ given by equation \ref{eq:acceptance}: \\
+          \indent accept move and sample $\theta^*$\\
+    \item else:\\
+          \indent reject move and sample previous point $\theta$ instead.\\
+    \item Repeat untill you have a sufficient amount of samples to represent the
+    target distribution.
+\end{itemize}
+The idea with the acceptance criterion is that the algorithm will eventually
+converge toward the peak of the target density distribution. If one just
+accepted the next step without comparing to a random pick from the normal
+distribution, the algorithm would just converge to the closest peak. By
+comparing the acceptance criterion to a pick from the normal distribution, one
+would also in some cases accept picks with a less probable state. this makes the
+algorithm map the whole distribution, but it will quickly drift away from
+spending too much time where the target density distribution is negligible. 

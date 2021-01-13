@@ -1,0 +1,141 @@
+\chapter{Method}
+\section{Radial velocity components in linear theory}
+One of the goals of this project is to test the viability of using the assumptions
+from linear theory and study wether it is a good physical approximation for
+studying the physics of voids and filaments. The radial velocity component of
+halos in filaments and voids is an analytical tool that is useful for comparing
+with data from simulation for testing wether linear theory can be used to
+approximate the physical behaviour of halos and galaxies observed in these objects.
+\subsection{Radial velocity component for filaments}
+When calculating the radial velocity component of filaments, the average filament is
+approximated to be a cylindrical object. The radial component is the component of
+the velocity vector $\vec{v}$ that points perpendicular to the longitudinal axis
+$L$. This is illustrated in figure \ref{fig:filamentvr}. For this analysis we
+will assume that the other velocity components are negligible and that the
+radial component is the significant component.
+\begin{figure}\label{fig:filamentvr}
+    \begin{tikzpicture}
+        \draw[->] (-4,0,0) -- (4,0,0) node[below right] {$L$};
+        \draw[->] (0,1,0) -- (0,0.5,0) node[below right] {$v_r$};
+        \draw[->] (0,-1,0) -- (0,-0.5,0) node[below right] {$v_r$};
+        \node (A) [draw, cylinder, shape aspect=1.8, minimum height=50mm, minimum width=20mm] {};
+    \end{tikzpicture}
+    \caption{Illustration of a cylindrical filament with longitudinal axis $L$ and radial velocity component $v_r$.}
+\end{figure}
+in linear theory can be written as
+\begin{equation}\label{eq:lincont}
+    \frac{d\delta}{dt}+\frac{1}{a}\nabla\cdot\vec{v}=0.
+\end{equation}
+ The continuity equation In linear theory one can write
+ $d\delta/dt=Hf\delta$ \cite[p.~347]{schneider2006extragalactic}, where $f$ is the growth factor
+defined in equation \ref{eq:growthfac}. Substituing this into equation
+\ref{eq:lincont} one will get
+\begin{equation}\label{eq:templineq}
+    \nabla\cdot\vec{v}=-Hfa\delta.
+\end{equation}
+Assuming cylindrical coordinates we can replace the
+divergence
+\begin{equation}
+    \nabla\cdot\vec{v}=\frac{1}{r}\frac{\partial}{\partial r}(rv_r)+\frac{1}{r}\frac{\partial v_\phi}{\partial \phi} +\frac{\partial v_L}{\partial L}.
+\end{equation}
+Assuming that the radial component $v_r$ gives the significant contribution and
+the two other are negligible, by inserting into equation \ref{eq:templineq} on
+will get
+\begin{equation}
+    \frac{1}{r}\frac{\partial}{\partial r}(rv_r)=-Hfa\delta.
+\end{equation}
+Multiplying both sides by $r$ and integrating one will be left with
+\begin{equation}
+    v_r=-\frac{1}{r}Hfa\int_0^r\delta(x) x dx.
+\end{equation}
+By defining the average mass density contrast for filaments $\Delta_f(r)$
+as
+\begin{equation}\label{eq:contrastfil}
+    \Delta_f(r)=\frac{2}{r^2}\int_0^r\delta(x) x dx,
+\end{equation}
+one can write the radial velocity component for a halo in a filament as
+\begin{equation}\label{vrfilament}
+    v_r(r) = -\frac{1}{2}Hfar\Delta_f(r).
+\end{equation}
+\subsection{Radial velocity component for voids}
+The radial velocity component for voids is similar to the one for filaments
+except that for voids one assumes a spherical coordinate system. This assumption
+is based on the notion that the average void should have a spherical shape with,
+on average, no prefferred direction for overdensities on the rim and
+thereby having a spherical density profile. Since objects cluster towards larger
+densities, approximating the velocity of halos and galaxies around
+voids to be dominated by the radial component, moving straight away from the
+underdensity in the center of the void one can argue that the radial velocity
+should be the dominating component. This is illustrated in figure \ref{fig:filamentvr}.
+\begin{figure}\label{fig:filamentvr}
+    \begin{tikzpicture}
+        \draw[->] (0,0.5,0) -- (0,1,0) node[below right] {$v_r$};
+        \draw[->] (0,-0.5,0) -- (0,-1,0) node[below right] {$v_r$};
+        \draw[->] (0,0.5,0) -- (0,1,0) node[below right] {$v_r$};
+        \draw[->] (2.5,0,0) -- (3,0,0) node[below right] {$v_r$};
+        \draw[->] (-2.5,0,0) -- (-3,0,0) node[below right] {$v_r$};
+        \draw[->] (0,2.5,0) -- (0,3,0) node[below right] {$v_r$};
+        \draw[->] (0,-2.5,0) -- (0,-3,0) node[below right] {$v_r$};
+        \draw (0,0) circle (3cm);
+        \draw (0,0) ellipse (3cm and 1cm);
+    \end{tikzpicture}
+    \caption{Illustration of a spherical void with radial velocity pointing outwards from the center of the void.}
+\end{figure}
+The derivation for the radial velocity component is the same for voids as for
+filaments up until equation \ref{eq:templineq}. The difference for voids is that
+the divergence now has to be calculated in spherical coordinates given by
+\begin{equation}
+    \nabla\cdot \vec{v}=\frac{1}{r^2}\frac{\partial}{\partial r}(r^2v_r)
+                       +\frac{1}{r\mathrm{sin}\theta}\frac{\partial}{\partial r}(\mathrm{sin}\theta v_\theta)
+                       +\frac{1}{r\mathrm{sin}\theta}\frac{\partial}{\partial r}(\phi v_\phi).
+\end{equation}
+As for filaments only the radial component is assumed to be non-negligible
+giving
+\begin{equation}
+    \frac{1}{r^2}\frac{\partial(r^2v_r)}{\partial r}=-Hfa\delta.
+\end{equation}
+Multiplying by $r^2$ and integrating one will get
+\begin{equation}
+    v_r = -\frac{1}{r^2}Hfa\int_0^r x^2\delta(x)dx.
+\end{equation}
+As for filaments a average mass density contrast for voids is defined as
+\begin{equation}\label{eq:contrastvoid}
+    \Delta_v(r)=\frac{3}{r^3}\int_0^r x^2\delta(x)dx,
+\end{equation}
+which will give an expression for the radial velocity for voids
+\begin{equation}\label{eq:vrvoid}
+    v_r(r)=-\frac{1}{3}Hfar\Delta_v(r).
+\end{equation}
+\section{Void Analysis}
+\subsection{Density profile}
+After running the void finding algorithm from REVOLVER on our dataset we have a list of $x$, $y$
+and $z$ coordinates for every void center. With a catalogue of void centers one
+has to compare their position to the galaxy catalogue in which they are found to
+calculate the average density profile as a function of distance from the void
+center. Using a periodic kd-tree module \footnote{The periodic kd-tree code
+applied for this analysis is found at at \url{https://github.com/patvarilly/periodic_kdtree}} to search for
+the nearest halos of the void centers with a gradually increasing radius one can count the halos in
+the catalogue close to a given void center. For every void a search for
+neghbouring halo particles is conducted with a gradually increasing radius. For
+a linearly spaced radius array $\vec{r}=\{r0,\dots,r_{n}\}$ using an iterative
+approach every galaxy in a sphere with radius $r_{i}$, where
+$i\in\mathbb{N}\bigcap [r_0,r_{n}]$ denotes the
+number of iterations, is counted. The total number of halos is stored for
+every iteration. For the first iteration the number of halos in a sphere around the void
+center is calculated and stored. The density for this sphere is then $n_i/V_i$,
+where $n_i$ is the number of halos inside the sphere and $V_i=4\pi r_{i}^3/3$. For
+the next iteration the number of halos inside a sphere with radius $r_{i+1}$ is
+counted. Alot of the halos inside this new sphere overlaps with the previous
+sphere. Therefore the number of halos in the previous step were stored and then
+subtracted from the number of galaxies in the new sphere leaving only the number
+of halos counted in the spherical shell that does not overlap between the two
+spheres. The volume of this spherical shell is $V_{i+1}=4\pi(r_{i+1}^3-r_i^3)/3$. The
+number density in the shell defined by subtracting the previous sphere from the
+new sphere is the number of galaxies in the new sphere subtracted by the number
+of galaxies in the previous sphere divided by the volume of the sperical shell.
+The total number of galaxies in the new sphere is stored and this process is
+repeat for all iterations defined by the radius vector $\vec{r}$. This process
+will give the density profile as a function of radius for a given void. By
+adding the density profiles for all voids and diving by the number of voids one
+will get an average density profile for the whole dataset.
+
