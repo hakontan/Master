@@ -152,7 +152,7 @@ lower. After assigning a density to each triangle, one can use linear
 interpolation, assuming the density changes linearly between each bin, to assign
 a density to all bins in the assigned computational grid.
 
-\subsection{Topological Persistence}
+\subsection{Topological Persistence}\label{sec:persistence}
 When identifying the structures of the cosmic web from a density field derived
 from a point distribution, one may
 encounter noise. Structures not supposed to be significant may be inerpreted as
@@ -179,9 +179,27 @@ as seen from above the surface of the water they are still separated. These two
 components will grow untill the through separating the two peaks will become
 visible. If the persistence of the pair is lower than a given threshold the two independent components of the excursion set will now merge
 together and form a persistence pair. When two components merge one is
-destroyed. In this case the second maximum is destroyed by the minimum as is
-illustrated in figure \ref{fig:persistence}. Denne subseksjonen er uferdig
+destroyed. In this case the lowest maximum is destroyed by the minimum as is
+illustrated in figure \ref{fig:persistence}.\\
 
+DisPerSE cancels noise in the dataset by computing the persistance pairs
+in the discrete morse complex. Given a persistence pair composed of two
+simplicial complexes $q_k=\{\sigma_k,\sigma_{k+1}\}$ on the discrete morse
+function $f$, a persistence ratio $r$ is given as
+\begin{equation}
+    r(q_k)=\frac{f(\sigma_{k+1})}{f(\sigma_k)}.
+\end{equation}
+This ratio is used for determining the statiscical significance of persistance
+pairs. The significance given in "number of sigmas" reads 
+\begin{equation}
+    S(q_k)=\mathrm{Erf}^{-1}(\frac{P_k(r(q_k))+1}{2}),
+\end{equation}
+where Erf is the error function and $P_k(r(q_k))$ is the cumulative probability
+that a persistence pair with persistence ratio $r\geq r_0$ exists in the
+dataset. The code takes a $\sigma$ input for specifying a threshold for cutting
+persistence pairs. The argument specifies the persistance threshold in number of
+sigmas and any persistance pair with probability lower than the given sigma
+threshold will be cancelled.
 
 
 \begin{figure}\label{fig:persistence}
@@ -189,3 +207,80 @@ illustrated in figure \ref{fig:persistence}. Denne subseksjonen er uferdig
    \caption{Må lage bedre figur.}
 \end{figure}
 \section{REVOLVER-REal-space VOid Locations from surVEy Reconstruction}
+For much of the void analysis conducted in this thesis the code
+REVOLVER-REal-space VOid Locations from surVEy Reconstruction is utilized. This
+code is publicly available on \url{https://github.com/seshnadathur/Revolver}.
+In the scope of this project the code provides two important utilites for the
+analysis. It provides code for finding voids in a galaxy or halo catalogue and
+the ability to reconstruct realspace positions for redshiftspace positions.
+\subsection{ZOBOV-ZOnes BOrdering on Voidness}
+The void finding method provided by REVOLVER utilized in this project is based
+on the ZOBOV-ZOnes BOrdering on Voidness algorithm . The ZOBOV algorithm was
+first presented in \cite{Neyrinck_2008}, in which this subsection is based on. In
+order to assign a density to the grid from the point particle distribution ZOBOV
+takes use of Voronoi-tesselation. Voronoi tesselation divides the space into
+individual cells where each cell belongs to a single particle from the point
+distribution. Each cell is divided so that a cell around particle $i$ is the
+points in space closer to that particle than any other particle. One can imagine
+individual bubbles at each particle in the distribution expanding at at an equal
+rate. Where these bubbles collide defines the edges of each voronoi cell. The
+density of each cell is then $\rho_i=1/V_i$, where index $i$ represents the
+density and volume at each cell respectively.\\
+
+After density has been assigned to
+the grid through Voronoi-tesselation the particles are divied into zones. The
+zones are divided around each density minimum. The center of each zone is a
+voronoi cell with a density lower than all of its neighbours. These centers are
+found by tracing each particles neighbours until one reaches such a particle with
+density lower than all its neighbours. A zone is defined as the set of particles
+which density flows downwards towards the minimum. Due to noise present in the
+dataset, multiple zones may make up one void. Therefore some of them may need to
+be joined together. The way zones are joined is considering, for a 2D density
+field and imagining the density function as a scalar function representing a
+landscape, individual zones and imagine filling them with water. For each zone
+the water level is set to the density at the core of each zone. Gradually
+raising the water level other zones will get filled. The process stops when a
+zone with a lower core density gets filled, or if the current zone is the one
+with the lowest density, when the whole field is filled with water. The water
+level in which the water flows into a depper zone is recorded as $\rho(z)$, where $z$ denotes i given zone. This will lead to
+a very large void (the zone with lowest density at the center), and many
+subvoids. Now one has to define the edges of the voids to determine which zones
+should be counted as voids.
+\\\indent
+One method is to determine the statistical significance of voids. The
+probability of wether a zone should be considered as real is determined by the
+ratio of the density contrast of a zone with the minimum density of the zone. By
+comparing this to a poisson particle distribution one can get the estimate for a
+likelihood function $P$ which determines the probability that a void with a
+given density contrast could arise from poisson noise. One can then choose to
+cut all voids exceeding a given significance level from the dataset.
+\subsection{Redshiftspace reconstruction}
+Due to all observational data being measured in redshiftspace, in order to study
+the realspace positions of observed quantities one has to apply reconstruction. REVOLVER contains a numerical implementation of
+the algorithm described in \cite{Nadathur_2018} in which describes the details
+of REVOLVER reconstructs realspace positions from redshiftspace. I will give a
+short recap of this method here.\\\indent
+The algorithm of reconstruction is derived in the framework of Lagrangian
+perturbation theory. In this framework the eularian position $\vec{x}(t)$ is
+given as
+\begin{equation}
+    \vec{x}(t)=\vec{q}+\vec{\Psi}(\vec{q},t),
+\end{equation}
+where $\vec{q}$ is the initial Lagrangian position and $\vec{\Psi}(t)$ is the
+displacement field. The eularian position separates itself from the lagrangian
+position in the sense that the eularian position is a specific point in space
+while the lagrangian position is the position of a parcel where the observer
+follows an individual parcel with the velocity field through space and time.
+To first order, the displacement field $\Psi$ can be modelled together with the
+overdensity as $\nabla_q\Psi^{(1)}{\vec{q},t}=-\delta{\vec{x,t}}$
+The displacement field $\vec{\Psi}(\vec{q},t)$ can be modelled together with the
+density field as
+\begin{equation}
+    \nabla\cdot\vec{\Psi}+\beta\nabla\cdot(\vec{\Psi}\cdot\hat{r})\hat{r}=-\frac{\delta_g}{b}
+\end{equation}
+\cite{recondisplace}, where $\beta$ and the bias $b$ is defined in equations
+\ref{eq:beta} and \ref{eq:bias}. By assuming that $\vec{\Psi}$, is irrotational
+meaning $\nabla\times\vec{\Psi}=0$, using a Helmholtz decomposition one can
+write $\Psi=\nabla\phi$ and
+$\beta\nabla\cdot(\vec{\Psi}\cdot\hat{r})\hat{r}\approx\nabla\gamma$.
+Uferdig, må se nærmere på utledning
