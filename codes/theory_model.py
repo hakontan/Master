@@ -65,7 +65,7 @@ class TheoryModel():
         void_cat   = np.column_stack((void_x, void_y, void_z))
         fig, ax = plt.subplots()
         ax.hist(void_radius,50)
-        fig.savefig("Void_histogram" + self.handle +".pdf")
+        fig.savefig("figures/histograms/void_histogram" + self.handle +".pdf")
         self.void_cat = void_cat[np.logical_and(void_radius>min_r, void_radius<max_r)] # Applying cuts to the void catalog
         self.velocity_cat = np.column_stack((galaxy_vx, galaxy_vy, self.galaxy_vz))
 
@@ -94,16 +94,19 @@ class TheoryModel():
                 radial_velocity = (v_galaxy * r_vec).sum(axis=1) / np.linalg.norm(r_vec, axis= 1)
                 radial_velocity = np.sum(radial_velocity) - current_velocity
 
-                velocity_profile[j] += radial_velocity
+                velocity_profile[j] += radial_velocity / np.maximum(1.0, galaxies_in_shell)
                 N_in_velocity[j] += galaxies_in_shell
 
                 current_velocity += radial_velocity
                 current_number_of_galaxies += galaxies_in_shell
-        v_final = (velocity_profile / np.maximum(np.ones(self.N+1), N_in_velocity))
+            #print velocity_profile / np.maximum(np.ones(self.N+1), N_in_velocity)
+        v_final = (velocity_profile / len(self.void_cat[:, 0]))#/ np.maximum(np.ones(self.N+1), N_in_velocity))
         fig, ax = plt.subplots()
         ax.plot(radius_array, v_final)
-        np.save("velocity_profile" + self.handle, v_final)
-        fig.savefig("velocity_profile.pdf")
+        ax.set_xlabel("radius [Mpc/h]")
+        ax.set_xlabel(r"$v_r(r)$ km/s")
+        np.save("datafiles/velocity_profiles/velocity_profile" + self.handle, v_final)
+        fig.savefig("figures/velocity_profiles/velocity_profileMD2_all.pdf")
 
 
     def delta_and_sigma_vz_galaxy(self, array_files=None):
@@ -178,8 +181,8 @@ class TheoryModel():
             fig, ax = plt.subplots()
             ax.plot(radius_array, sigma_vz)
             fig.savefig("sigmavz_test.png")
-            np.save("delta" + self.handle, delta)
-            np.save("sigma_vz" + self.handle, sigma_vz)
+            np.save("datafiles/density_profiles/delta" + self.handle, delta)
+            np.save("datafiles/velocity_profiles/sigma_vz" + self.handle, sigma_vz)
         else:
             delta = np.load(array_files[0])
             sigma_vz = np.load(array_files[1])
@@ -217,7 +220,7 @@ class TheoryModel():
             fig, ax = plt.subplots()
             ax.plot(r, contrast)
             fig.savefig("contrast_test.png")
-            np.save("contrast" + self.handle, contrast)
+            np.save("datafiles/density_profiles/contrast" + self.handle, contrast)
         else:
             contrast = np.load(array_file)
         self.contrast = interpolate.interp1d(r, contrast, kind="cubic")
@@ -450,7 +453,7 @@ if __name__=="__main__":
 
     """
     
-    model = TheoryModel(30, 2500.0, 1.0, void_file, galaxy_file, "MD2_60_100", min_r=60.0, max_r=100.0)
+    model = TheoryModel(30, 2500.0, 1.0, void_file, galaxy_file, "MD2_all", min_r=0.0, max_r=1000.0)
     #model.xi_vg_real_func("MD2void_real.txt", "MD2galaxy_real.txt", "xi_vg_realMD2.npy")
     model.delta_and_sigma_vz_galaxy()
     model.contrast_galaxy()
