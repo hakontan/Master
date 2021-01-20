@@ -303,7 +303,7 @@ motion for such a fluid is governed by the equations
     \frac{\partial \vec{v}}{\partial t} + (\vec{v}\cdot\nabla)\vec{v}=-\frac{\nabla P}{\rho}-\nabla \Phi,
 \end{equation}
 \begin{equation}\label{eq:poisson}
-    \nabla ^2\Phi=4\pi G\rho.
+    \nabla ^2\Phi=4\pi G\rho -\Lambda.
 \end{equation}
 Here $\vec{v}=\vec{v}(\vec{r},t)$ is the velocity field of the fluid and $\Phi=\Phi(\vec{r},t)$
 is the newtonian gravitational potential. $P$ is the pressure of the fluid. Equation \ref{eq:continuuity} is the
@@ -321,13 +321,12 @@ riktig.). We can model small perturbations to first order by substituing $\rho =
 $\delta$ is used to assign small perturbations to the physical quantities and should not be
 confused with the previously defined density contrast. The velocity also has to
 take into account the expansion of the universe in addition to the peculiar
-velocity of the particles giving $\vec{v} = H(t)\vec{r} + \vec{v}_{pec}$. After a
-thorough calculation, and transforming the solution to comoving coordinates $\vec{x}$, (Kanskje sitere dette? Den er veldig lang) one will arrive at the following expression for the
-evolution of the density contrast
+velocity of the particles giving $\vec{v} = H(t)\vec{r} + \vec{v}_{pec}$. These
+equations can be reduced to 
 \begin{equation}
     \frac{\partial^2 \delta}{\partial t^2} + 2H(t) \frac{d \delta}{dt}=4\pi G\bar{\rho}\delta.
 \end{equation}
-This equation only contains time derivatives, and all the coefficients does not
+\cite[p.~345]{schneider2006extragalactic}. This equation only contains time derivatives, and all the coefficients does not
 depend on $\vec{x}$. Therefore $\delta(\vec{x}, t)$ can then be expressed a spatial and time
 dependent expression on the form 
 \begin{equation}
@@ -355,7 +354,7 @@ able to accurately describe the formation of dark matter halos or galaxy
 clusters. The evolution of density contrasts of order higher than unity requires
 different techniques to model in a reasonable way. The spherical top-hat model
 is one of the most fundamental frameworks to analytically model the non linear
-collapse of an overdensites in the universe.
+collapse of overdensites in the universe.
 \begin{figure}\label{fig:tophat}
     \tdplotsetmaincoords{80}{20}
     \begin{tikzpicture}[tdplot_main_coords]
@@ -379,8 +378,7 @@ collapse of an overdensites in the universe.
     \caption{A simple illustriation of the spherical top hat model.}
 \end{figure}
 The spherical top-hat model gets its name from how its density profile is
-defined. The following derivation assumes an Einstein-de Sitter universe.
-For the spherical top-hat model we have
+defined. For the spherical top-hat model we have
 \begin{equation}
     \rho(\vec{r},t) =
     \begin{cases} 
@@ -407,15 +405,32 @@ one gets
 \end{equation}
 Here it is worth noting that the left hand side of \ref{eq:kinpot} is the sum of
 the kinetic and potential energy. Therefore the integration constant $E$ can be
-interpreted as the total energy. It can be shown that this equation has the
-parametrised solution
+interpreted as the total energy. It can be shown that, for
+$E<0$, this equation has the parametrised solution
 \begin{align}
     R&=A(1-\mathrm{cos}\theta)\\
     t&=B(\theta-\mathrm{sin}\theta)\\
     A^3&=GMB^2.
 \end{align}
-
-\subsection{Two point correlation functions and the matter power spectrum.}
+\cite[p.~79]{peebles1980}. By setting an initial radius $R_i$ at time $t_i$ this
+solution tells us that a shell expanding with the background evolution of the
+universe will reach eventually slow down and reach a maximum radius at
+$\theta=\pi$. This is called turn-around. This point is called turn around and now the sphere will begin to
+collapse. This solution also suggests that at $\theta=2\pi$ the sphere would
+collapse to a point. This is not the case as something known as virialization
+occurs before this happens.\\\indent
+The virial theorem describes the relation between the potential and kinetic
+energy in dynamical equilibrium in a set of collisionless particles effected by
+a potential. Individual particles in the gas will reach $R=0$ and eventually
+shoot outwards again. The whole system will stabilize when it has virialized. The virial theorem states that
+\begin{equation}\label{eq:virial}
+    \vert U\vert=2K,
+\end{equation}
+where $U$ is the potential energy and $K$ is the kinetic energy.
+At the radius of turn around, the kinetic energy is zero. As the cloud collapses
+teh kinetic energy will increase and eventually it will virialize when the
+conditions of equation \ref{eq:virial} is fulfilled.
+\subsection{Two point correlation functions and the matter power spectrum.} \label{sec:corrtheory}
 Matter in the universe is not randomly distributed. As a result of how structure in the universe evolves, galaxies for example,
 does spread out randomly but they gather in groups or clusters. This means that given a random point in space, the probability of finding
 a galaxy in the vicinity of that point is higher if the randomly chosen point by chance landed on a galaxy. The probability of finding a galaxy
@@ -451,6 +466,29 @@ not look identical to anything anywhere in the universe (if it is not infinately
 large), but if the statistical properties are the same, then the models are
 correct. This makes the power spectrum and two point correlation function
 important vital tools when studying the universe.
+
+\subsection{The cosmic web}
+On large scales the universe is isotropic and homogenous. However this does not
+mean that every galaxy or cosmological particle is distributed randomly. As
+previously discussed matter tends to flow towards overdensities. Over time many
+of these overdensities will collapse into large dark matter halos. Dark matter
+halos contain subsctructures and sub halos where baryonic matter can form
+galaxies. The massive halos are bound together by matter in what resembles a
+web structure known as the cosmic web. The cosmic web is made up of large
+filaments of baryonic and dark matter and in between there are large voids with
+very low density. Figure \ref{fig:millenium} shows the millenium simulation
+\begin{figure}[htbp]\label{fig:millenium}
+    \subfigure[]{\includegraphics[width=0.5\textwidth]{figures/milleniumz0.jpg}}\hspace{1em}%
+    \subfigure[]{\includegraphics[width=0.5\textwidth]{figures/milleniumzoomz0.jpg}}
+    \subfigure[]{\includegraphics[width=0.5\textwidth]{figures/milleniumz18.jpg}}\hspace{1em}%
+    \subfigure[]{\includegraphics[width=0.5\textwidth]{figures/milleniumzoomz18.jpg}}
+    \caption{Figure showing snapshots of the Millennium simulation with $10^{10}$ particles
+    for two different redshifts. Figures a) and a) is taken at $z=0$ while
+    figures c) and d) is taken at $z=18.3$. Image credit: Må finne ut hvordan
+    denne skal siteres!}
+\end{figure}
+
+
 \subsection{Real- vs Redshiftspace}
 As mentioned earlier in section \ref{sec:sec_distance}, due to the fact that the
 universe is expanding, galacies we observe in the universe on cosmological scales

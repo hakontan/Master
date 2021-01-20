@@ -1,5 +1,5 @@
 \chapter{Method}
-\section{Radial velocity components in linear theory}
+\section{Radial velocity components in linear theory}\label{sec:radlintheory}
 One of the goals of this project is to test the viability of using the assumptions
 from linear theory and study wether it is a good physical approximation for
 studying the physics of voids and filaments. The radial velocity component of
@@ -106,8 +106,65 @@ which will give an expression for the radial velocity for voids
 \begin{equation}\label{eq:vrvoid}
     v_r(r)=-\frac{1}{3}Hfar\Delta_v(r).
 \end{equation}
+\section{Numerical measurement of correlation functions and multipole expansions.}
+As mentioned in section \ref{sec:corrtheory} correlation functions are useful
+tools for measuring the statistical properties of the universe. In order to test
+analytical models one has to compare with data from observations or simulations.
+The code \footnote{The code for measuring correlation functions utilized for this analysis can be found at \url{https://github.com/seshnadathur/pyCUTE}.} used for this project to measure angular correlation functions
+implements a Landy-Szalasay estimator \cite{Landy}. The Landy-Szalasay estimator
+for the angular cross correlation function, where $s$ denotes redshiftspace, reads
+\begin{equation}
+    \xi^s(s,u)=\frac{\langle D_1D_2\rangle-\langle D_1R_2\rangle-\langle D_2R_1\rangle+\langle R_1R_2\rangle}{\langle R_1R_2\rangle}.
+\end{equation}
+Where, in this analysis, subscript $1$ denotes either void centers or center or
+the center of cosmic filaments and subscript $2$ denotes halo positions. $D_1$
+and $D_2$ refers to the actual data while $R$ is samples from a random
+distribution resembling the dataset. Each quantity in the squared brackets
+denote the mean value of of a pair with separation $r$ and $\mu$, where
+$\mu=cos(\theta)$ is the cosine of the angle between the separation vector and
+the line of sight direction. An illustration of a pair in the coordinate system
+of the observer is illustrated in figure \ref{fig:corrpair}
+\begin{figure}\label{fig:corrpair}
+    \begin{tikzpicture}
+        \def\myrad{2}% radius of the circle
+        \def\myang{60}% angle for the arc
+        %\draw (0,0) -> (10,0) {s};
+        % the origin
+        \coordinate (O) at (10,0);
+        
+        \draw[line width=0.2mm][->] (0,0) -- (10,0);
+        \draw[line width=0.2mm][->] (10,0) -- (10-1.414,-1.414);
+        % the circle and the dot at the origin
+        \node[text width=10cm] at (13.3,0.5) {Filament/void center};
+        \node[text width=10] at (5,0.5) {$\vec{s}$};
+        \node[text width=10] at (9,-1.4) {$\vec{r}$};
+        \node[text width=5] at (0,1) {Observer};
+        \node[text width=5] at (10-1.3*0.93,-1.3*0.34) {$\theta$};
+        \draw (O) node[circle] {} circle [radius=\myrad];
+        % the ``\theta'' arc
+        \draw (O) [thick,domain=180:225] plot ({10 + cos(\x)}, {sin(\x)});
+    \end{tikzpicture}
+    \caption{Figure illustrating the system where pairs are counted for the angular cross correlation function. Sjekk opp om S egentlig skal være r}
+\end{figure}
+\\\indent
+In order to remove the angular dependency, the angular correlation function is
+expanded in mulitpoles. The multipoles are given by 
+\begin{equation}
+    \xi^s_\ell(s)=\int_0^1\xi^s(s,\mu)(1+2\ell)L_\ell(\mu)d\mu
+\end{equation}
+\cite{Nadathur_corr}, where $L_\ell(\mu)$ are Legendre polynomials
+of order $\ell$. In this analysis only the monopole and multipole
+are taken into consideration. The Legendre multipoles for $\ell=0$ and
+$\ell=1$ are given by
+\begin{equation}
+    L_0(\mu)=1
+\end{equation}
+and
+\begin{equation}
+    L_2(\mu)=(3\mu^2-1)/2.
+\end{equation}
 \section{Void Analysis}
-\subsection{Density profile}
+\subsection{Density profile}\label{sec:voiddensity}
 After running the void finding algorithm from REVOLVER on our dataset we have a list of $x$, $y$
 and $z$ coordinates for every void center. With a catalogue of void centers one
 has to compare their position to the galaxy catalogue in which they are found to
@@ -138,4 +195,80 @@ repeat for all iterations defined by the radius vector $\vec{r}$. This process
 will give the density profile as a function of radius for a given void. By
 adding the density profiles for all voids and diving by the number of voids one
 will get an average density profile for the whole dataset.
-
+\subsection{Velocity profile and velocity dispersion}
+When studying linear theory applied to voids and filaments, one needs an observational or
+numerical representation to test its validity. As explained in section
+\ref{sec:radlintheory} the radial velocity profile can be represented analytically and
+may provide a good comparison. In addition to the $x$, $y$ and $z$ coordinates for the
+halo particles, the galaxy catalogue used also containts the $v_x$, $v_y$ and
+$v_z$ particles. The radial velocity profile is calculated in a
+similar manner as the density profile for voids described in
+\ref{sec:voiddensity}. Using a periodic kd-tree centered at the current void one
+can count all particles in a sphere around the current void center. For a given
+halo particle its position with respect to a given void center is given by
+\begin{equation}\label{eq:voidpos}
+    \vec{r}=\vec{r}_{\mathrm{void}}-\vec{r}_{\mathrm{halo}}.
+\end{equation}
+This is the vector that points radially from the void center to a given halo
+particle. The radial velocity component is is the component of the velocity of a
+given halo particle $\vec{v}$ that points along this vector. The component of vector
+$\vec{v}$ along vector $\vec{r}$ is caluclated as
+\begin{equation}
+    v_r=\frac{\vec{r}\cdot\vec{v}}{\vert\vec{r}\vert}.
+\end{equation}
+This is the radial velocity for a halo particle with respect to a given void
+center. In a similar manner to the density profile the radial velocity is
+calculated iteratively for every particle in sphere around the void center. In
+order to get the radial velocity profile the particles are divided into
+shells. For every iteration, for a given void, for each sphere the radial
+velocity is stored for the next iteration. The radial velocity in a given shell
+for the next iteration is the radial velocity in the new sphere subtracted by
+the radial velocity in the previous sphere. This is averaged by, for each shell,
+dividing by the number of particles in a given shell. After this has
+been done for all voids the radial velocity profile is divided by the number of voids in the catalogue to get
+the average radial velocity profile for a single halo particle in the catalogue.
+\\\indent
+The velocity dispersion $\sigma_v$ is also calculated. The velocity dispersion
+is given by the usual expression for the standard derivation
+\begin{equation}
+    \sigma_{v} = \sqrt{\langle v^2 \rangle + \langle v\rangle^2}.
+\end{equation}
+This velocity is along the line of sight for the observer. For the multidark
+dataset this is along the $z$ direction and therefore only the $v_z$ component
+is considered. This is calculated in spherical shells around each void center to
+get the average void velocity dispersion profile.
+\subsection{Void-galaxy cross correlation function.}
+As mentioned in section \sec{sec:corrtheory} cross correlation functions are
+essential tools in cosmology for measuring the statistical properties of
+observables in the universe. In this analysis one of the cross correlations that
+will be looked into is the cross correlation between void centers and galaxies
+or halos. Following the approach of \cite{Nadathur_corr}, the following
+subsection will describe how to derive the void-galaxy cross correlation
+function. 
+\\\indent
+Let $\vec{r}_{void}$ denote the position of a void center and $\vec{r}_{halo}$ denote the
+position of a halo or galaxy particle in realspace. Their separation vector $\vec{r}$ is then
+given by equation \ref{eq:voidpos}. The relation from redshiftspace to realspace
+can be written as
+\begin{equation}
+    \vec{s}=\vec{r}+\frac{\vec{v}_{pec}\cdot\hat{r}_{void}}{aH}\hat{r}_{void},
+\end{equation}
+where $v_{pec}$ is the peculiar velocity of a galaxy or halo particle and
+$\hat{r}_{void}=\vec{r}_{void}/ \vert \vec{r}_{void}\vert$. Here it is assumed
+that the velocity of void centers are negligible. The number of voids in
+realspace may not be preserved in redshiftspace. Therefore reconstruction,
+described here in section \ref{sec:reconstrction}, has to be applied to regain
+the field in realspace from redshiftspace. The basic assumption
+required is that the number of void-galaxy pairs in the simulation volume is
+unchanged during transformation from realspace to redshiftspace. This is stated
+mathematically as
+\begin{equation}
+    (1 + \xi^s_{\mathrm{vg}}(\vec{s}))\mathrm{d}^3\mathrm{s}=(1 + \xi^r_{\mathrm{vg}}(\vec{r}))\mathrm{d}^3\mathrm{r},
+\end{equation}
+where superscript $r$ and $s$ denotes realspace and redshiftspace respectively.
+Here $\xi^s_{vg}(\vec{s})$ is the cross correlation between realspace voids and
+the redshifted galaxy field and $\xi^r_{vg}(\vec{r})$ is the cross correlation
+between realspace voids and realspace galaxy positions. Another assumption made
+is that the velocity of all halo particles near a void can be approximated by
+its radial velocity $\vec{v}=v_r \hat{r}$, where $\hat{r}$ is the radial unit vector
+in a spherical coordinate system. The Jacobian of the

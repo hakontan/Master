@@ -254,7 +254,7 @@ comparing this to a poisson particle distribution one can get the estimate for a
 likelihood function $P$ which determines the probability that a void with a
 given density contrast could arise from poisson noise. One can then choose to
 cut all voids exceeding a given significance level from the dataset.
-\subsection{Redshiftspace reconstruction}
+\subsection{Redshiftspace reconstruction}\label{sec:reconstruction}
 Due to all observational data being measured in redshiftspace, in order to study
 the realspace positions of observed quantities one has to apply reconstruction. REVOLVER contains a numerical implementation of
 the algorithm described in \cite{Nadathur_2018} in which describes the details
@@ -272,7 +272,7 @@ position in the sense that the eularian position is a specific point in space
 while the lagrangian position is the position of a parcel where the observer
 follows an individual parcel with the velocity field through space and time.
 To first order, the displacement field $\Psi$ can be modelled together with the
-overdensity as $\nabla_q\Psi^{(1)}{\vec{q},t}=-\delta{\vec{x,t}}$
+overdensity as $\nabla_q\Psi^{(1)}(\vec{q},t)=-\delta(\vec{x,t})$
 The displacement field $\vec{\Psi}(\vec{q},t)$ can be modelled together with the
 density field as
 \begin{equation}
@@ -283,4 +283,4 @@ density field as
 meaning $\nabla\times\vec{\Psi}=0$, using a Helmholtz decomposition one can
 write $\Psi=\nabla\phi$ and
 $\beta\nabla\cdot(\vec{\Psi}\cdot\hat{r})\hat{r}\approx\nabla\gamma$.
-Uferdig, må se nærmere på utledning
+Uferdig, 
