@@ -272,15 +272,38 @@ position in the sense that the eularian position is a specific point in space
 while the lagrangian position is the position of a parcel where the observer
 follows an individual parcel with the velocity field through space and time.
 To first order, the displacement field $\Psi$ can be modelled together with the
-overdensity as $\nabla_q\Psi^{(1)}(\vec{q},t)=-\delta(\vec{x,t})$
-The displacement field $\vec{\Psi}(\vec{q},t)$ can be modelled together with the
-density field as
-\begin{equation}
-    \nabla\cdot\vec{\Psi}+\beta\nabla\cdot(\vec{\Psi}\cdot\hat{r})\hat{r}=-\frac{\delta_g}{b}
+overdensity as $\nabla\Psi^{(1)}(\vec{q},t)=-\delta(\vec{x,t})$, where
+$\delta(\vec{x},t)$ is the usual overdensity parameter given in equation \ref{eq:overdensity}.
+In order to extract the displacement field from $\vec{\Psi}(\vec{q},t)$ from a
+redshifted density distribution one has to solve \cite{recondisplace}
+\begin{equation}\label{eq:reconeq}
+    \nabla\cdot\vec{\Psi}+\beta\nabla\cdot(\vec{\Psi}\cdot\hat{r})\hat{r}=-\frac{\delta_g}{b},
 \end{equation}
-\cite{recondisplace}, where $\beta$ and the bias $b$ is defined in equations
-\ref{eq:beta} and \ref{eq:bias}. By assuming that $\vec{\Psi}$, is irrotational
-meaning $\nabla\times\vec{\Psi}=0$, using a Helmholtz decomposition one can
-write $\Psi=\nabla\phi$ and
-$\beta\nabla\cdot(\vec{\Psi}\cdot\hat{r})\hat{r}\approx\nabla\gamma$.
-Uferdig, 
+where $\beta$ and the bias $b$ is defined in equations
+\ref{eq:beta} and \ref{eq:bias}. Using a Helmholtz decomposition one can
+express $(\vec{\Psi}\cdot\hat{r})\hat{r}$ as a divergence and a curl component giving $(\vec{\Psi}\cdot\hat{r})\hat{r}=\nabla A + \nabla \times \vec{B}$.
+By approximating $(\vec{\Psi}\cdot\hat{r})\hat{r}$ to be irrotational one can
+the curl component.
+Using this and rewriting $\vec{\Psi}$ as the gradient of a
+potential $\vec{\Psi}=\nabla\phi$ one can rewrite equation \ref{eq:reconeq} as
+\begin{equation}
+    \nabla^2(\phi+\beta A)=-\frac{\delta_g}{b}.
+\end{equation}
+The previous assumption that $(\vec{\Psi}\cdot\hat{r})\hat{r}$ is irrotational
+allows us to write $(\vec{\Psi}\cdot\hat{r})\hat{r}\approx\nabla A$ and
+substiting back $\Psi$ for $\nabla\phi$ one can approximate equation
+\ref{eq:reconeq} as 
+\begin{equation}
+    \vec{\Psi}+(\vec{\Psi}\cdot\hat{r})\hat{r}=-\nabla\nabla^{-2}\frac{\delta_g}{b}.
+\end{equation}
+Using fast fourier transforms this equation can be solved as \cite{Burden_reconstruction}
+\begin{equation}\label{eq:revolversolve}
+    \vec{\Psi}=\mathrm{IFFT}\Big[-\frac{i\vec{k}\delta(\vec{k})}{k^2b}\Big]-\frac{f}{1+f}\Big[\mathrm{IFFT}\Big[-\frac{i\vec{k}\delta(\vec{k})}{k^2b}\Big]\cdot\hat{r}\Big]\hat{r}.
+\end{equation}
+\\\indent
+REVOLVER solves equation \ref{eq:revolversolve} using fast fourier transforms.
+Using a Voronoi tesselation for estimating the density field $\delta(\vec{x})$ of
+the simulation volume, this field is then transformed to fourier space as
+$\delta(\vec{k})$. By then dividing by $bk^2$ and multiplying by $i\vec{k}$, one
+will retrieve the expression inside the braces in the equation above. The
+inverse fourier transform is then taken.

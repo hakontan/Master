@@ -106,7 +106,7 @@ which will give an expression for the radial velocity for voids
 \begin{equation}\label{eq:vrvoid}
     v_r(r)=-\frac{1}{3}Hfar\Delta_v(r).
 \end{equation}
-\section{Numerical measurement of correlation functions and multipole expansions.}
+\section{Numerical measurement of correlation functions and multipole expansions.}\label{sec:numerical_corr}
 As mentioned in section \ref{sec:corrtheory} correlation functions are useful
 tools for measuring the statistical properties of the universe. In order to test
 analytical models one has to compare with data from observations or simulations.
@@ -134,17 +134,22 @@ of the observer is illustrated in figure \ref{fig:corrpair}
         
         \draw[line width=0.2mm][->] (0,0) -- (10,0);
         \draw[line width=0.2mm][->] (10,0) -- (10-1.414,-1.414);
+        \draw[line width=0.2mm][->] (0,0) -- (10-1.414,-1.414);
         % the circle and the dot at the origin
         \node[text width=10cm] at (13.3,0.5) {Filament/void center};
-        \node[text width=10] at (5,0.5) {$\vec{s}$};
-        \node[text width=10] at (9,-1.4) {$\vec{r}$};
+        \node[text width=10] at (5,0.5) {$\vec{r}_{void/filament}$};
+        \node[text width=10] at (9.5,-1.4) {$\vec{r}$};
+        \node[text width=10] at (5,-1.1) {$\vec{r}_{halo}$};
         \node[text width=5] at (0,1) {Observer};
-        \node[text width=5] at (10-1.3*0.93,-1.3*0.34) {$\theta$};
+        \node[text width=5] at (3.7,-1.1*0.34) {$\theta$};
         \draw (O) node[circle] {} circle [radius=\myrad];
         % the ``\theta'' arc
-        \draw (O) [thick,domain=180:225] plot ({10 + cos(\x)}, {sin(\x)});
+        \draw (O) [thick,domain=330:360] plot ({2+cos(\x)}, {sin(\x)});
     \end{tikzpicture}
-    \caption{Figure illustrating the system where pairs are counted for the angular cross correlation function. Sjekk opp om S egentlig skal være r}
+    \caption{Figure illustrating the system used in this analysis. This
+    figure is drawn in realspace thereby all vectors denoted as $\vec{r}$.
+    Transformation to redshiftspace will distort the galaxy positions and the
+    corresponding system has vectors denoted as $\vec{s}$.}
 \end{figure}
 \\\indent
 In order to remove the angular dependency, the angular correlation function is
@@ -230,7 +235,7 @@ the average radial velocity profile for a single halo particle in the catalogue.
 \\\indent
 The velocity dispersion $\sigma_v$ is also calculated. The velocity dispersion
 is given by the usual expression for the standard derivation
-\begin{equation}
+\begin{equation}\label{eq:sigma_v}
     \sigma_{v} = \sqrt{\langle v^2 \rangle + \langle v\rangle^2}.
 \end{equation}
 This velocity is along the line of sight for the observer. For the multidark
@@ -250,7 +255,7 @@ Let $\vec{r}_{void}$ denote the position of a void center and $\vec{r}_{halo}$ d
 position of a halo or galaxy particle in realspace. Their separation vector $\vec{r}$ is then
 given by equation \ref{eq:voidpos}. The relation from redshiftspace to realspace
 can be written as
-\begin{equation}
+\begin{equation}\label{eq:s_to_r}
     \vec{s}=\vec{r}+\frac{\vec{v}_{pec}\cdot\hat{r}_{void}}{aH}\hat{r}_{void},
 \end{equation}
 where $v_{pec}$ is the peculiar velocity of a galaxy or halo particle and
@@ -262,13 +267,124 @@ the field in realspace from redshiftspace. The basic assumption
 required is that the number of void-galaxy pairs in the simulation volume is
 unchanged during transformation from realspace to redshiftspace. This is stated
 mathematically as
-\begin{equation}
+\begin{equation}\label{eq:corr_void_start}
     (1 + \xi^s_{\mathrm{vg}}(\vec{s}))\mathrm{d}^3\mathrm{s}=(1 + \xi^r_{\mathrm{vg}}(\vec{r}))\mathrm{d}^3\mathrm{r},
 \end{equation}
 where superscript $r$ and $s$ denotes realspace and redshiftspace respectively.
 Here $\xi^s_{vg}(\vec{s})$ is the cross correlation between realspace voids and
 the redshifted galaxy field and $\xi^r_{vg}(\vec{r})$ is the cross correlation
-between realspace voids and realspace galaxy positions. Another assumption made
+between realspace voids and realspace galaxy positions. $\vec{r}$ and $\vec{s}$
+are vectors pointing from the void center to a given galaxy position in
+realspace and redshiftspace respectively. Another assumption made
 is that the velocity of all halo particles near a void can be approximated by
-its radial velocity $\vec{v}=v_r \hat{r}$, where $\hat{r}$ is the radial unit vector
-in a spherical coordinate system. The Jacobian of the
+its radial velocity $\vec{v}=v_r \hat{r}$. We orient our coordinate system so that
+$\hat{r}_{void}=\hat{z}$. The observer will then only experience redshift
+distortions in the $z$ direction. This makes $s_x=r_x$ and $s_y=r_y$. With $\hat{r}_{void}=\hat{z}$ then have that
+$\hat{r}_{void}\cdot\hat{r}=z/r$. We can then rewrite equation \ref{eq:s_to_r}
+as
+\begin{equation}
+    \vec{s}=\vec{r}+\frac{v_rz}{aHr}\hat{z}.
+\end{equation}
+The coordinate transformation will then have the
+following jacobian determinant
+\begin{equation}
+    \vert J(\frac{s}{r})\vert=
+    \begin{vmatrix}
+        1 & 0 & 0\\
+        0 & 1 & 0\\
+        0 & 0 & \frac{\partial s_z}{\partial r_z} 
+    \end{vmatrix},
+\end{equation}
+where
+\begin{equation}
+    \frac{\partial s_z}{\partial r_z} = 1 + \frac{v_r}{raH}+\frac{(v_r^\prime-v_r/r)}{aH}\mu^2.
+\end{equation}
+here $v_r^\prime$ denotes derivative with respect to $r$. One can now rewrite
+equation \ref{eq:corr_void_start} as
+\begin{equation}\label{eq:corr_temp}
+    1 + \xi^s_{\mathrm{vg}}(\vec{s})=(1 + \xi^r_{\mathrm{vg}}(\vec{r})) \Big[1 + \frac{v_r}{raH}+\frac{(v_r^\prime-v_r/r)}{aH}\mu^2 \Big]^{-1}.
+\end{equation}
+Assuming the dynamics to be accurately modelled in the scope of linear
+perturbation theory we have the radial velocity $v_r$ given by equation
+\ref{eq:vrvoid}. We also have $\Delta_v^\prime(r)=3(\delta(r)-\Delta_v(r))/r$ giving
+\begin{equation}
+    v_r^\prime=-Hfa(\delta(r)-\Delta(r)),
+\end{equation}
+where $\Delta_v(r)$ is the density contrast defined in equation
+\ref{eq:contrastvoid}. Inserting this into equation \ref{eq:corr_temp} results
+in
+\begin{equation}\label{eq:corr_temp2}
+    1 + \xi^s_{\mathrm{vg}}(\vec{s})=(1 + \xi^r_{\mathrm{vg}}(\vec{r})) \Big[1 -\frac{f}{3}\Delta(r)-f\mu^2(\delta(r)-\Delta(r))\Big]^{-1}.
+\end{equation}
+When expanding this equation it is appropriate with a review of the terms. It is
+assumed that for voids the density profile is small enough so that terms of
+second order in $\delta$ and $\Delta_{v}$ is negligible meaning $\delta^2$,
+$\Delta_{v}^2$ and $\delta\Delta_v$ terms are not considered. This leaves us with terms
+of order $\mathcal{\delta}$ and  $\mathcal{\delta\xi^r}$ which proves to give
+the model sufficient validity on a range of scales \cite{BeyondBAO}. Equation
+\ref{eq:corr_temp2} then reduces to
+\begin{equation}\label{eq:corr_no_stream}
+    \xi^s_{\mathrm{vg}}(\vec{s},\mu)=\xi^r(r)+\frac{f}{3}\Delta_v(r)(1+\xi^r(r))+f\mu^2[\delta(r)-\Delta_v(r)](1+\xi^r(r)).
+\end{equation}
+It is worth noting that since $\xi^r(r)$ is the correlation function in
+realspace coordinates, if one is to apply this method to observational data
+reconstruction has to be performed. Since observational data is observed in
+redshiftspace, one cannot observe $\xi^r(r)$ directly. One therefore has to
+perform reconstruction on the data and then perform the correlation function
+calculation described in section \ref{sec:numerical_corr} in order to obtain
+$\xi^r(r)$. When working with simulation data one has knowledge about the
+particle field in redshiftspace and in realspace. However for a test on how the
+method performs on observational data it is usefull to perform reconstruction on
+the redshifted particle field instead of just using the realspace particle
+field.
+\\\indent
+The correlation function in redshiftspace $xi^s_{\mathrm{vg}}(\vec{s},\mu)$
+relies on the realspace length of the separation vector $\vert\vec{r}\vert$ as
+can be seen from equation \ref{eq:corr_no_stream}. The system is illustrated in
+figure \ref{fig:corrpair}. For every distance from the void center $s$ in
+redshiftspace, we want the corresponding length from the void center $r$ in
+realspace to calculate $xi^r_{\mathrm{vg}}(r)$, $\delta(r)$ and $\Delta_v(r)$.
+To achieve this we start by decomposing $s$ into a parallel and perpendicual
+component using basic trigonometry
+\begin{equation}
+    s_\parallel=s\mu
+\end{equation}
+and
+\begin{equation}
+    s_\perp=s(1-\mu^2).
+\end{equation}
+In the simulation volume there is only redshiftspace distortions along the line
+of sight direction. This will mean that the perpendicual component is unchanged
+when changing coordinates from redshiftspace to realspace. The parallel
+component is found by the relation
+\begin{equation}
+    r_\parallel=s_\parallel + s\frac{\beta\delta(s)\mu}{3},
+\end{equation}
+where $\beta=f/b$.
+The correspending realspace separation is then given as
+\begin{equation}
+    r=\sqrt{r_\parallel^2+r_\perp^2}.
+\end{equation}
+\subsection{Expanding model to account for velocity dispersion}
+The previous model for the void-galaxy correlation function is a good
+approximation. However it can be improved by taking into account the velocity
+dispersion of galaxies around the void centers in the line of sight direction.
+This will provide a more accurate model thereby giving a better fit to data.
+Instead of only considering radial velocities another component along the line
+of sight direction is added
+\begin{equation}
+    \vec{v}=v_r\hat{r}+v_\parallel \hat{r}_{void}.
+\end{equation}
+$v_r$ is the radial velocity used in the previous model given by equation
+\ref{eq:vrvoid}. $v_\parallel$ is given by a gaussian probability distribution
+$P(v_{\vert\vert})$ with zero mean
+\begin{equation}
+    P(v_\parallel)=\frac{1}{\sqrt{2\pi}\sigma_{v_{\parallel}}}\mathrm{exp}\Big[-\frac{v_\parallel}{2\sigma_{v_\parallel}^2}\Big].
+\end{equation}
+Since in our simulation volume we only measure velocities along the line of
+sight direction we can take $\sigma_{v_{\parallel}}$ to measured by equation
+\ref{eq:sigma_v}. This will give a and integral for calculating the improved
+model taking into account dispersion in the velocity of halos \cite{Achitouv_streaming}
+\begin{equation}
+    1+\xi^s(s,\mu)=\int_{-\infty}^\infty\frac{1+\xi^r(r)}{\sqrt{2\pi}\sigma_{v_{\parallel}(r)}}\mathrm{exp}\Big[-\frac{v_\parallel^2}{2\sigma_{v_\parallel}(r)}\Big]dv_\parallel.
+\end{equation}
