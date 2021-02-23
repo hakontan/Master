@@ -54,7 +54,7 @@ as
     \Delta_f(r)=\frac{2}{r^2}\int_0^r\delta(x) x dx,
 \end{equation}
 one can write the radial velocity component for a halo in a filament as
-\begin{equation}\label{vrfilament}
+\begin{equation}\label{eq:vrfilament}
     v_r(r) = -\frac{1}{2}Hfar\Delta_f(r).
 \end{equation}
 \subsection{Radial velocity component for voids}
@@ -253,8 +253,8 @@ function.
 \\\indent
 Let $\vec{r}_{void}$ denote the position of a void center and $\vec{r}_{halo}$ denote the
 position of a halo or galaxy particle in realspace. Their separation vector $\vec{r}$ is then
-given by equation \ref{eq:voidpos}. The relation from redshiftspace to realspace
-can be written as
+given by equation \ref{eq:voidpos}. A figure of the system is illustrated in \ref{fig:corrpair}. The relation from redshiftspace to realspace
+is given as
 \begin{equation}\label{eq:s_to_r}
     \vec{s}=\vec{r}+\frac{\vec{v}_{pec}\cdot\hat{r}_{void}}{aH}\hat{r}_{void},
 \end{equation}
@@ -316,7 +316,9 @@ in
 \begin{equation}\label{eq:corr_temp2}
     1 + \xi^s_{\mathrm{vg}}(\vec{s})=(1 + \xi^r_{\mathrm{vg}}(\vec{r})) \Big[1 -\frac{f}{3}\Delta(r)-f\mu^2(\delta(r)-\Delta(r))\Big]^{-1}.
 \end{equation}
-When expanding this equation it is appropriate with a review of the terms. It is
+This equation can be expanded using the taylor expansion
+$1/(1-x)\approx1+x+\mathcal{O}(x)^2$. When expanding this equation it is
+appropriate with a review of the terms. It is
 assumed that for voids the density profile is small enough so that terms of
 second order in $\delta$ and $\Delta_{v}$ is negligible meaning $\delta^2$,
 $\Delta_{v}^2$ and $\delta\Delta_v$ terms are not considered. This leaves us with terms
@@ -324,7 +326,7 @@ of order $\mathcal{\delta}$ and  $\mathcal{\delta\xi^r}$ which proves to give
 the model sufficient validity on a range of scales \cite{BeyondBAO}. Equation
 \ref{eq:corr_temp2} then reduces to
 \begin{equation}\label{eq:corr_no_stream}
-    \xi^s_{\mathrm{vg}}(\vec{s},\mu)=\xi^r(r)+\frac{f}{3}\Delta_v(r)(1+\xi^r(r))+f\mu^2[\delta(r)-\Delta_v(r)](1+\xi^r(r)).
+    \xi^{s,base}_{\mathrm{vg}}(\vec{s},\mu)=\xi^r(r)+\frac{f}{3}\Delta_v(r)(1+\xi^r(r))+f\mu^2[\delta(r)-\Delta_v(r)](1+\xi^r(r)).
 \end{equation}
 It is worth noting that since $\xi^r(r)$ is the correlation function in
 realspace coordinates, if one is to apply this method to observational data
@@ -384,7 +386,131 @@ $P(v_{\vert\vert})$ with zero mean
 Since in our simulation volume we only measure velocities along the line of
 sight direction we can take $\sigma_{v_{\parallel}}$ to measured by equation
 \ref{eq:sigma_v}. This will give a and integral for calculating the improved
-model taking into account dispersion in the velocity of halos \cite{Achitouv_streaming}
+model taking into account dispersion in the velocity of halos \cite{BeyondBAO}
 \begin{equation}
-    1+\xi^s(s,\mu)=\int_{-\infty}^\infty\frac{1+\xi^r(r)}{\sqrt{2\pi}\sigma_{v_{\parallel}(r)}}\mathrm{exp}\Big[-\frac{v_\parallel^2}{2\sigma_{v_\parallel}(r)}\Big]dv_\parallel.
+    1+\xi^{s,streaming}(s,\mu)=\int_{-\infty}^\infty\frac{1+\xi^{s,base}(s)}{\sqrt{2\pi}\sigma_{v_{\parallel}(r)}}\mathrm{exp}\Big[-\frac{v_\parallel^2}{2\sigma_{v_\parallel}(r)}\Big]dv_\parallel.
 \end{equation}
+\section{Filament Analysis}
+\subsection{Masking the simulation volume}\label{sec:maskingfilament}
+When applying the DisPerSE code on the particle distribution the output will be,
+for each filament detected, coordinates to the start point of each segment
+making up the total filament. For each filament there will be a number of
+filament segments with startpoints $\vec{r}_i$. This also makes $\vec{r}_{i+1}$
+the endpoint of filament with startpoins $\vec{r}_i$. Each filament segment $F_j$ is
+then given by
+\begin{equation}
+    \vec{F}_{j}=\vec{r}_{i+1}-\vec{r}_i.
+\end{equation}
+Here $j$ denotes a given filament segment while $i$ denotes the startpoints of the
+segments. With this notation $j+1$ is denoted by startpoints $i+2$ and $i+1$ and
+so on. When a given filament segment is defined the simulation volume is masked
+to remove all particles outside the edges of the start and endpoint of the
+filament segment. This is done by defining  two planes perpendicular to
+$\vec{F}_j$ with points $\vec{r}_{i+1}$ and $\vec{r}_i$. The equation for a
+plane $P$ given a vector $\vec{F}$ and a point $\vec{r}$ is given
+by the usual formula
+\begin{equation}\label{eq:plane_mask}
+    P=F_x(x-r_x)+F_y(y-r_y)+F_z(z-r_z)=0,
+\end{equation}
+where $x$, $y$ and $z$ are coordinates of the particles in the simulation
+volume. In this section this vector will be denoted as $\vec{x}$.
+The coordinates $r_x$, $r_y$ and $r_z$ are the components of $\vec{r}$.
+For a given filament $F$ segment with startpoint $r_{i}$ and endpoint $r_{i+1}$ the particles kept are the particles
+satisfying the following criteria
+\begin{equation}
+    P_0=F_x(x-r_{i_x})+F_y(y-r_{i_y})+F_z(z-r_{i_z})>0
+\end{equation}
+and
+\begin{equation}
+    P_1=F_x(x-r_{{i+1}_x})+F_y(y-r_{{i+1}_y})+F_z(z-r_{{i+1}_z})<0.
+\end{equation}
+The rest of the particles are masked keeping only the particles in the
+simulation volume bound by the two plane parallel to the filament segment
+centered in the startpoint and endpoint.
+
+\subsection{Density profile}\label{sec:filamentdensity}
+After masking the particle box as described in section \ref{sec:maskingfilament}
+we are left with a filament segment $\vec{F}_j$ defined by the start and
+endpoints $\vec{r}_{i}$ and $\vec{r}_{i+1}$. The distance each halo particle in
+the masked simulation volume to the filament segment is the length of the vector
+from the particle perpendicular to the filament axis
+\begin{equation}\label{eq:distance_from_filament}
+    d=\frac{\vert \vec{x}\times\vec{F}_j\vert}{\vert \vec{F}_j\vert}.
+\end{equation}
+This will leave us with a catalogue of the closest distance for all particles to
+the axis of the filament segment. A histogram is then created of this catalogue
+to easily count the number of particles in a given radial distance from the
+filament segment. The volume of the spherical shells surrounding the filament segment
+containing the particles in the radial bin is then given as
+\begin{equation}
+    V_i={\pi\vert \vec{F}_j\vert(r_i^2-r_{i-1}^2)}
+\end{equation}
+where $r_i$ and $r_{i-1}$ denotes the edges of the radial bins for the histogram.
+The radial density profile of the filament segment is then given as
+\begin{equation}
+    \rho_i=\frac{N_i}{V_i},
+\end{equation}
+where $N_i$ is the number of particles in each radial bin. For each filament segment
+this is added together and in the end it is divided by the total number of
+filaments to get the average density profile.
+\subsection{Velocity profile}
+In the galaxy catalogue of halo particles in the simulation volume the $v_x$,
+$v_y$ and $v_z$ components of the halo particle velocity $\vec{v}$ is given. To
+compare the model from linear theory given in equation \ref{eq:vrfilament} we
+need the component perpendicular to the axis of a given filament to get the
+radial component. As for the density profile calculation in section
+\ref{sec:filamentdensity} let $\vec{F}_j=\vec{r}_{i+1} - \vec{r}_i$ define a given
+filament segment. After, for each filament, the particle box is masked as
+described in section \ref{sec:maskingfilament}, the radial component
+perpendicular to the filament axis is caluclated. The length of the parallel component of the
+halo positions $\vec{x}_\parallel$ is calculated as
+\begin{equation}
+    \vert\vec{x}_\parallel\vert=\sqrt{\vert \vec{x}\vert^2-d^2},
+\end{equation}
+where $d$ is the distance from the filament given by equation
+\ref{eq:distance_from_filament}. The parallel component of the vector $\vec{x}$
+is then
+\begin{equation}
+    \vec{x}_\parallel=\vert\vec{x}_\parallel\vert\frac{\vec{F}_j}{\vert\vec{F}_j\vert}.
+\end{equation}
+This allows one to easily calculatre the component perpendicular to the filament
+axis 
+\begin{equation}
+    \vec{x}_\perp=\vec{x}-\vec{x}_\parallel.
+\end{equation}
+To obtain the component of the velocity perpendicular to the filament axis one
+has to use the regular formula calculating the component of a vector along
+another vector
+\begin{equation}
+    v_r=\frac{\vec{v}\cdot\vec{x}_\perp}{\vert\vec{x}_\perp\vert}.
+\end{equation}
+This is calculated for all particles in a given radial bin defined by the
+histogram created in the density profile calculation in section
+\ref{sec:filamentdensity}. To get the average velocity in each bin, the velocity
+in each bin is divided by the number halo particles in each bin. This is then
+added to the total velocity profile for each filament. In the end the
+velocity is divided by the number of filaments to get the average radial
+velocity profile for filaments.
+\section{Parametrizing distance scales.}
+The fiducial cosmology used will vary from the true cosmology. This will introduce distortions in the distance measurements. As conducted by \cite{BeyondBAO}, the method applied to the analysis in this project wil also parametrize these distortions by introducing two dimensionless ratios. One in the perpendicular and one the parallel direction as
+\begin{equation}
+    \alpha_\perp=\frac{d_A(z)}{d_A^{\mathrm{fid}}(z)}
+\end{equation} 
+and
+\begin{equation}
+    \alpha_\parallel=\frac{H^{\mathrm{fid}}(z)}{H(z)},
+\end{equation}
+where $d_A$ is the angular diameter distance. The correlation function $\xi^s(\vec{s},\mu)$ is measured using the fiducial
+components $s_\parallel^\mathrm{fid}$ and $s_\perp^\mathrm{fid}$. These components are then rescaled using the dimensionless ratios as
+\begin{equation}
+    s_\parallel=\alpha_\parallel s_\parallel^\mathrm{fid}
+\end{equation}
+and 
+\begin{equation}
+    s_\perp = \alpha_\perp s_\perp^\mathrm{fid}.
+\end{equation}
+Likewise the correlation function in realspace $\xi^r(r)$ takes into account distances in realspace at a given redshift for a fixed cosmology. The corresponding distance in the real universe may vary from this distance and therefore the realspace distance is rescaled as
+\begin{equation}
+    r=\int_0^1\alpha_\parallel r^{\mathrm{fid}}\sqrt{1+(1+\mu^2)\Big[\frac{\alpha_\perp^2}{\alpha_\parallel^2}-1\Big]}d\mu.
+\end{equation}
+This rescaling of parameters gives an additional parameter when fitting the models to data as both $\alpha_\perp$ and $\alpha_\parallel$ has to be tested in order to determine the best fit to the distance parametrization. In simulations the fiducial cosmology is known and $\alpha_\parallel=\alpha_\perp=1$. Therefore constraining $\epsilon=\alpha_\perp/\alpha_\parallel$ for a model applied to simulation data can provide a good test of how the model performs.

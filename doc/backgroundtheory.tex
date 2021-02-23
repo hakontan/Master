@@ -85,9 +85,23 @@ calculate the the luminosity distance as
 \begin{equation}
     d_L = \sqrt{\frac{L}{4\pi F}}.
 \end{equation}
-(Kanskje si noe mer om svakheter med denne.)
-
-
+\indent
+Lastly we introduce the angular diameter distance as the last distance
+measurement. The angular extent of an object on the sky us another measurable quantity related to distances in the universe. The angular diameter distance is for an object with a known size
+$D$ at a large distance $d$, where $d\gg D$, is given as 
+\begin{equation}
+    d_A\equiv \frac{D}{\Delta\theta},
+\end{equation}
+where $\Delta\theta$ is the angle covered by the object measured in radians and $d_P$ is the proper distance. Taking into account the proper distance separating the two endpoints of the diameter of the observed object we have 
+\begin{equation}
+    D=a(t)r\Delta\theta,
+\end{equation}
+where $r$ is the distance from the observer to the measured object.
+This will give and expression for the angular diameter distance
+\begin{equation}
+    d_A = \frac{r}{1+z},
+\end{equation}
+where the relation $a(t)=1/(1+z)$ has been used.
 \subsection{Modelling the evolution of the universe and the $\Lambda$CDM model}
 The cosmological principle states that on sufficiently
 large scales the universe is isotropic and homogenous. This means the universe
@@ -312,8 +326,9 @@ motion for such a fluid is governed by the equations
     \frac{\partial \rho}{\partial t} + \nabla\cdot(\rho \vec{v})=0,
 \end{equation}
 \begin{equation}\label{eq:eulereq}
-    \frac{\partial \vec{v}}{\partial t} + (\vec{v}\cdot\nabla)\vec{v}=-\frac{\nabla P}{\rho}-\nabla \Phi,
+    \frac{\partial \vec{v}}{\partial t} + (\vec{v}\cdot\nabla)\vec{v}=-\frac{\nabla P}{\rho}-\nabla \Phi
 \end{equation}
+and
 \begin{equation}\label{eq:poisson}
     \nabla ^2\Phi=4\pi G\rho -\Lambda.
 \end{equation}
@@ -339,7 +354,7 @@ equations can be reduced to
     \frac{\partial^2 \delta}{\partial t^2} + 2H(t) \frac{d \delta}{dt}=4\pi G\bar{\rho}\delta.
 \end{equation}
 \cite[p.~345]{schneider2006extragalactic}. This equation only contains time derivatives, and all the coefficients does not
-depend on $\vec{x}$. Therefore $\delta(\vec{x}, t)$ can then be expressed a spatial and time
+depend on $\vec{x}$. Therefore $\delta(\vec{x}, t)$ can then be expressed as a spatial and time
 dependent expression on the form 
 \begin{equation}
     \delta(\vec{x}, t) = D(t)g(\vec{x}).
@@ -356,7 +371,7 @@ is called the growth factor and determines the amplitude of structure growth as
 a function of time. Since $t\propto a$, one can then model the growth factor for
 a given cosmological model. We will lastly define the function
 \begin{equation}\label{eq:growthfac}
-    f(a) \equiv \frac{d log D_+}{d log a},
+    f(a) \equiv \frac{d\mathrm{ log} D_+}{d\mathrm{log} a},
 \end{equation}
 to quantify the relationship between the growth of structure and the expansion
 of the universe.
@@ -478,7 +493,22 @@ not look identical to anything anywhere in the universe (if it is not infinately
 large), but if the statistical properties are the same, then the models are
 correct. This makes the power spectrum and two point correlation function
 important vital tools when studying the universe.
-
+\\\\\indent
+An important cosmological parameter is $\sigma_8$ which serves as a normalization for the matter powerspectrum. The parameter $\sigma_8$ is motivated by the observation that when averaging over spheres on scales of radius $R=8$Mpc/h it is found that
+\begin{equation}
+    \sigma_{8,g}^2\equiv\Big\langle\Big(\frac{n-\bar{n}}{\bar{n}}\Big)^2\Big\rangle_{8\mathrm{Mpc/h}}\approx1,
+\end{equation}
+where $n$ is the local number density of galaxies and $\bar{n}$ is the average number density.
+In a similar fasion the it is defined through the dark matter density contrast as
+\begin{equation}
+    \sigma_8^2=\Big\langle\vert\delta_{8\mathrm{Mpc/h}}\vert\Big)^2\Big\rangle,
+\end{equation}
+where the density contrast $\delta$ is averaged over spheres of $R=8$Mpc/h.
+These two parameters can be related through the linear bias factor as
+\begin{equation}\label{eq:sigma_8_relation}
+    \sigma_8=\frac{\sigma_{8,g}}{b}\approx\frac{1}{b}.
+\end{equation}
+Using this relation one can normalize the dark matter power spectrum by measuring the $\sigma_{8,g}$ and using the relation in equation \ref{eq:sigma_8_relation} to use scales on $8$Mpc/h as a reference for normalizing the power spectrum when the shape is known.
 \subsection{The cosmic web}
 On large scales the universe is isotropic and homogenous. However this does not
 mean that every galaxy or cosmological particle is distributed randomly. As
@@ -530,8 +560,6 @@ observed but can be inferred from measuring the correlation function for
 galaxies. The correlation function contains a bump at the characteristic length
 scale $r_s$. This shows that the baryonic acoustic influential on the distribution of
 matter in the universe today.
-
-
 
 \subsection{Real- vs Redshiftspace}
 As mentioned earlier in section \ref{sec:sec_distance}, due to the fact that the
@@ -795,6 +823,9 @@ compromise between long computation time and accuracy between closely
 interacting particles. 
 
 \section{Statistics}
+For the analysis of the data statistical methods are utilized. This section
+gives a brief overview fundemental methods used for basic statistical analysis.
+This section is largely based on \cite{Probphysics} and \cite{Dataanalysiscosmology}.
 \subsection{Bayes theorem}
 When studying and comparing our observations and simulations with theory one has
 to quantify the probability of our models parameter space given the data we use.
@@ -848,9 +879,9 @@ maximize the likelihood function. In other words one can try to find the most
 probable value for $\theta$. If one assumes the data is given by a gaussian
 distribution, the likelihood function is defined by a multivariate gaussian
 \begin{equation}
-    \mathcal{L}(\theta) = \frac{1}{\sqrt{(2\pi)^n\vert C \vert}}\mathrm{exp}\big[{-\frac{1}{2}}\sum_{ij}(y^{model}_i-y^{data}_i)C_{ij}^{-1}(y^{model}_j-y^{data}_j)\big].
+    \mathcal{L}(\vec{\theta}) = \frac{1}{\sqrt{(2\pi)^n\vert C \vert}}\mathrm{exp}\big[{-\frac{1}{2}}\sum_{ij}(y^{model}_i-y^{data}_i)C_{ij}^{-1}(y^{model}_j-y^{data}_j)\big],
 \end{equation}
-From this we can see that the likelihood and the $\chi^2$ is related as
+where $n$ is the number of parameters. From this we can see that the likelihood and the $\chi^2$ is related as
 $\mathcal{L}\propto \mathrm{exp}[-\frac{1}{2}\chi^2]$. From this it is also evident that
 maximizing the likelihood is the same as minimizing $\chi^2$. Using bayes theorem given by equation
 \ref{eq:bayes} one can see that we now have an expression for the likelihood.
