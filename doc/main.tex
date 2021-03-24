@@ -1,0 +1,238 @@
+% Main source file
+
+\documentclass[a4paper,11pt]{book}
+\usepackage[UKenglish]{babel}
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+\usepackage{calc}
+\usepackage{amsmath}
+\usepackage{hyperref}
+\usepackage{aas_macros}
+% Stuff that might be useful depending on individual needs
+\usepackage{array}
+\usepackage{boxedminipage}
+\usepackage{rotating}
+\usepackage{amssymb}
+\usepackage{subfigure}
+\usepackage{hhline}
+\usepackage{moreverb}
+\usepackage{float}
+\usepackage{tikz}
+\usepackage{tikz-3dplot}
+\usetikzlibrary{angles,quotes}
+\usetikzlibrary{shapes.geometric}
+\let\vec\mathbf
+
+%DIN TITTEL HER:
+\newcommand{\mintittel}{Masteroppgave}
+\title{\mintittel}
+\author{Håkon Tansem}
+\date{\today}
+
+% Setting for layout
+\setlength{\textwidth}{14.5cm}
+\setlength{\headheight}{13.6pt}
+\setlength{\marginparwidth}{0.7cm}
+%\setlength{\marginparsep}{0.7cm}
+\setlength{\evensidemargin}{1cm}
+
+% Fancy heading -  if you want it
+\usepackage{fancyhdr}
+\pagestyle{fancyplain}
+\addtolength{\headwidth}{\marginparsep}
+\addtolength{\headwidth}{\marginparwidth}
+\renewcommand{\chaptermark}[1]%
+	{\markboth{#1}{}}
+\renewcommand{\sectionmark}[1]%
+	{\markright{\thesection\ #1}}
+\lhead[\fancyplain{}{\bfseries\thepage}]%
+	{\fancyplain{}{\bfseries\rightmark}}
+\rhead[\fancyplain{}{\bfseries\leftmark}]%
+	{\fancyplain{}{\bfseries\thepage}}
+\cfoot{}
+
+% Below: depends on package float
+% -----------------------------------------------------
+% Definitions for algorithms
+\floatstyle{boxed}
+\newfloat{algorithm}{hbt}{loa}[chapter]
+\floatname{algorithm}{Algorithm}
+
+%\setcounter{secnumdepth}{3}
+%New commands;
+
+\renewcommand{\H}{\mathcal{H}}
+\newcommand{\phid}{\dot{\phi}}
+\newcommand{\phidd}{\ddot{\phi}}
+\newcommand{\Phid}{\dot{\Phi}}
+\newcommand{\Phidd}{\ddot{\Phi}}
+\newcommand{\psid}{\dot{\psi}}
+\newcommand{\Psid}{\dot{\Psi}}
+\newcommand{\Psidd}{\ddot{\Psi}}
+\newcommand{\R}{\mathcal{R}}
+\renewcommand{\L}{\mathcal{L}}
+\newcommand{\Rd}{\dot{\mathcal{R}}}
+\newcommand{\M}{m_{Pl}}
+\newcommand{\g}{g_{\mu\nu}}
+\newcommand{\gu}{g^{\mu\nu}}
+\newcommand{\Ricci}{R_{\mu\nu}}
+\newcommand{\G}{G_{\mu\nu}}
+\newcommand{\addotoa}{\dfrac{\ddot{a}}{a}}
+\renewcommand{\dh}{\dot{h}}
+\newcommand{\ddh}{\ddot{h}}
+\newcommand{\dF}{\dot{F}}
+\newcommand{\ddF}{\ddot{F}}
+\newcommand{\dFoF}{\dfrac{\dF}{F}}
+\newcommand{\ddFoF}{\dfrac{\ddF}{F}}
+\newcommand{\synch}{\left(\delta_{ij}+h_{ij}\right)}
+%\newcommand{\Chr}[2]{\Gamma_{#1}^{#2}
+
+
+\newcommand{\tphi}{\tilde{\phi}}
+\newcommand{\tpsi}{\tilde{\psi}}
+\newcommand{\tdpsi}{\dot{\tilde{\psi}}}
+\newcommand{\tPhi}{\tilde{\Phi}}
+\newcommand{\tdPhi}{\dot{\tilde{\Phi}}}
+\newcommand{\tPsi}{\tilde{\Psi}}
+\newcommand{\tdPsi}{\dot{\tilde{\Psi}}}
+\newcommand{\tE}{\tilde{E}}
+\newcommand{\tB}{\tilde{B}}
+\newcommand{\tg}{\tilde{g}}
+\newcommand{\tV}{\tilde{V}}
+\newcommand{\tT}{\tilde{T}}
+\newcommand{\tNabla}{\tilde{\nabla}}
+\newcommand{\tR}{\tilde{\rho}}
+\newcommand{\ta}{\tilde{a}}
+\newcommand{\trho}{\tilde{\rho}}
+\newcommand{\tP}{\tilde{p}}
+\newcommand{\tp}{\tilde{p}}
+\newcommand{\tz}{\tilde{z}}
+\newcommand{\teta}{\tilde{\eta}}
+\renewcommand{\th}{\tilde{h}}
+\newcommand{\tH}{\tilde{\mathcal{H}}}
+\newcommand{\tdelta}{\tilde{\delta}}
+\newcommand{\tv}{\tilde{v}}
+\newcommand{\tw}{\tilde{w}}
+\newcommand{\taddotoa}{\dfrac{\ddot{\ta}}{\ta}}
+\newcommand{\tsynch}{\left(\delta_{ij}+\th_{ij}\right)}
+\newcommand{\tOmega}{\tilde{\Omega}}
+\newcommand{\C}{\mathcal{C}}
+
+\newcommand{\tabb}[1]{Table \ref{#1}}
+\newcommand{\fig}[1]{Figure \ref{#1}}
+\newcommand{\eq}[1]{equation (\ref{#1})}
+\newcommand{\chap}[1]{Chapter \ref{#1}}
+\renewcommand{\sec}[1]{\S\ref{#1}}
+\newcommand{\eqs}[2]{equations \eqref{#1} - \eqref{#2}}
+\renewcommand{\t}[1]{\mathrm{#1}}
+\renewcommand{\k}{{\boldsymbol{k}}}
+\newcommand{\K}{(k_1+k_2+k_3)}
+%\renewcommand{\sum}{\displaystyle\sum}
+
+\newcommand{\be}{\begin{equation}}
+\newcommand{\ee}{\end{equation}}
+\newcommand{\ba}{\begin{align}}
+\newcommand{\ea}{\end{align}}
+\newcommand{\I}{\Bigg|}
+\newcommand{\bea}{\begin{eqnarray}}
+\newcommand{\eea}{\end{eqnarray}}
+\newcommand{\bdm}{\begin{displaymath}}
+\newcommand{\edm}{\end{displaymath}}
+\newcommand{\beas}{\begin{eqnarray*}}
+\newcommand{\eeas}{\end{eqnarray*}}
+
+\newcommand{\khv}{\hat{\mathbf{k}}}
+\newcommand{\nhv}{\hat{\mathbf{n}}}
+\newcommand{\kh}{\hat{k}}
+
+\newcommand{\av}[1]{\left< #1\right>}
+\newcommand{\kv}{\mathbf{k}}
+\newcommand{\kdv}{\mathbf{k}'}
+\newcommand{\pv}{\mathbf{p}}
+\newcommand{\pdv}{\mathbf{p}'}
+\newcommand{\qv}{\mathbf{q}}
+\newcommand{\qdv}{\mathbf{q}'}
+\newcommand{\kmkd}{\mathbf{k}-\mathbf{k}'}
+\newcommand{\pmpd}{\mathbf{p}-\mathbf{p}'}
+\newcommand{\qmqd}{\mathbf{q}-\mathbf{q}'}
+\newcommand{\ppkd}{\mathbf{p}+\mathbf{k}'}
+\newcommand{\qpkd}{\mathbf{q}+\mathbf{k}'}
+\newcommand{\Pow}[1]{\mathcal{P}\left(#1\right)}
+\newcommand{\Pro}[3]{P_{#1 #2}\left( #3\right)}
+\newcommand{\dk}{\frac{d^3\kv}{(2\pi)^3}}
+\newcommand{\dkd}{\frac{d^3\kv'}{(2\pi)^3}}
+
+% Einstein frame quantities
+
+\newcommand{\tq}{\tilde{q}}
+\newcommand{\tpi}{\tilde{\pi}}
+\newcommand{\tDelta}{\tilde{\Delta}}
+
+\newcommand{\cssq}{c_s^{\phantom{s}2}}
+\newcommand{\tcssq}{\tilde{c}_s^{\phantom{s}2}}
+%Fixing height of tables
+\renewcommand{\arraystretch}{1.8}
+
+%Wigner symbols
+\newcommand{\wignertre}[2]{\genfrac{(}{)}{0pt}{}{#1}{#2}}
+\newcommand{\wignersix}[2]{\genfrac{\{}{\}}{0pt}{}{#1}{#2}}
+%============================================================
+\begin{document}
+\pagenumbering{roman}
+%\pagestyle{plain}
+\input{titlepage}
+\vspace*{18cm}
+\noindent Copyright \copyright$\,$ 2021, Håkon Tansem
+\vspace{4mm}
+
+\noindent This work, entitled ``\mintittel'' is distributed under the
+terms of the Public Library of Science Open Access License, a copy of which can be found at
+http://www.publiclibraryofscience.org.
+
+\include{foreword}
+\include{acknowledgement}
+%\addcontentsline{toc}{chapter}{\numberline{}Contents}
+\tableofcontents
+
+\addcontentsline{toc}{chapter}{\numberline{}List of Figures}
+\listoffigures
+\newpage
+\thispagestyle{empty}
+\mbox{}
+
+\newpage
+\pagestyle{fancyplain}
+\pagenumbering{arabic}
+
+
+%Her har jeg kommentert ut mine delkapitler, denne malen fungerer slik at jeg har ett hoveddokument, som heter main.tex. I denne har jeg \include{navn på en annen .tex fil jeg ønsker at skal bli en del
+% av dette dokumentet}. Dvs at i mitt tilfelle hadde jeg en main.tex, sammen med introduction.tex, cosmology.tex, fRgrav.tex osv.
+
+\include{introduction}
+\include{backgroundtheory}
+\include{codesused}
+\include{dataset}
+\include{method}
+\include{results}
+%\include{cosmology}
+%\include{fRgrav}
+%\include{bispectrum}
+%\include{frame}
+%\include{modify}
+%\include{results}
+%\include{conclusions}
+	
+\addcontentsline{toc}{part}{\numberline{}Appendicies}
+\part*{Appendices}
+\appendix
+%\include{appendix}
+
+% Include the necessary appendices
+
+\addcontentsline{toc}{chapter}{\numberline{}Bibliography}
+\bibliographystyle{unsrt}
+\bibliography{references.bib}
+%\bibliography{fRBib}
+\end{document}
