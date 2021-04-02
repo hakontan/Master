@@ -169,6 +169,25 @@ halo particles.
     \caption{Figure showing showing parameters fits to $\beta$, $\sigma_v$ and $\epsilon$ for the Multidark 4 dataset using a linear bias approximation, modelling the velocity using linear theory given by equation \ref{eq:vrvoid} and only considering voids with effective radius $r\geq 40$Mpc/h. Overplotted are the fiducial values for each parameter.}
 \end{figure}
 \subsection{Linear bias approximation with Achitouv (2017) term}
+\begin{table}\label{tab:MD_linbiasachitouv}
+    \centering
+    \footnotesize
+    \begin{tabular}{| c | c | c | c | c | c |}
+        \hline
+        Dataset& $\epsilon$ & $\beta$ & $\sigma_v$  \\
+        \hline
+        MD2& $0.94532\pm 0.01261$ & $0.25894\pm 0.03147$ & $288.010\pm 37.719$\\ 
+        MD3 no cuts. & $0.99083\pm 0.00909$ & $0.33092\pm 0.03357$ & $368.158\pm 26.906$\\
+        MD3 $20$Mpc/h$\leq r\leq 40$ Mpc/h & $0.99008\pm 0.00764$ & $0.34618\pm 0.03010$ & $359.899\pm 21.892$\\
+        MD3 $r\geq 40$Mpc/h & $0.99615\pm 0.01036$ & $0.37984\pm 0.03493$ & $312.844\pm 48.217$\\
+        MD4 & $0.99380\pm 0.00906$ &  $0.31023\pm 0.03508$ & $329.030\pm 23.442$\\
+        MD4 $20$Mpc/h$\leq r\leq 40$ Mpc/h & $0.99042\pm 0.00797$ & $0.38023\pm 0.03170$ & $312.144\pm 23.502$\\
+        MD4 $r\geq 40$ Mpc/h & $0.98717\pm 0.01063$ & $0.42834\pm 0.03512$ & $251.144\pm 54.591$ \\
+        \hline
+    \end{tabular}
+    \caption{Best fit values for the parameters $\epsilon$, $\beta$ and $\sigma_v$ for the different datasets using a linear bias approximation and the approximation term given in equation \ref{eq:achitouv2017}.}
+\end{table}
+
 \begin{figure}[htbp]\label{fig:linbiasMD2mod}
     \includegraphics[width=1\textwidth]{figures/cornerplots/v_correction/MD2_mod.pdf}
     \caption{Figure showing showing parameters fits to $\beta$, $\sigma_v$ and $\epsilon$ for the Multidark 2 dataset using a linear bias approximation, modelling the the proposed velocity correction by \cite{Achitouv_streaming} linear theory given by equation \ref{eq:achitouv2017}.}
