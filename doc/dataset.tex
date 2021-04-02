@@ -1,0 +1,46 @@
+\chapter{Dataset - Multidark Simulation}
+For this analysis i will use The Big MultiDark Planck simulation (BigMDPL)\cite{Multidark_dataset}. The data from this simulation can be found at \footnote{The BigMDPL dataset can be found at \url{https://www.cosmosim.org/cms/simulations/bigmdpl/}}. This is a dark matter particle simulation following the evolution of $3840^3$ particles starting from redshift $z=100$. A full list of parameters as listed on the webpage of the dataset can be seen in table \ref{tab:cosmosimparameters}.
+\begin{table}
+    \begin{tabular}{| c | c |}
+        \hline
+        Box size & $2.5$ Gpc/h \\ 
+        Number of particles& $3840^3$ \\  
+        DM particle mass & $2.359\cdot10^{10} \mathrm{M}_\odot$/h \\
+        Force resolution & $30$kpc/h (high redshift) - $10$kpc/h (low redshift)\\
+        Initial redshift & $z = 100$\\
+        Hubble parameter & $h=0.677$\\
+        $\Omega_\Lambda$ & $0.692885$\\
+        $\Omega_m$ & $ 0.307115$\\ 
+        $ \Omega_b$ & $0.048206$ \\
+        Spectral index & $n=0.96$\\
+        $\sigma_8(z=0)$ & $0.8228$ \\
+        \hline
+    \end{tabular}
+    \caption{\label{tab:cosmosimparameters}Parameters of the BigMDPL simulation extracted from the website \url{https://www.cosmosim.org/cms/simulations/bigmdpl/}.}
+\end{table}
+This simulation has been carried out utilizing the L-GAGDET-2, which is a version of the publicly available GADGET-2 code \cite{springel2005}. L-GADGET-2 is a modfication of the treeSPH\cite{treesph} code GADGET-2 to account for a very large amount of particles. A short description of a treeSPH code is given in section (Skriv en kort seksjon). The simulation data utilized in this analysis is taken at $z=1$. After simulating the evolution of the dark matter particle field from $z=100$ to $z=1$ a halo finder is used to identify dark matter halos in the particle field.
+\section{Halo finding using Rockstar}
+In order to identify dark matter halos from the dark matter particle field, the rockstar halo finder\cite{rockstar} is utilized. In short this halo finder is comprised of six steps in which i will recap in short here.
+\begin{enumerate}
+    \item The first step is to group particles in the simulation volume using a friends of friends (FOF) algorithm. In short a FOF algorithm groups particles by using a linking length $l$ and for every particle it groups it together with all other particles within the linking length $l$.
+    \item For each group the particles are normalized by the group position and velocity dispersions.
+    \item In phase-space a linking length is chosen so that $70$\% of the groups particles are linked together.
+    \item This process of steps 2. and 3. repeats itself
+    \item Once all subgroups are calculated seed halos are placed at the lowest substructure levels. Particles are then assigned to the closest seed halo in phase space.
+    \item Once particles are assigned to a seed halo unbound particles are removed and the properties of the halo itself is calcuated (i.e mass, velocity, position etc).
+\end{enumerate}
+\section{Applying mass cuts to the dataset.}
+After the halo finder algorithm has been applied to the dataset we are left with a catalogue of dark matter halos with $x$, $y$ and $z$ positions, $v_x$, $v_y$ and $v_z$ velocity components and mass of each individual halo. This dataset will be pruned into four different catalogues by applying different mass cuts. This is done by removing all haloes below a certain mass threshold from the catalogue. These will be referred to later in the thesis as MultiDark 1 (MD1), MultiDark 2 (MD2), MultiDark 3 (MD3) and MultiDark 4 (MD4) respectively. Their individual properties are listed in table \ref{tab:MDproperties}
+\begin{table}\label{tab:MDproperties}
+    \begin{tabular}{| c | c | c | c | c | }
+        \hline
+        Property & MultiDark 1 & MultiDark 2 & MultiDark 3 & MultiDark 4 \\
+        \hline
+        Mass cut [$M_\odot$/h] & $10^{13.5}$ & $10^{13}$ & $10^{12.75}$ & $10^{12.5}$ \\ 
+        Nr of halos &$534559$& $3460116$ & $7523817$& $15365856$ \\
+        Bias ($b$) & $3.85$ & $2.77$ & $2.40$ & $2.11$ \\
+        Number density [(h/Mpc)$^3$] & $0.34\cdot10^{-4}$ & $2.2\cdot10^{-4}$ & $4.8\cdot10^{-4}$ & $9.8\cdot10^{-4}$ \\
+        \hline
+    \end{tabular}
+    \caption{Relevant properties for the analysis conducted in this thesis for each individual dataset after applying mass cuts to the halo catalogue.}
+\end{table}
