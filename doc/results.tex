@@ -1,4 +1,4 @@
-\chapter{Results}
+\chapter{Results/Discussion}
 
 \section{Filament analysis}
 
@@ -43,20 +43,24 @@ halo particles.
 
 \section{Void analysis}
 \subsection{Histograms}
-\begin{figure}[htbp]\label{fig:histMD2}
+The effective void radius measured in Mpc/h is one of the void quantities that is measured from the void finder in the REVOLVER code. Figures \ref{fig:voidhistMD2}, \ref{fig:voidhistMD2} and \ref{fig:voidhistMD4} shows histograms of the effective void radius found in the MD2, MD3 and MD4 datasets respectively. The histograms were calculated using radius bins with a size of $2$Mpc/h. Due to a small sample size giving lots of noise and bad fits to the cross correlation function the MD1 dataset was excluded from the void analysis. From the figures one can see that for the MD2 and MD3 datasets the distribution voids $20$Mpc/h to $80$Mpc/h range. With the MD4 dataset the distribution is tilted more towards smaller voids with the peak of the distribution at approximately $30$Mpc/h. This trend can be seen throughout all the three datasets tested. The more halo particles in the catalogue the more the distribution shifts towards smaller voids. This is a reasonable result as a catalogue that is highly populated will introduce more irregularities to the density field from which the voids are defined than a more sparsely populated catalogue. The amount of small voids however can introduce physics that may not be accurately approximated by linear theory. If the voids are small irregular interactions between halo particles may start to dominate and the assumptions from section \ref{sec:radlintheory} such as the velocity of halos being purely in the radial direction may not give a good approximation for their real behaviour. Therefore, in order study wether this is the case, the MD3 and MD4 datasets the results was split into three. One catalogue containing all voids, one catalogue containing small voids with effecetive radius $20$Mpc/h$\leq 40$Mpc and one catalogue with large voids containing voids with $r\geq 40$Mpc/h. 
+
+\begin{figure}[htbp]\label{fig:voidhistMD2}
     \includegraphics{figures/histograms/void_histogramMD2.pdf}
     \caption{Figure showing a histogram of the effective void radius of voids found in the Multidark 2 dataset.}
 \end{figure}
-\begin{figure}[htbp]\label{fig:histMD3}
+\begin{figure}[htbp]\label{fig:voidhistMD3}
     \includegraphics{figures/histograms/void_histogramMD3.pdf}
-    \caption{Figure showing a histogram of the effective void radius of voids found in the Multidark 2 dataset.}
+    \caption{Figure showing a histogram of the effective void radius of voids found in the Multidark 3 dataset.}
 \end{figure}
-\begin{figure}[htbp]\label{fig:histMD4}
+\begin{figure}[htbp]\label{fig:voidhistMD4}
     \includegraphics{figures/histograms/void_histogramMD4.pdf}
-    \caption{Figure showing a histogram of the effective void radius of voids found in the Multidark 2 dataset.}
+    \caption{Figure showing a histogram of the effective void radius of voids found in the Multidark 4 dataset.}
 \end{figure}
 \subsection{Density profiles}
-
+In accordance with the method described in section \ref{sec:voiddensity}, the density profiles of voids $\delta(r)$ were calculated. The density profile for voids found in the MD2 dataset is illustrated in figure \ref{fig:deltaMD2}. The density profiles for the MD3 and MD4 with and without cuts, where only voids with radius radius $20$Mpc/h$\leq r\leq 40$Mpc/h and $r\geq 40$ Mpc/h are included, is shown in figures \ref{fig:deltadmMD3} and \ref{fig:deltadmMD4} respectively. From these figures one can see that in the void center the density is low while it it starts to increase before it reaches a maximum value. This is due to the fact that overdensities are usually found on the edges of voids as matter flows away from underdensities in the void in the void itself. After this overdensity the density profile declines and far away from the void center the average density profile converges towards the average density of the simlation volume. One can see from these figures that applying cuts will shift the peak of the overdensity. Larger voids will peak at a larger radius than the smaller voids. The smaller voids also has a more prominent overdensity than the larger voids.\\\indent
+ 
+These density profiles was also used to calibrate the dark matter density profile as described in section \ref{sec:dm_calibrate}. This is shown in figures \ref{fig:deltadmMD2}, \ref{fig:deltadmMD3} and \ref{fig:deltadmMD4} for the three datasets tested.
 \begin{figure}[htbp]\label{fig:deltaMD2}
     \includegraphics{figures/Density_profiles/Voids/density_profileMD2.pdf}
     \caption{Figure showing the density profile for voids found in the Multidark 2 dataset.}
@@ -69,7 +73,22 @@ halo particles.
     \includegraphics[width=1\textwidth]{figures/Density_profiles/Voids/density_profileMD4.pdf}
     \caption{Figure showing the density profile for voids found in the Multidark 4 dataset. Here the radius of voids considered are in the radius range of: all voids: top figure, $20$Mpc/h $\leq r\leq 40$Mpc/h in the bottom left, and $r\geq 40$Mpc/h in the bottom right.}
 \end{figure}
+In these figures the blue lined labeled "Scaled $\delta_{dm}(r)$" is the dark matter profile multiplied by a scaling factor in order for the amplitube to resemble that of $\delta_g(r)$. This factor was set to $1.85$. For use in the model for the correlation function, after it was scaled with the $1.85$ factor, the dark matter profile was divided by the bias term for the given MultiDark dataset it was utilized on. The bias factor for each dataset is listed in table \ref{tab:MDproperties} This is illustrated by the orange line. 
+\begin{figure}[htbp]\label{fig:deltadmMD2}
+    \includegraphics{figures/Density_profiles/Voids/DM_profile_MD2.pdf}
+    \caption{Figure showing the calbrated dark matter density profile in accordance with the method described in section \ref{sec:dm_calibrate} for voids found in the Multidark 2 dataset. The blue line is the dark matter density profile multiplied by a factor $1.85$ in order to make it resemble $\delta_g(r)$. The orange line is the scaled dark matter density profile divided by the bias factor for the given MultiDark dataset. The orange line is the one used in the calculation of the model.}
+\end{figure}
 
+\begin{figure}[htbp]\label{fig:deltadmMD3}
+    \includegraphics{figures/Density_profiles/Voids/DM_profile_MD3.pdf}
+    \caption{Figure showing the calbrated dark matter density profile in accordance with the method described in section \ref{sec:dm_calibrate} for voids found in the Multidark 3 dataset. The blue line is the dark matter density profile multiplied by a factor $1.85$ in order to make it resemble $\delta_g(r)$. The orange line is the scaled dark matter density profile divided by the bias factor for the given MultiDark dataset. The orange line is the one used in the calculation of the model.}
+\end{figure}
+
+\begin{figure}[htbp]\label{fig:deltadmMD4}
+    \includegraphics{figures/Density_profiles/Voids/DM_profile_MD4.pdf}
+    \caption{Figure showing the calbrated dark matter density profile in accordance with the method described in section \ref{sec:dm_calibrate} for voids found in the Multidark 4 dataset. The blue line is the dark matter density profile multiplied by a factor $1.85$ in order to make it resemble $\delta_g(r)$. The orange line is the scaled dark matter density profile divided by the bias factor for the given MultiDark dataset. The orange line is the one used in the calculation of the model.}
+\end{figure}
+The dark matter density profile is not as steep as the dark matter halo profile. This is because as $\delta_g(r)$ traces a discrete particle field, $\delta_{dm}(r)$ resembles a more fluid like behaviour. Allthough in this work the real dark matter profile for the dataset was not obtained and instead a dark matter profile from another dataset was utilized the principle for this behaviour is the same. The catalogue used to calculate $\delta_g(r)$ is found from the dark matter field and is a point particle distribution derived from a much larger amount of dark matter particles. The Larger amount of particles in the dark matter particle field will even out the slope of the density profile.\\\indent
 \begin{figure}[htbp]\label{fig:DeltaMD2}
     \includegraphics{figures/Density_profiles/Voids/DeltaMD2.pdf}
     \caption{Figure showing the density contrast $\Delta_v(r)$ for voids found in the Multidark 2 dataset.}
@@ -82,10 +101,12 @@ halo particles.
     \includegraphics[width=1\textwidth]{figures/Density_profiles/Voids/DeltaMD4.pdf}
     \caption{Figure showing the density contrast $\Delta_v(r)$ for voids found in the Multidark 4 dataset. Here the radius of voids considered are in the radius range of: all voids: top figure, $20$Mpc/h $\leq r\leq 40$Mpc/h in the bottom left, and $r\geq 40$Mpc/h in the bottom right.}
 \end{figure}
+In order to calculate the correlation function given in equations \ref{eq:corr_no_stream} and \ref{eq:corr_stream} the density contrast for voids $\Delta_v(r)$, given in equation \ref{eq:contrastvoid}, was calculated for all the datasets with the aforementioned cuts. This is illustrated in the figures \ref{fig:DeltaMD2}, \ref{fig:DeltaMD3} and \ref{fig:DeltaMD4}. Hva skal man si om denne?
 \subsection{Radial velocity profiles}
+The radial velocity profile $v_r(r)$ for all three datasets were calculated in accordance with the method described in section \ref{sec:voidvel}. These were also compared with the predicted radial velocity from linear theory given in equation \ref{eq:vrvoid}. This is illustrated in figures \ref{fig:vrMD2}, \ref{fig:vrMD3} and \ref{fig:vrMD4} for the MD2, MD3 and MD4 datasets respectively. From these figures, one can see that the measured radial velocity is in the range of approximately $150$km/s. This is in agreement with the results from \cite{Nadathur_2018} e.g figure 2 and figure 2 in \cite{Achitouv_streaming}. From the figures for the radial velocity, one can see that when applying cuts there is a significant increase in velocity for halos found around the larger voids. (Har større voids større overtettheter rundt kantene?)\\\indent
 \begin{figure}[htbp]\label{fig:vrMD2}
     \includegraphics[width=1\textwidth]{figures/Theory_vs_v_r/Voids/vr_comparisonMD2.pdf}
-    \caption{Figure showing the radial velocity profile halos around voids found in the Multidark 2 dataset. Here it is compared with the prediction from linear theory given in equation \ref{eq:vrvoid}. Here the radius of voids considered are in the radius range of: all voids: top figure, $20$Mpc/h $\leq r\leq 40$Mpc/h in the bottom left, and $r\geq 40$Mpc/h in the bottom right.}
+    \caption{Figure showing the radial velocity profile halos around voids found in the Multidark 2 dataset. Here it is compared with the prediction from linear theory given in equation \ref{eq:vrvoid}.}
 \end{figure}
 
 \begin{figure}[htbp]\label{fig:vrMD3}
@@ -97,7 +118,7 @@ halo particles.
     \includegraphics[width=1\textwidth]{figures/Theory_vs_v_r/Voids/vr_comparisonMD4.pdf}
     \caption{Figure showing the radial velocity profile halos around voids found in the Multidark 4 dataset. Here it is compared with the prediction from linear theory given in equation \ref{eq:vrvoid}. Here the radius of voids considered are in the radius range of: all voids: top figure, $20$Mpc/h $\leq r\leq 40$Mpc/h in the bottom left, and $r\geq 40$Mpc/h in the bottom right.}
 \end{figure}
-
+The last major component entering the correlation function in equation \ref{eq:corr_stream} is the velocity dispersion $\sigma_{v_z}$. This quantity was calculated for all three datasets with and without the aforementioned cuts and is illustrated in figures \ref{fig:sigmavMD2}, \ref{fig:sigmavMD3} and \ref{fig:sigmavMD4} for the three datasets respectively. As in \cite{Nadathur_corr} and \cite{Achitouv_streaming} the velocity dispersion converges to a value of around $300-350$ km/s giving good agreement with previous works. Howevever close to the void center, the dispersion profile is noisy. If few of the voids contains halo particles close to the void center, they will be accounted for and since the method divides by the amount of particles in a given radial bin around the void, bins with small number of particles can provide an unproportionately large contribution. This may give unreliable results later on when looking at small scales. For future improvements one could manually set the values at small scales to a fixed value to neglect this problem.
 \begin{figure}[htbp]\label{fig:sigmavMD2}
     \includegraphics[width=1\textwidth]{figures/Theory_vs_v_r/Voids/sigma_vzMD2.pdf}
     \caption{Figure showing the velocity dispersion for halos around voids given by equation \ref{eq:sigma_v} found in the Multidark 2 dataset. Here the radius of voids considered are in the radius range of: all voids: top figure, $20$Mpc/h $\leq r\leq 40$Mpc/h in the bottom left, and $r\geq 40$Mpc/h in the bottom right.}

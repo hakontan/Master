@@ -213,7 +213,13 @@ The total number of galaxies in the new sphere is stored and this process is
 repeat for all iterations defined by the radius vector $\vec{r}$. This process
 will give the density profile as a function of radius for a given void. By
 adding the density profiles for all voids and diving by the number of voids one
-will get an average density profile for the whole dataset.
+will get an average density profile for the whole dataset. In the end the quantity that will be calculated is 
+\begin{equation}
+    \delta(r)=\delta_v(r)/\bar{\delta}-1,
+\end{equation}
+where $\bar{\delta}$ is the average density in the simulation volume $N/V$, where $N$ is the total number of halo particles in the halo catalogue
+and $V$ is the total volume, which in this case is $2500^3$ [$\mathrm{Mpc}^3/h^3$]. $\delta_v(r)$ is the average density of voids profile of voids found
+in the catalogue. 
 \subsection{Velocity profile and velocity dispersion}\label{sec:voidvel}
 When studying linear theory applied to voids and filaments, one needs an observational or
 numerical representation to test its validity. As explained in section
