@@ -156,11 +156,11 @@ The last major component entering the correlation function in equation \ref{eq:c
 When fitting the parameters to data there is especially one parameter that is interesting and this parameter is $\epsilon$. Through the relations given in 
 equations \ref{eq:alpha_par} and \ref{eq:alpha_perp} this parameter is directly linked to the cosmology. $\beta$ when using a linear bias approximation and $\sigma_8$
 when using a dark matter profile are also of interest. In this case since we dont possess the dark matter profile for our dataset and instead adapt a dark matter profile from the HOD mock galaxy catalogue there is limited information that can be read from $\sigma_8$ in this case. $\sigma_v$ and $r_{scale}$ are treated as nuisance parameters.
+
 \subsection{Linear bias approximation}
 The model using a linear bias approximation and the velocity derived from linear theory was compared with data through maximum likelihood analysis, as described in section \ref{sec:maximum_likelihood_method}. For all the three datasets with cuts the maximum likelihood value and $1-\sigma$ interval are shown in table \ref{tab:MD_linbias}. Figure \ref{fig:linbiasMD2} shows the best fits for the parameters $\epsilon$, $\beta$ and $\sigma_v$ for the MD2 dataset with no cuts. All the likelihood estimate plots have the fiducial values taken from the dataset overplotted as lines and the maximum likelihood values as a cross. Here one can see that for the MD2 dataset without cuts the fiducial values for $\beta$ and $\epsilon$ lies within the $1-\sigma$ interval. The fits to $\sigma_v$ has the fiducial value outside of the $1-\sigma$ interval. Since this is treated as a nuisance parameter not much attention has been directed at studying this. As one could see from the histogram over effective void radius found in the dataset, shown in figure \ref{fig:voidhistMD2}, this dataset had the distributon of shifted the most towards higher radii. As the peak of the distribution is located at approximately $40$Mpc/h it seems likely that the majority of voids found in the dataset is large enough so that the approximations from linear theory are sufficient to model physical behaviour of dark matter halos around voids in this dataset.\\\indent
 The same analysis was applied to the MD3 dataset without cuts. This is shown in figure \ref{fig:linbiasMD3}. Here one can clearly see that the model provides bad fits for $\beta$. Allthough the model performs good when providing fits for $\epsilon$, $\beta$ is also important for the udneerstanding of the underlying cosmology. As one can see from the histogram of effective radii for voids in the MD3 dataset, shown in figure \ref{fig:voidhistMD3}, one can see that, in comparison with the histogram for voids in the MD2 dataset, the distribution is shifted dramatically towards smaller voids. When including all voids in the analysis a large number of voids may then incldue dark matter halos subject effects not properly approximated by linear theory thus resulting a worse performance. Figure \ref{fig:linbiasMD3modR2040} shows the same analysis but here only voids with effective radius $20$Mpc/h$\leq r\leq 40$Mpc/h are considered. Here one can see that allthough the model provides good fits for $\epsilon$, the model struggles with fitting $\beta$ for this dataset. In figure \ref{fig:linbiasMD3modR40} the model was tested on the MD3 dataset but only considering voids with effective radius $r\geq 40$Mpc/h. Here one can see that with the small voids excluded the model provides good fits for all the parameters. The maximum likelihood values for $\beta$ and $\epsilon$ is very close to their fiducial values. This strengthens the suspicion that non-linear effects found in small voids makes the model perform worse. Thus when using a dataset with a large amount of particles resulting in a large amount of small voids, applying cuts may prove crucial for gaining the correct information about the parameters if one were to apply these methods on observational data where the fiducial values are unknown. \\\indent
 From the histogram of effective void radii for MD4 dataset, shown in figure \ref{fig:voidhistMD4}, it is evident that this dataset, in which includes the most particles, also has the distribution shifted the most towards small voids. This means that a large fraction of the voids in this dataset may be subject to non linear effects. Figure \ref{fig:linbiasMD4} shows the model applied the MD4 dataset without cuts. Here one can see that allthough $\sigma_v$ and $\epsilon$ provide decent fits, the performance of the model when fitting $\beta$ is even worse than for the MD3 dataset without cuts. Figure \ref{fig:linbiasMD4R2040} shows the model applied on the MD4 dataset only considering voids with effective radius $20$Mpc/h$\leq r\leq 40$Mpc/h. Again one can see that the model is not sufficient to accurately fit $\beta$ when voids of this size is considered. With this cut the model performs slight better than with no cuts. This may be due to the very small voids with radius $r< 20$Mpc/h are not considered. Again when applying cuts including only voids with $r\geq 40$Mpc/h, as shown in figure \ref{fig:linbiasMD4}, one can see that the model is accurately picking out values close to their fiducial values for the parameters $\beta$ and $\epsilon$. These results indicate that linear theory may not be sufficient to accurately model small voids with radii in the $20$Mpc/h range. Future efforts should be put into studying exactly the size of voids where linear theory breaks down.  
-
 
 \begin{table}
     \centering
@@ -224,6 +224,14 @@ From the histogram of effective void radii for MD4 dataset, shown in figure \ref
     \label{fig:linbiasMD4R40}
 \end{figure}
 \subsection{Linear bias approximation with Achitouv (2017) term}
+In order to study wether improvements could be made to the regular model derived from linear theory, a correctional term proposed by \cite{Achitouv_streaming} was implemented, as described in section \ref{sec:vr_correction}. The best fit values for the parameters $\epsilon$, $\beta$ and $\sigma_v$ for all datasets tested using this model is shown in table \ref{tab:MD_linbiasachitouv}. For the MD2 dataset, shown in figure \ref{fig:linbiasMD2mod}, one can see that this model does not fit the $\epsilon$ parameter as good as the regular model shown in figure \ref{fig:linbiasMD2}. Allthough for this particular dataset the model with the correction term performed slightly better when fitting $\beta$, it performed significantly worse when fitting $\epsilon$. As $\epsilon$ is a  parameter that is directly linked to the cosmology this is the most important parameter in the model. Allthough $\beta$ and $\epsilon$ are still within the $1-\sigma$ interval, the correction term did not provide better fits than the regular model.\\\indent
+The same model with the correctional term is applied to the MD3 dataset without cuts is shown in figure \ref{fig:linbiasMD3mod}. Allthough it is slightly better than the regular model when fitting $\beta$ for this dataset, as with the MD2 dataset, the model has a worse performance when fitting $\epsilon$. This particular dataset contains a large amount of small voids and may therefore be subject to non-linear effects. Therefore, as with for the regular model, it may to be expected to perform as good on this partical dataset without cuts. However The regular model still managed to 
+capture the fiducial value for $\epsilon$ for this dataset without cuts. This model however did not perform as well as the regular model in terms of sampling the fiducial value for $\epsilon$.
+Figure \ref{fig:linbiasMD3modR2040} shows the model with the velocity correction for the MD3 dataset with the $20$Mpc/h$\leq r\leq 40$Mpc/h cuts. Here one can see, that allthough the $\beta$ factor, in which is slightly better here than for the regular model, the model with the velocity correction term lacks when sampling the best parameters for $\epsilon$. For the MD3 dataset with the $r \geq 40$Mpc/h cut, as shown in figure \ref{fig:linbiasMD3modR40}, one can see that there is no significant improvement to the parameter fits in contrast to the regular model where applying mass cuts seemed to have an effect where it reduced non linear effects present. For this dataset with the g9iven cut $\epsilon$ the model does not perform as well as the regular model when sampling $\epsilon$. Allthough it is slightly better when sampling $\beta$ without cuts for MD3 dataset.
+
+The model with the velocity correction term was also applied to the MD4 dataset without cuts. This is shown in figure \ref{fig:linbiasMD4mod}. Here one can see that, as with the regular model for this dataset, $\beta$ is not sampled accurately when there are no cuts. 
+This is the same behaviour as with the regular model for this dataset without cuts and may be attributed to the presence of a large number of small voids dominated by non-linear effects. The $\epsilon$ factor however is not sampled as good as for the regular model. The MD4 dataset with the cut $20$Mpc/h$\leq r\leq 40$Mpc/h can be seen in figure \ref{fig:linbiasMD4modR2040}. Allthough the sampling of the $\beta$ parameter is slightly better it is still outside the $1-\sigma$ interval. The sampling of the $\epsilon$ parameter is also slightly worse than for the dataset without cuts. Figure \ref{fig:linbiasMD4R40} shows the model with the velocity correction term for the MD4 dataset only including voids with effective radius $r\geq 40$Mpc/h. The sampling of $\epsilon$ is approximately the same as for the other two figures for the MD4 dataset. Allthough with this cut the sampling of $\beta$ is greatly improved. This behaviour has proven to be consistent for both the MD3 and MD4 dataset for both the models with and without the velocity correction term. The sampling of $\epsilon$ remains almost the same with or without cuts, however the regular model sampled it closer to the fiducial value for all the datasets. $\beta$ on the other hand is highly affected by the cuts.
+
 \begin{table}
     \centering
     \footnotesize
@@ -240,66 +248,78 @@ From the histogram of effective void radii for MD4 dataset, shown in figure \ref
         MD4 $r\geq 40$ Mpc/h & $0.98717\pm 0.01048$ & $0.42788\pm 0.03484$ & $251.164\pm 55.278$ \\
         \hline
     \end{tabular}
-    \label{tab:MD_linbiasachitouv}
+    
     \caption{Best fit values for the parameters $\epsilon$, $\beta$ and $\sigma_v$ for the different datasets using a linear bias approximation and the approximation term given in equation \ref{eq:achitouv2017}.}
+    \label{tab:MD_linbiasachitouv}
 \end{table}
 
-\begin{figure}[htbp]\label{fig:linbiasMD2mod}
+\begin{figure}[htbp]
     \includegraphics[width=1\textwidth]{figures/cornerplots/v_correction/MD2_mod.pdf}
     \caption{Figure showing showing parameters fits to $\beta$, $\sigma_v$ and $\epsilon$ for the Multidark 2 dataset using a linear bias approximation, modelling the the proposed velocity correction by \cite{Achitouv_streaming} linear theory given by equation \ref{eq:achitouv2017}.}
+    \label{fig:linbiasMD2mod}
 \end{figure}
 
-\begin{figure}[htbp]\label{fig:linbiasMD3mod}
+\begin{figure}[htbp]
     \includegraphics[width=1\textwidth]{figures/cornerplots/v_correction/MD3_mod.pdf}
     \caption{Figure showing showing parameters fits to $\beta$, $\sigma_v$ and $\epsilon$ for the Multidark 3 dataset using a linear bias approximation, modelling the the proposed velocity correction by \cite{Achitouv_streaming} linear theory given by equation \ref{eq:achitouv2017}.}
+    \label{fig:linbiasMD3mod}
 \end{figure}
 
-\begin{figure}[htbp]\label{fig:linbiasMD3modR2040}
+\begin{figure}[htbp]
     \includegraphics[width=1\textwidth]{figures/cornerplots/v_correction/MD3_R20_40_mod.pdf}
     \caption{Figure showing showing parameters fits to $\beta$, $\sigma_v$ and $\epsilon$ for the Multidark 3 dataset using a linear bias approximation, modelling the the proposed velocity correction by \cite{Achitouv_streaming} linear theory given by equation \ref{eq:achitouv2017}. In this figure only voids with effective radius $20$Mpc/h$\leq r \leq 40$Mpc/h are considered.}
+    \label{fig:linbiasMD3modR2040}
 \end{figure}
 
-\begin{figure}[htbp]\label{fig:linbiasMD3modR40}
+\begin{figure}[htbp]
     \includegraphics[width=1\textwidth]{figures/cornerplots/v_correction/MD3_R40_200_mod.pdf}
     \caption{Figure showing showing parameters fits to $\beta$, $\sigma_v$ and $\epsilon$ for the Multidark 3 dataset using a linear bias approximation, modelling the the proposed velocity correction by \cite{Achitouv_streaming} linear theory given by equation \ref{eq:achitouv2017}. In this figure only voids with effective radius $r \geq 40$Mpc/h are considered.}
+    \label{fig:linbiasMD3modR40}
 \end{figure}
 
 
-\begin{figure}[htbp]\label{fig:linbiasMD4mod}
+\begin{figure}[htbp]
     \includegraphics[width=1\textwidth]{figures/cornerplots/v_correction/MD4_mod.pdf}
     \caption{Figure showing showing parameters fits to $\beta$, $\sigma_v$ and $\epsilon$ for the Multidark 4 dataset using a linear bias approximation, modelling the the proposed velocity correction by \cite{Achitouv_streaming} linear theory given by equation \ref{eq:achitouv2017}.}
+    \label{fig:linbiasMD4mod}
 \end{figure}
 
-\begin{figure}[htbp]\label{fig:linbiasMD4modR2040}
+\begin{figure}[htbp]
     \includegraphics[width=1\textwidth]{figures/cornerplots/v_correction/MD4_R20_40_mod.pdf}
     \caption{Figure showing showing parameters fits to $\beta$, $\sigma_v$ and $\epsilon$ for the Multidark 4 dataset using a linear bias approximation, modelling the the proposed velocity correction by \cite{Achitouv_streaming} linear theory given by equation \ref{eq:achitouv2017}. In this figure only voids with effective radius $20$Mpc/h$\leq r \leq 40$Mpc/h are considered.}
+    \label{fig:linbiasMD4modR2040}
 \end{figure}
 
-\begin{figure}[htbp]\label{fig:linbiasMD4modR40}
+\begin{figure}[htbp]
     \includegraphics[width=1\textwidth]{figures/cornerplots/v_correction/MD4_R40_200_mod.pdf}
     \caption{Figure showing showing parameters fits to $\beta$, $\sigma_v$ and $\epsilon$ for the Multidark 4 dataset using a linear bias approximation, modelling the the proposed velocity correction by \cite{Achitouv_streaming} linear theory given by equation \ref{eq:achitouv2017}. In this figure only voids with effective radius $r \geq 40$Mpc/h are considered.}
+    \label{fig:linbiasMD4modR40}
 \end{figure}
 
 \subsection{Dark matter profile fits}
 
-\begin{figure}[htbp]\label{fig:linbiasMD3DM}
-    \includegraphics[width=1\textwidth]{figures/cornerplots/rscale/MD3_all_DM_rscale.pdf}
+\begin{figure}[htbp]
+    \includegraphics[width=1\textwidth]{figures/cornerplots/rscale/MD3_DM_rscale.pdf}
     \caption{Figure showing showbing parameters fits to $f\sigma_8$, $\sigma_v$ $r_{\mathrm{scale}}$ and $\epsilon$ for the Multidark 3 dataset using a dark matter profile as described in section \ref{sec:dm_calibrate} and modelling the velocity using linear theory as in equation \ref{eq:vrvoid}}
+    \label{fig:MD3DM}
 \end{figure}
 
-\begin{figure}[htbp]\label{fig:linbiasMD3DMR40}
+\begin{figure}[htbp]
     \includegraphics[width=1\textwidth]{figures/cornerplots/rscale/MD3_R40_200_DM_rscale.pdf}
     \caption{Figure showing showing parameters fits to $f\sigma_8$, $\sigma_v$ $r_{\mathrm{scale}}$ and $\epsilon$ for the Multidark 3 dataset using a dark matter profile as described in section \ref{sec:dm_calibrate} and modelling the velocity using linear theory as in equation \ref{eq:vrvoid}. In this figure only voids with effective radius $r \geq 40$Mpc/h are considered.}
+    \label{fig:MD3DMR40}
 \end{figure}
 
-\begin{figure}[htbp]\label{fig:linbiasMD4DM}
-    \includegraphics[width=1\textwidth]{figures/cornerplots/rscale/MD4_all_DM_rscale.pdf}
+\begin{figure}[htbp]
+    \includegraphics[width=1\textwidth]{figures/cornerplots/rscale/MD4_DM_rscale.pdf}
     \caption{Figure showing showing parameters fits to $f\sigma_8$, $\sigma_v$ $r_{\mathrm{scale}}$ and $\epsilon$ for the Multidark 4 dataset using a dark matter profile as described in section \ref{sec:dm_calibrate} and modelling the velocity using linear theory as in equation \ref{eq:vrvoid}}
+    \label{fig:MD4DM}
 \end{figure}
 
-\begin{figure}[htbp]\label{fig:linbiasMD4DMR40}
+\begin{figure}[htbp]
     \includegraphics[width=1\textwidth]{figures/cornerplots/rscale/MD4_R40_200_DM_rscale.pdf}
     \caption{Figure showing showing parameters fits to $f\sigma_8$, $\sigma_v$ $r_{\mathrm{scale}}$ and $\epsilon$ for the Multidark 4 dataset using a dark matter profile as described in section \ref{sec:dm_calibrate} and modelling the velocity using linear theory as in equation \ref{eq:vrvoid}. In this figure only voids with effective radius $r \geq 40$Mpc/h are considered.}
+    \label{fig:MD4DMR40}
 \end{figure}
 
 \begin{table}\label{tab:MD_DM}
@@ -309,16 +329,43 @@ From the histogram of effective void radii for MD4 dataset, shown in figure \ref
         \hline
         Dataset& $\epsilon$ & $f\sigma_8$ & $\sigma_v$ & $r_\mathrm{scale}$ \\
         \hline
-        MD2& $0.99947\pm 0.00988$ & $0.53545\pm 0.60226$ & $352.832\pm 34.967$ & $0.94749\pm 0.05621$\\ 
-        MD3 no cuts. & $1.00110\pm 0.00950$ & $0.35727\pm 0.0.40479$ & $293.070\pm 29.288$ & $0.91153\pm 0.59305$ \\
-        MD3 $r\geq 40$Mpc/h & $0.99906\pm 0.01072$ & $0.65484\pm 0.06126$ & $283.288\pm 52.371$ & $1.03431\pm 0.05075$\\
-        MD4 & $0.99823\pm 0.00935$ &  $0.2340\pm 0.02941$ & $232.614\pm 25.018$ & $0.91541\pm 0.07299$\\
-        MD4 $r\geq 40$ Mpc/h & $0.99543\pm 0.01123$ & $0.60042\pm 0.04589$ & $154.538\pm 45.498$ & $1.03838\pm 0.04681$ \\
+        MD3 no cuts. & $0.99893\pm 0.00945$ & $0.35859\pm 0.03900$ & $289.107\pm 29.540$ & $0.92314\pm 0.05873$ \\
+        MD3 $r\geq 40$Mpc/h & $1.00038\pm 0.01125$ & $0.58883\pm 0.05413$ & $271.288\pm 51.705$ & $1.01360\pm 0.05174$\\
+        MD4 & $0.99922\pm 0.00929$ &  $0.23048\pm 0.02925$ & $234.701\pm 25.439$ & $0.93445\pm 0.07486$\\
+        MD4 $r\geq 40$ Mpc/h & $0.99576\pm 0.01163$ & $0.5872\pm 0.04692$ & $164.232\pm 44.885$ & $1.04583\pm 0.04659$ \\
         \hline
     \end{tabular}
     \caption{Best fit values for the parameters $\epsilon$, $\sigma_v$, $f \sigma_8$ and $r_\mathrm{scale}$ for the different datasets using a dark matter density profile.}
 \end{table}
 
-\subsection{Correlation function void-galaxy $\xi_{vg}$}
+\subsection{Correlation function void-galaxy $\xi_{\mathrm{vg}}$}
+\begin{figure}[htbp]
+    \includegraphics{figures/correlation/xi_rsd_MD2.pdf}
+    \caption{Figure showing the cross-correlation $\xi^{s}_{\mathrm{vg}}$ function using the best fit parameters for the streaming model and the model with the velocity correction term, given in tables \ref{tab:MD_linbias} and \ref{tab:MD_linbiasachitouv} respectively, for the MD2 dataset.}
+    \label{fig:xiMD2}
+\end{figure}
 
+\begin{figure}[htbp]
+    \includegraphics{figures/correlation/xi_rsd_MD3.pdf}
+    \caption{Figure showing the cross-correlation $\xi^{s}_{\mathrm{vg}}$ function using the best fit parameters for the streaming model and the model with the velocity correction term, given in tables \ref{tab:MD_linbias} and \ref{tab:MD_linbiasachitouv} respectively, for the MD3 dataset.}
+    \label{fig:xiMD3}
+\end{figure}
+
+\begin{figure}[htbp]
+    \includegraphics{figures/correlation/xi_rsd_MD3_R40_200.pdf}
+    \caption{Figure showing the cross-correlation $\xi^{s}_{\mathrm{vg}}$ function using the best fit parameters for the streaming model and the model with the velocity correction term, given in tables \ref{tab:MD_linbias} and \ref{tab:MD_linbiasachitouv} respectively, for the MD3 dataset. Here only voids with effective radius $r\geq 40$Mpc/h is included.}
+    \label{fig:xiMD3R40}
+\end{figure}
+
+\begin{figure}[htbp]
+    \includegraphics{figures/correlation/xi_rsd_MD4.pdf}
+    \caption{Figure showing the cross-correlation $\xi^{s}_{\mathrm{vg}}$ function using the best fit parameters for the streaming model and the model with the velocity correction term, given in tables \ref{tab:MD_linbias} and \ref{tab:MD_linbiasachitouv} respectively, for the MD4 dataset.}
+    \label{fig:xiMD4}
+\end{figure}
+
+\begin{figure}[htbp]
+    \includegraphics{figures/correlation/xi_rsd_MD4_R40_200.pdf}
+    \caption{Figure showing the cross-correlation $\xi^{s}_{\mathrm{vg}}$ function using the best fit parameters for the streaming model and the model with the velocity correction term, given in tables \ref{tab:MD_linbias} and \ref{tab:MD_linbiasachitouv} respectively, for the MD4 dataset. Here only voids with effective radius $r\geq 40$Mpc/h is included.}
+    \label{fig:xiMD4R40}
+\end{figure}
 
