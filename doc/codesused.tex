@@ -11,16 +11,16 @@ sets. In this section i will give a brief overview of how DisPerSE works to
 identify the filamentary structure from a particle distribution. For a thorough
 review i recommend the paper \cite{2011MNRAS.414..350S}, in which the following
 chapter is based and much notation is borrowed, describing the theory behind DisPerSE and the
-references therein.
+references therein. Another good summary of the beforementioned paper is found in \cite{Alexhothesis}, in which the following chapter also has drawn information from.
 \subsection{Morse-Theory}
 To identify the features of the cosmic web from the density field of our
 particle distribution, DisPerSE relies on Morse Theory \cite{Morse}. Morse
 theory is a mathematical framework used to relate the geometrical and
-topological properties of a function. In our case we utilize morse theory to
-study the relation between the density field and topological features such as
+topological properties of a function. In our case the topological features are quantities such as the number of galaxy clusters or dark matter halos while the geometric features are quantites related to the precise position of the galaxiy cluster or dark matter halos and the local density. In our case we utilize morse theory to
+study the relation between the density field derived from a dark matter halo catalogue and features such as
 filaments, voids and walls.
 This is done by studying the gradient of a smooth function $f$. By studying the
-gradient of the said function $f$, one can analyze the topological features of
+gradient of the said function $f$, one can analyze the topological and geometrical features of
 the manifold. In general, to apply Morse theory one needs a smooth scalar function $f$
 that is twice differentiable. In our case this scalar function is the density
 field of our simulation volume. In Morse theory the gradient of the function $f$
@@ -55,9 +55,9 @@ order $k$ on the Morse function living in $\mathbb{R}^d$, we have an ascending m
 $d-k$ dimensions. This ascending manifold is constructed by the set of points reached by
 all integral lines with origin at the critical point $P$. The descending
 manifold is a $k-$dimensional region of space defined by all integral lines with
-destination at point $P$. This leads to the definition of the Morse-complex.
+destination at point $P$. An ascending $3-$manifold associated with minimas trace underdense regions represented by voids. Ascending $2-$manifolds trace walls and the filaments themselves are traced by ascending $1-$manifolds. This leads to the definition of the Morse-complex.
 The Morse complex is simply the set of all the ascending or descending
-manifolds.\\
+manifolds. The Morse complex establishes the link between the geometrical properties such as the location of critical points and the paths of the gradients with the topological feature such as how the critical points are connected and how many there are of each type.\\
 \subsection{Discrete Morse-theory}
 The formality currently introduced deals with smooth continuous functions. This
 however is rarely applicable to measured data or simulations. For an example the density field
@@ -82,11 +82,11 @@ l-simplex $\gamma_l=\{p_0,\dots,p_l\}$ with $l\leq k$. If $\gamma_l$ is a face
 of $\sigma_k$, then $\sigma_k$ is called a coface of $\gamma_l$. When $k$ and
 $l$ only differs by one, a face is called a facet and a coface is called a cofacet. These simplices make up
 what is called a simplicial complex in which a discrete Morse-function is
-defined and discrete Morse-theory is applied. A simplicial complex $K$ are made
+defined and discrete Morse-theory is applied. A simplicial complex $K$ is made
 up of a finite set of simplices such that $\sigma_k\in K$. With this one can
 define a discrete Morse-function $f$ as a function that maps a real value
 $f(\sigma_k)$ for each simplex in the simplicial complex $K$. As for the
-Morse-function defined in. regular Morse-theory, the discrete counterpart also has
+Morse-function defined in regular Morse-theory, the discrete counterpart also has
 to be differentiable and the gradient can only flow towards one preferred direction
 locally. For this to occur and a Morse-function to be defined on the simplicial
 complex it has to satisfy the following criteria
@@ -192,7 +192,7 @@ function $f$, a persistence ratio $r$ is given as
 This ratio is used for determining the statiscical significance of persistance
 pairs. The significance given in "number of sigmas" reads 
 \begin{equation}
-    S(q_k)=\mathrm{Erf}^{-1}(\frac{P_k(r(q_k))+1}{2}),
+    S(q_k)=\mathrm{Erf}^{-1}\Big[\frac{P_k(r(q_k))+1}{2}\Big],
 \end{equation}
 where Erf is the error function and $P_k(r(q_k))$ is the cumulative probability
 that a persistence pair with persistence ratio $r\geq r_0$ exists in the

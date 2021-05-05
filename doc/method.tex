@@ -6,7 +6,7 @@ studying the physics of voids and filaments. The radial velocity component of
 halos in filaments and voids is an analytical tool that is useful for comparing
 with data from simulation for testing wether linear theory can be used to
 approximate the physical behaviour of halos and galaxies observed in these objects.
-\subsection{Radial velocity component for filaments}
+\subsection{Radial velocity component for filaments}\label{sec:filamentvr}
 When calculating the radial velocity component of filaments, the average filament is
 approximated to be a cylindrical object. The radial component is the component of
 the velocity vector $\vec{v}$ that points perpendicular to the longitudinal axis
@@ -128,7 +128,7 @@ The code \footnote{The code for measuring correlation functions utilized for thi
 implements a Landy-Szalay estimator \cite{Landy}. The Landy-Szalay estimator
 for the angular cross correlation function, where $s$ denotes redshiftspace, reads
 \begin{equation}
-    \xi^s(s,u)=\frac{\langle D_1D_2\rangle-\langle D_1R_2\rangle-\langle D_2R_1\rangle+\langle R_1R_2\rangle}{\langle R_1R_2\rangle}.
+    \xi^s(s,\mu)=\frac{\langle D_1D_2\rangle-\langle D_1R_2\rangle-\langle D_2R_1\rangle+\langle R_1R_2\rangle}{\langle R_1R_2\rangle}.
 \end{equation}
 Where, the terms in the square brackets denotes the number of pairs of the given quantities. In this analysis, subscript $1$ denotes either void centers or center or
 the center of cosmic filaments and subscript $2$ denotes halo positions. $D_1$
@@ -136,7 +136,9 @@ and $D_2$ refers to the actual data while $R$ is samples from a random
 distribution resembling the dataset. Each quantity in the squared brackets
 denote the mean value of of a pair with separation $r$ and $\mu$, where
 $\mu=cos(\theta)$ is the cosine of the angle between the separation vector and
-the line of sight direction. An illustration of a pair in the coordinate system
+the line of sight direction. However in this project I will only deal with simulation data in which includes a complete catalogue without empty patches.
+The numerical calculation of the correlation function will then consist of counting void-halo pairs with separation $s$ and angle $\mu$.
+An illustration of a pair in the coordinate system
 of the observer is illustrated in figure \ref{fig:corrpair}
 \begin{figure}\label{fig:corrpair}
     \begin{tikzpicture}
@@ -166,14 +168,12 @@ of the observer is illustrated in figure \ref{fig:corrpair}
     corresponding system has vectors denoted as $\vec{s}$.}
 \end{figure}
 \\\indent
-In order to remove the angular dependency, the angular correlation function is
-expanded in mulitpoles. The multipoles are given by 
+In realspace, due to isotropy and homegenity, there is no angular dependence on the correlation function and $\xi^r(r)$ is only a function of radius. However the redshiftspace distortions themselves are responsible for the angular dependency in $\xi^s(r,\mu)$. Since redshiftspace distortions are only present when considering the component of a vector parallel to the line of sight direction, we loose isotropy in redshiftspace. In order to characterise the angular dependencies the angular cross correlation function is expanded into multipoles
 \begin{equation}
     \xi^s_\ell(s)=\int_0^1\xi^s(s,\mu)(1+2\ell)L_\ell(\mu)d\mu
 \end{equation}
 \cite{Nadathur_corr}, where $L_\ell(\mu)$ are Legendre polynomials
-of order $\ell$. In this analysis only the monopole and multipole
-are taken into consideration. The Legendre multipoles for $\ell=0$ and
+of order $\ell$. The redshiftspace distortions themselves are fully characterised by the monopole and quadrupole terms\cite{Hamaus_2017}. The Legendre polynomials for $\ell=0$ and
 $\ell=1$ are given by
 \begin{equation}
     L_0(\mu)=1
@@ -479,7 +479,7 @@ The radial density profile of the filament segment is then given as
 where $N_i$ is the number of particles in each radial bin. For each filament segment
 this is added together and in the end it is divided by the total number of
 filaments to get the average density profile.
-\subsection{Velocity profile}
+\subsection{Velocity profile}\label{sec:numfilamentvelocity}
 In the galaxy catalogue of halo particles in the simulation volume the $v_x$,
 $v_y$ and $v_z$ components of the halo particle velocity $\vec{v}$ is given. To
 compare the model from linear theory given in equation \ref{eq:vrfilament} we
@@ -517,7 +517,7 @@ added to the total velocity profile for each filament. In the end the
 velocity is divided by the number of filaments to get the average radial
 velocity profile for filaments.
 \section{Parametrizing distance scales.}\label{sec:rescale_r}
-In order to implement our model we have to introduce a fiducial cosmology. We have to assign values for parameters such as $\Omega_m$ and $\Omega_\Lambda$  the model to function. These fiducial values we assign however may differ from the true cosmology. This will introduce distortions in the distance measurements. As conducted by \cite{BeyondBAO}, the method applied to the analysis in this project wil also parametrize these distortions by introducing two dimensionless ratios. One in the perpendicular and one the parallel direction as
+In order to implement our model we have to introduce a fiducial cosmology. We have to assign values for parameters such as $\Omega_m$ and $\Omega_\Lambda$ for the model to function. These fiducial values we assign however may differ from the true cosmology. This will introduce distortions in the distance measurements. As conducted by \cite{BeyondBAO}, the method applied to the analysis in this project wil also parametrize these distortions by introducing two dimensionless ratios. One in the perpendicular and one the parallel direction as
 \begin{equation}\label{eq:alpha_perp}
     \alpha_\perp=\frac{d_A(z)}{d_A^{\mathrm{fid}}(z)}
 \end{equation} 
@@ -525,7 +525,7 @@ and
 \begin{equation}\label{eq:alpha_par}
     \alpha_\parallel=\frac{H^{\mathrm{fid}}(z)}{H(z)},
 \end{equation}
-where $d_A$ is the angular diameter distance. The correlation function $\xi^s(\vec{s},\mu)$ is measured using the fiducial
+where $d_A$ is the angular diameter distance. The correlation function $\xi^s(s,\mu)$ is measured using the fiducial
 components $s_\parallel^\mathrm{fid}$ and $s_\perp^\mathrm{fid}$. These components are then rescaled using the dimensionless ratios as
 \begin{equation}
     s_\parallel=\alpha_\parallel s_\parallel^\mathrm{fid}
@@ -538,13 +538,18 @@ Likewise the correlation function in realspace $\xi^r(r)$ takes into account dis
 \begin{equation}\label{eq:r_scaling}
     r=\int_0^1\alpha_\parallel r^{\mathrm{fid}}\sqrt{1+(1+\mu^2)\Big[\frac{\alpha_\perp^2}{\alpha_\parallel^2}-1\Big]}d\mu.
 \end{equation}
-This rescaling of parameters gives an additional parameter when fitting the models to data as both $\alpha_\perp$ and $\alpha_\parallel$ has to be tested in order to determine the best fit to the distance parametrization. In simulations the fiducial cosmology is known and $\alpha_\parallel=\alpha_\perp=1$. Therefore constraining $\epsilon=\alpha_\perp/\alpha_\parallel$ for a model applied to simulation data can provide a good test of how the model performs.
+This rescaling of parameters gives an additional parameter when fitting the models to data as both $\alpha_\perp$ and $\alpha_\parallel$ has to be tested in order to determine the best fit to the distance parametrization. In simulations the fiducial cosmology is known and $\alpha_\parallel=\alpha_\perp=1$. Therefore constraining $\epsilon=\alpha_\perp/\alpha_\parallel$ for a model applied to simulation data can provide a good test of how the model performs. These parameters are one of the most important parameters of the model as these are directly linked to the cosmological parameters $\Omega_\Lambda$ and $\Omega_m$. In \cite{Nadathur_2020}, the authors show that the study of voids are important additions to other famous cosmological surveys for constraining the cosmological parameters. This is shown in \ref{fig:voidscosmoparam}
+\begin{figure}
+    \includegraphics{figures/voidscosmo.png}
+    \caption{Marginalised constraints on $\Omega_m$ and $\Omega_\Lambda$ inferred from different cosmological surveys. This figure illustrates that the study of voids is a good addition to other experiments in contributing to providing constraints for these cosmological parameters. Figure is copied from \cite{Nadathur_2020}.}
+    \label{fig:voidscosmoparam}
+\end{figure}
 \subsection{Calibrating dark matter profiles.}\label{sec:dm_calibrate}
 When using a linear bias approximation we can simply approximate $\delta(r)_g=\xi_{\mathrm{vg}}^r(r)$ as the realspace correlation function between voids and galaxies and the normalized density profile $\delta(r)$ effectively traces the same quantity. The linear bias approximation itself is to just use $\delta_{\mathrm{dm}}=\delta_\mathrm{g}/b$. However when using a dark matter density profile the bias factor is not considered and instead, in linear theory, $\sigma_8$ is used to scale the amplitude of the density profile. At a given redshift $z$ we then have
 \begin{equation}\label{eq:delta_dm_profile}
-    \delta(r,z) = \frac{\sigma_8(z)}{\sigma_8^{\mathrm{MD}}}\sigma_8^\mathrm{fid}(r,z),
+    \delta(r,z) = \frac{\sigma_8(z)}{\sigma_8^{\mathrm{MD}}}\delta^\mathrm{fid}(r,z),
 \end{equation}
-where $sigma_8^{\mathrm{MD}}=0.8228$ is the value for $\sigma_8$ for the multidark simulation dataset with $z=1$. For $\sigma_8^\mathrm{fid}(r,z)$, the exact dark matter density profile for the four simulated datasets was not obtained. Instead i will use a dark matter profile for voids obtained from the BigMD mock CMASS galaxy sample described in section (skriv om dette). This dark matter profile will need some extra scaling in order for it to accurately represent the dark matter profile for the dataset used in the this analysis. Its amplitube is scaled by $\sigma_8$ as shown in equation \ref{eq:delta_dm_profile} however beforehand i will scale it using by eye measurement making sure its amplitube is approximately equal to the halo dark matter profile derived from the dataset $\delta_\mathrm{g}(r)$ and dividing by the bias factor for the given dataset. This will make the amplitude roughly in line with what the corresponding dark matter profile for the dataset would have looked like. However the slope may differ. Therefore when scaling the radius an extra $r_\mathrm{scale}$ parameter is multiplied with equation \ref{eq:r_scaling} when scaling the radius for the dark matter density profile. This parameter $r_\mathrm{scale}$ will be included in the likelihood analysis as a part of the model when fitting the data. This will make it so that both the amplitube and the slope of the dark matter density profile will be adjusted when fitting the parameters to the data.
+where $\sigma_8^{\mathrm{MD}}=0.8228$ is the value for $\sigma_8$ for the multidark simulation dataset with $z=0$. For $\sigma_8^\mathrm{fid}(r,z)$, the exact dark matter density profile for the four simulated datasets was not obtained. Instead i will use a dark matter profile for voids obtained from the BigMD mock CMASS galaxy sample described in section (skriv om dette). This dark matter profile will need some extra scaling in order for it to accurately represent the dark matter profile for the dataset used in the this analysis. Its amplitube is scaled by $\sigma_8$ as shown in equation \ref{eq:delta_dm_profile} however beforehand i will scale it using by eye measurement making sure its amplitube is approximately equal to the halo dark matter profile derived from the dataset $\delta_\mathrm{g}(r)$ and dividing by the bias factor for the given dataset. This will make the amplitude roughly in line with what the corresponding dark matter profile for the dataset would have looked like. However the slope may differ. Therefore when scaling the radius an extra $r_\mathrm{scale}$ parameter is multiplied with equation \ref{eq:r_scaling} when scaling the radius for the dark matter density profile. This parameter $r_\mathrm{scale}$ will be included in the likelihood analysis as a part of the model when fitting the data. This will make it so that both the amplitube and the slope of the dark matter density profile will be adjusted when fitting the parameters to the data.
 \section{Likelihood analysis.}\label{sec:maximum_likelihood_method}
 In order to test the validity of the models and to see wether the proposed improvements perform better a likelihood analysis is conducted. The likelihood analysis in this thesis largely follows the approach conducted by \cite{BeyondBAO}. The code implementing the Metropolis-hastings MCMC chain is provided by the publicly available Victor code\footnote{The code used for the likelihood analysis is provided by \url{https://github.com/seshnadathur/victor}}. Using the method described in section \ref{sec:numerical_corr} the angular cross correlation function $\xi^s(s,\mu)$ and its multipoles is calculated from a simulated halo catalogue in redshiftspace represented as discrete point particles in. For the purpose of this analysis the Multidark dataset is utilized. (Finn ut hvordan denne referes til og fortel litt mer om den.). The numerical angular cross correlation function  is measured using $80$ linearly spaced bins for $0<\mu<1$ and $30$ linearly spaced bins for $2$Mpc/h$<s<118$Mpc/h. Using the same number of bins and datapoints the corresponding angular cross correlation function in realspace $\xi^r(r)$ is also calculated using the corresponding realspace halo catalogue. Using the methods described in sections \ref{sec:voiddensity} and \ref{sec:voidvel} the density profile and velocity dispersion is calculated for each void in catalogue identified by REVOLVER. The density profile and velocity dispersion is calculated using $30$ linearly spaced bins for $2$Mpc/h$<r<118$Mpc/h. With these quantities calculated one has all the components needed to evaluate equation \ref{eq:corr_stream}.
 \subsection{Estimating the covariance matrix}
