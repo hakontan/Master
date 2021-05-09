@@ -1,6 +1,6 @@
-\chapter{Results/Discussion}
+\chapter{Results/Discussion}\label{sec:results}
 The following section is split into two sections. One section is devoted to the analysis conducted on filaments and another section conducted to the analysis conducted on voids. Throughout this analysis a fiducial cosmology is assumed. Every time a quantity relying on cosmological parameter is illustrated, the following values were used: $H_0=100h$kms$^{-1}$Mpc$^{-1}$, $\Omega_m=0.31$ and $\Omega_\Lambda=0.69$.
-\section{Filament analysis}
+\section{Filament analysis}\label{sec:filaments}
 
 \subsection{Effect of choosing persistence ratio on dataset}
 As discussed in section \ref{sec:persistence} DisPerSE has an option to filter
@@ -94,7 +94,7 @@ The velocites predicted by linear theory displays the same behaviour as the velo
     \caption{Figure showing the calculated radial velocity profile compared with the predictions from linear theory for filaments in the MD2 dataset with $\sigma=2$.}
     \label{fig:filvrMD2s2}
 \end{figure}
-\section{Void analysis}
+\section{Void analysis}\label{sec:void}
 \subsection{Histograms}
 The effective void radius measured in Mpc/h is one of the void quantities that is measured from the void finder in the REVOLVER code. Figures \ref{fig:voidhistMD2}, \ref{fig:voidhistMD2} and \ref{fig:voidhistMD4} shows histograms of the effective void radius found in the MD2, MD3 and MD4 datasets respectively. The histograms were calculated using radius bins with a size of $2$Mpc/h. Due to a small sample size giving lots of noise and bad fits to the cross correlation function the MD1 dataset was excluded from the void analysis. From the figures one can see that for the MD2 and MD3 datasets the distribution voids $20$Mpc/h to $80$Mpc/h range. With the MD4 dataset the distribution is tilted more towards smaller voids with the peak of the distribution at approximately $30$Mpc/h. This trend can be seen throughout all the three datasets tested. The more halo particles in the catalogue the more the distribution shifts towards smaller voids. This is a reasonable result as a catalogue that is highly populated will introduce more irregularities to the density field from which the voids are defined than a more sparsely populated catalogue. The amount of small voids however can introduce physical effects that may not be accurately approximated by linear theory. If the voids are small irregular interactions between halo particles may start to dominate and the assumptions from section \ref{sec:radlintheory} such as the velocity of halos being purely in the radial direction may not give a good approximation for their real behaviour. Therefore, in order study wether this is the case, the MD3 and MD4 datasets the results was split into three. One catalogue containing all voids, one catalogue containing small voids with effecetive radius $20$Mpc/h$\leq 40$Mpc and one catalogue with large voids containing voids with $r\geq 40$Mpc/h. 
 
