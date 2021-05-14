@@ -5,7 +5,7 @@ from linear theory and study wether it is a good physical approximation for
 studying the physics of voids and filaments. The radial velocity component of
 halos in filaments and voids is an analytical tool that is useful for comparing
 with data from simulation for testing wether linear theory can be used to
-approximate the physical behaviour of halos and galaxies observed in these objects.
+approximate the physical behavior of halos and galaxies observed in these objects.
 \subsection{Radial velocity component for filaments}\label{sec:filamentvr}
 When calculating the radial velocity component of filaments, the average filament is
 approximated to be a cylindrical object. The radial component is the component of
@@ -28,7 +28,7 @@ in linear theory can be written as
 \end{equation}
  The continuity equation In linear theory one can write
  $d\delta/dt=Hf\delta$ \cite[p.~347]{schneider2006extragalactic}, where $f$ is the growth factor
-defined in equation \ref{eq:growthfac}. Substituing this into equation
+defined in equation \ref{eq:growthfac}. Substituting this into equation
 \ref{eq:lincont} one will get
 \begin{equation}\label{eq:templineq}
     \nabla\cdot\vec{v}=-Hfa\delta.
@@ -61,7 +61,7 @@ one can write the radial velocity component for a halo in a filament as
 The radial velocity component for voids is similar to the one for filaments
 except that for voids one assumes a spherical coordinate system. This assumption
 is based on the notion that the average void should have a spherical shape with,
-on average, no prefferred direction for overdensities on the rim and
+on average, no preferred direction for overdensities on the rim and
 thereby having a spherical density profile. Since objects cluster towards larger
 densities, approximating the velocity of halos and galaxies around
 voids to be dominated by the radial component, moving straight away from the
@@ -126,7 +126,7 @@ tools for measuring the statistical properties of the universe. In order to test
 analytical models one has to compare with data from observations or simulations.
 The code \footnote{The code for measuring correlation functions utilized for this analysis can be found at \url{https://github.com/seshnadathur/pyCUTE}.} used for this project to measure angular correlation functions
 is called pyCUTE. This code is a Python wrapper for a modified version of the CUTE\cite{alonso2013cute} code. The code implements a Landy-Szalay estimator \cite{Landy} for estimating the angular correlation. The Landy-Szalay estimator
-for the angular cross correlation function, where $s$ denotes redshiftspace, reads
+for the angular cross correlation function, where $s$ denotes redshift-space, reads
 \begin{equation}
     \xi^s(s,\mu)=\frac{\langle D_1D_2\rangle-\langle D_1R_2\rangle-\langle D_2R_1\rangle+\langle R_1R_2\rangle}{\langle R_1R_2\rangle}.
 \end{equation}
@@ -168,12 +168,12 @@ of the observer is illustrated in figure \ref{fig:corrpair}
     corresponding system has vectors denoted as $\vec{s}$.}
 \end{figure}
 \\\indent
-In realspace, due to isotropy and homegenity, there is no angular dependence on the correlation function and $\xi^r(r)$ is only a function of radius. However the redshiftspace distortions themselves are responsible for the angular dependency in $\xi^s(r,\mu)$. Since redshiftspace distortions are only present when considering the component of a vector parallel to the line of sight direction, we loose isotropy in redshiftspace. In order to characterise the angular dependencies the angular cross correlation function is expanded into multipoles
+In real-space, due to isotropy and homogeneity, there is no angular dependence on the correlation function and $\xi^r(r)$ is only a function of radius. However the redshift-space distortions themselves are responsible for the angular dependency in $\xi^s(r,\mu)$. Since redshift-space distortions are only present when considering the component of a vector parallel to the line of sight direction, we loose isotropy in redshift-space. In order to characterize the angular dependencies the angular cross correlation function is expanded into multipoles
 \begin{equation}
     \xi^s_\ell(s)=\int_0^1\xi^s(s,\mu)(1+2\ell)L_\ell(\mu)d\mu
 \end{equation}
 \cite{Nadathur_corr}, where $L_\ell(\mu)$ are Legendre polynomials
-of order $\ell$. The redshiftspace distortions themselves are fully characterised by the monopole and quadrupole terms\cite{Hamaus_2017}. The Legendre polynomials for $\ell=0$ and
+of order $\ell$. The redshift-space distortions themselves are fully characterized by the monopole and quadrupole terms\cite{Hamaus_2017}. The Legendre polynomials for $\ell=0$ and
 $\ell=1$ are given by
 \begin{equation}
     L_0(\mu)=1
@@ -191,8 +191,8 @@ calculate the average density profile as a function of distance from the void
 center. Using a periodic kd-tree module \footnote{The periodic kd-tree code
 applied for this analysis is found at at \url{https://github.com/patvarilly/periodic_kdtree}} to search for
 the nearest halos of the void centers with a gradually increasing radius one can count the halos in
-the catalogue close to a given void center. For every void a search for
-neghbouring halo particles is conducted with a gradually increasing radius. For
+the catalogue close to a given void center. For every void, a search for
+neighbouring halo particles is conducted with a gradually increasing radius. For
 a linearly spaced radius array $\vec{r}=\{r_0,\dots,r_{n}\}$ using an iterative
 approach every galaxy in a sphere with radius $r_{i}$, where
 $i\in\mathbb{N}\bigcap [r_0,r_{n}]$ denotes the
@@ -201,14 +201,14 @@ every iteration. For the first iteration the number of halos in a sphere around 
 center is calculated and stored. The density for this sphere is then $n_i/V_i$,
 where $n_i$ is the number of halos inside the sphere and $V_i=4\pi r_{i}^3/3$. For
 the next iteration the number of halos inside a sphere with radius $r_{i+1}$ is
-counted. Alot of the halos inside this new sphere overlaps with the previous
+counted. A lot of the halos inside this new sphere overlaps with the previous
 sphere. Therefore the number of halos in the previous step were stored and then
 subtracted from the number of galaxies in the new sphere leaving only the number
 of halos counted in the spherical shell that does not overlap between the two
 spheres. The volume of this spherical shell is $V_{i+1}=4\pi(r_{i+1}^3-r_i^3)/3$. The
 number density in the shell defined by subtracting the previous sphere from the
 new sphere is the number of galaxies in the new sphere subtracted by the number
-of galaxies in the previous sphere divided by the volume of the sperical shell.
+of galaxies in the previous sphere divided by the volume of the spherical shell.
 The total number of galaxies in the new sphere is stored and this process is
 repeat for all iterations defined by the radius vector $\vec{r}$. This process
 will give the density profile as a function of radius for a given void. By
@@ -225,7 +225,7 @@ When studying linear theory applied to voids and filaments, one needs an observa
 numerical representation to test its validity. As explained in section
 \ref{sec:radlintheory} the radial velocity profile can be represented analytically and
 may provide a good comparison. In addition to the $x$, $y$ and $z$ coordinates for the
-halo particles, the galaxy catalogue used also containts the $v_x$, $v_y$ and
+halo particles, the galaxy catalogue used also contains the $v_x$, $v_y$ and
 $v_z$ particles. The radial velocity profile is calculated in a
 similar manner as the density profile for voids described in
 \ref{sec:voiddensity}. Using a periodic kd-tree centered at the current void one
@@ -237,7 +237,7 @@ halo particle its position with respect to a given void center is given by
 This is the vector that points radially from the void center to a given halo
 particle. The radial velocity component is is the component of the velocity of a
 given halo particle $\vec{v}$ that points along this vector. The component of vector
-$\vec{v}$ along vector $\vec{r}$ is caluclated as
+$\vec{v}$ along vector $\vec{r}$ is calculated as
 \begin{equation}
     v_r=\frac{\vec{r}\cdot\vec{v}}{\vert\vec{r}\vert}.
 \end{equation}
@@ -254,12 +254,12 @@ been done for all voids the radial velocity profile is divided by the number of 
 the average radial velocity profile for a single halo particle in the catalogue.
 \\\indent
 The velocity dispersion $\sigma_v$ is also calculated. The velocity dispersion
-is given by the usual expression for the standard devation
+is given by the usual expression for the standard deviation
 \begin{equation}\label{eq:sigma_v}
     \sigma_{v} = \sqrt{\langle v^2 \rangle - \langle v\rangle^2}.
 \end{equation}
 This velocity is along the line of sight for the observer. Since i am working with data from simulations
-The observer is located in the $xy-$plane and all velocites are measured in the $z-$direction. In real observations
+The observer is located in the $xy-$plane and all velocities are measured in the $z-$direction. In real observations
 the observer would be located at a point and an angular dependency would be introduced.
 Therefore in this analysis only the $v_z$ component
 is considered. This is calculated in spherical shells around each void center to
@@ -274,31 +274,31 @@ subsection will describe how to derive the void-galaxy cross correlation
 function. 
 \\\indent
 Let $\vec{r}_{void}$ denote the position of a void center and $\vec{r}_{halo}$ denote the
-position of a halo or galaxy particle in realspace. Their separation vector $\vec{r}$ is then
-given by equation \ref{eq:voidpos}. A figure of the system is illustrated in \ref{fig:corrpair}. The relation from redshiftspace to realspace
+position of a halo or galaxy particle in real-space. Their separation vector $\vec{r}$ is then
+given by equation \ref{eq:voidpos}. A figure of the system is illustrated in \ref{fig:corrpair}. The relation from redshift-space to real-space
 is given as
 \begin{equation}\label{eq:s_to_r}
     \vec{s}=\vec{r}+\frac{\vec{v}_{pec}\cdot\hat{r}_{void}}{aH}\hat{r}_{void},
 \end{equation}
 where $v_{pec}$ is the peculiar velocity of a galaxy or halo particle and
 $\hat{r}_{void}=\vec{r}_{void}/ \vert \vec{r}_{void}\vert$. Here it is assumed
-that the velocity of void centers are negligible. In redshiftspace the distribution of galaxies or halos gets distorted and therefore,the number of voids in
-realspace may not be preserved in redshiftspace. Since, for this project, data from simulations are utilized one has access to both a catalogue with realspace and redshiftspace positions. If one utilizes observational data only the redshiftspace positions are observed. Therefore reconstruction,
+that the velocity of void centers are negligible. In redshift-space the distribution of galaxies or halos gets distorted and therefore,the number of voids in
+real-space may not be preserved in redshift-space. Since, for this project, data from simulations are utilized one has access to both a catalogue with real-space and redshift-space positions. If one utilizes observational data only the redshift-space positions are observed. Therefore reconstruction,
 described here in section \ref{sec:reconstruction}, has to be applied to regain
-the field in realspace from redshiftspace if observational data is used. By using the realspace and redshiftspace catalogues provided by the Multidark simulations\cite{Multidark_dataset}, as i will do in this project, one eliminates errors introduced by the additional step of performing reconstruction on the redshiftspace data. However, for future work, it is important to study the effect of performing this extra step on simulation data to better quantify the potential error introduced as this step has to be done for this method to be applied on observational data.\\\indent
+the field in real-space from redshift-space if observational data is used. By using the real-space and redshift-space catalogues provided by the MultiDark simulations\cite{Multidark_dataset}, as i will do in this project, one eliminates errors introduced by the additional step of performing reconstruction on the redshift-space data. However, for future work, it is important to study the effect of performing this extra step on simulation data to better quantify the potential error introduced as this step has to be done for this method to be applied on observational data.\\\indent
 The basic assumption when calculating the cross correlation function
 required is that the number of void-galaxy pairs in the simulation volume is
-unchanged during transformation from realspace to redshiftspace. This is stated
+unchanged during transformation from real-space to redshift-space. This is stated
 mathematically as
 \begin{equation}\label{eq:corr_void_start}
     (1 + \xi^s_{\mathrm{vg}}(\vec{s}))\mathrm{d}^3\mathrm{s}=(1 + \xi^r_{\mathrm{vg}}(\vec{r}))\mathrm{d}^3\mathrm{r},
 \end{equation}
-where superscript $r$ and $s$ denotes realspace and redshiftspace respectively.
-Here $\xi^s_{vg}(\vec{s})$ is the cross correlation between realspace voids and
+where superscript $r$ and $s$ denotes real-space and redshift-space respectively.
+Here $\xi^s_{vg}(\vec{s})$ is the cross correlation between reals-pace voids and
 the redshifted galaxy field and $\xi^r_{vg}(\vec{r})$ is the cross correlation
-between realspace voids and realspace galaxy positions. $\vec{r}$ and $\vec{s}$
+between real-space voids and real-space galaxy positions. $\vec{r}$ and $\vec{s}$
 are vectors pointing from the void center to a given galaxy position in
-realspace and redshiftspace respectively. Another assumption made
+real-space and redshift-space respectively. Another assumption made
 is that the velocity of all halo particles near a void can be approximated by
 its radial velocity $\vec{v}=v_r \hat{r}$. We orient our coordinate system so that
 $\hat{r}_{void}=\hat{z}$. The observer will then only experience redshift
@@ -350,24 +350,24 @@ of order $\delta$ and  $\delta\xi^r$. Equation
 \begin{equation}\label{eq:corr_no_stream}
     \xi^{s,base}_{\mathrm{vg}}(\vec{s},\mu)=\xi^r(r)+\frac{f}{3}\Delta_v(r)(1+\xi^r(r))+f\mu^2[\delta(r)-\Delta_v(r)](1+\xi^r(r)).
 \end{equation}
-This is an approximation to equation \ref{eq:corr_temp}. Allthough the approximations give
-the model sufficient validity on a range of scales \cite{BeyondBAO}, testing during development of the methodology showed that the full expression given by equation \ref{eq:corr_temp} proved to correspond better with numerical calculations described in section \ref{sec:corrtheory}. Since the equations are implemented numerically there should therefore be no reason to not use the full expression for the sake of this analysis. Allthough 
-as mentioned earlier, it is worth noting that since $\xi^r(r)$ is the correlation function in
-realspace coordinates, if one is to apply this method to observational data
+This is an approximation to equation \ref{eq:corr_temp}. Although the approximations give
+the model sufficient validity on a range of scales \cite{BeyondBAO}, testing during development of the methodology showed that the full expression given by equation \ref{eq:corr_temp} proved to correspond better with numerical calculations described in section \ref{sec:corrtheory}. Since the equations are implemented numerically there should therefore be no reason to not use the full expression for the sake of this analysis. 
+As mentioned earlier, it is worth noting that since $\xi^r(r)$ is the correlation function in
+real-space coordinates, if one is to apply this method to observational data,
 reconstruction, described in section \ref{sec:reconstruction}, has to be performed. Since observational data is observed in
-redshiftspace, one cannot observe $\xi^r(r)$ directly. One therefore has to
+redshift-space, one cannot observe $\xi^r(r)$ directly. One therefore has to
 perform reconstruction on the data and then perform the correlation function
 calculation described in section \ref{sec:numerical_corr} in order to obtain
 $\xi^r(r)$. When working with simulation data one has knowledge about the
-particle field in redshiftspace and in realspace. In this analysis $\xi^r(r)$ is calculated by cross correlating the realspace catalogue with realspace voids using pyCUTE. 
+particle field in redshift-space and in real-space. In this analysis $\xi^r(r)$ is calculated by cross correlating the real-space catalogue with real-space voids using pyCUTE. 
 \\\indent
-The correlation function in redshiftspace $\xi^s_{\mathrm{vg}}(\vec{s},\mu)$
-relies on the realspace length of the separation vector $\vert\vec{r}\vert$ as
+The correlation function in redshift-space $\xi^s_{\mathrm{vg}}(\vec{s},\mu)$
+relies on the real-space length of the separation vector $\vert\vec{r}\vert$ as
 can be seen from equation \ref{eq:corr_no_stream}. The system is illustrated in
 figure \ref{fig:corrpair}. For every distance from the void center $s$ in
-redshiftspace, we want the corresponding length from the void center $r$ in
-realspace to calculate $xi^r_{\mathrm{vg}}(r)$, $\delta(r)$ and $\Delta_v(r)$.
-To achieve this we start by decomposing $s$ into a parallel and perpendicual
+redshift-space, we want the corresponding length from the void center $r$ in
+real-space to calculate $xi^r_{\mathrm{vg}}(r)$, $\delta(r)$ and $\Delta_v(r)$.
+To achieve this we start by decomposing $s$ into a parallel and perpendicular
 component using basic trigonometry
 \begin{equation}
     s_\parallel=s\mu
@@ -377,18 +377,18 @@ and
     s_\perp=s(1-\mu^2).
 \end{equation}
 In the simulation volume there is only redshiftspace distortions along the line
-of sight direction. This will mean that the perpendicual component is unchanged
-when changing coordinates from redshiftspace to realspace. The parallel
+of sight direction. This will mean that the perpendicular component is unchanged
+when changing coordinates from redshiftspace to real-space. The parallel
 component is found by inserting equation \ref{eq:vrvoid} into equation \ref{eq:s_to_r} and using the fact that there are no distortions in the perpendicular direction as
 \begin{equation}
     r_\parallel=s_\parallel + s\frac{\beta\Delta(s)\mu}{3},
 \end{equation}
 where $\beta=f/b$.
-The correspending realspace separation is then given as
+The corresponding real-space separation is then given as
 \begin{equation}
     r=\sqrt{r_\parallel^2+r_\perp^2}.
 \end{equation}
-\subsection{Expanding model to account for velocity dispersion}
+\subsection{Expanding the model to account for velocity dispersion}
 The previous model for the void-galaxy correlation function is a good
 approximation. However it can be improved by taking into account the velocity
 dispersion of galaxies around the void centers in the line of sight direction.
@@ -406,7 +406,7 @@ $P(v_{\vert\vert})$ with zero mean
 \end{equation}
 Since in our simulation volume we only measure velocities along the line of
 sight direction we can take $\sigma_{v_{\parallel}}$ to measured by equation
-\ref{eq:sigma_v}. If this method is to be used on observation, one cannot necessariliy extract the velocities of the each particle and gain information about $\sigma_v$. Therefore simulations has to be utilized in order to calculate this quantity. This will however introduce free parameters when doing paremeters estimations as this profile has to be scaled differently when derived from another dataset. Using equation \ref{eq:gaussian_prop_corr} one will get an integral for calculating the improved
+\ref{eq:sigma_v}. If this method is to be used on observation, one cannot necessarily extract the velocities of the each particle and gain information about $\sigma_v$. Therefore simulations has to be utilized in order to calculate this quantity. This will however introduce free parameters when doing parameters estimations as this profile has to be scaled differently when derived from another dataset. Using equation \ref{eq:gaussian_prop_corr} one will get an integral for calculating the improved
 model taking into account dispersion in the velocity of halos \cite{BeyondBAO}
 \begin{equation}\label{eq:corr_stream}
     1+\xi^{s,streaming}(s,\mu)=\int_{-\infty}^\infty\frac{1+\xi^{s,base}(s)}{\sqrt{2\pi}\sigma_{v_{\parallel}(r)}}\mathrm{exp}\Big[-\frac{v_\parallel^2}{2\sigma_{v_\parallel}^2(r)}\Big]dv_\parallel.
@@ -416,14 +416,14 @@ model taking into account dispersion in the velocity of halos \cite{BeyondBAO}
 When applying the DisPerSE code on the particle distribution the output will be,
 for each filament detected, coordinates to the start point of each segment
 making up the total filament. For each filament there will be a number of
-filament segments with startpoints $\vec{r}_i$. This also makes $\vec{r}_{i+1}$
-the endpoint of filament with startpoins $\vec{r}_i$. Each filament segment $F_j$ is
+filament segments with start points $\vec{r}_i$. This also makes $\vec{r}_{i+1}$
+the endpoint of filament with start points $\vec{r}_i$. Each filament segment $F_j$ is
 then given by
 \begin{equation}
     \vec{F}_{j}=\vec{r}_{i+1}-\vec{r}_i.
 \end{equation}
-Here $j$ denotes a given filament segment while $i$ denotes the startpoints of the
-segments. With this notation $j+1$ is denoted by startpoints $i+2$ and $i+1$ and
+Here $j$ denotes a given filament segment while $i$ denotes the start points of the
+segments. With this notation $j+1$ is denoted by start points $i+2$ and $i+1$ and
 so on. When a given filament segment is defined the simulation volume is masked
 to remove all particles outside the edges of the start and endpoint of the
 filament segment. This is done by defining  two planes perpendicular to
@@ -436,7 +436,7 @@ by the usual formula
 where $x$, $y$ and $z$ are coordinates of the particles in the simulation
 volume. In this section this vector will be denoted as $\vec{x}$.
 The coordinates $r_x$, $r_y$ and $r_z$ are the components of $\vec{r}$.
-For a given filament $F$ segment with startpoint $r_{i}$ and endpoint $r_{i+1}$ the particles kept are the particles
+For a given filament $F$ segment with start point $r_{i}$ and end point $r_{i+1}$ the particles kept are the particles
 satisfying the following criteria
 \begin{equation}
     P_0=F_x(x-r_{i_x})+F_y(y-r_{i_y})+F_z(z-r_{i_z})>0
@@ -447,11 +447,11 @@ and
 \end{equation}
 The rest of the particles are masked keeping only the particles in the
 simulation volume bound by the two plane parallel to the filament segment
-centered in the startpoint and endpoint. A figure of this process is illustrated in figure \ref{fig:galaxy_catbbox}
+centered in the start point and endpoint. A figure of this process is illustrated in figure \ref{fig:galaxy_catbbox}
 \begin{figure}[htbp]
     \subfigure[]{\includegraphics[width=0.5\textwidth]{figures/catalogue_nocut.png}}\hspace{1em}%
     \subfigure[]{\includegraphics[width=0.5\textwidth]{figures/filament_cat_cut.png}}
-    \caption{Figure illustrating visually how the the halo catalogue is masked. One the left is a scatter plot of the halo catalogue without a mask. The right figure illustrates the masking of the catalogue where the two red dots are the start and endpoints of the filament segment. Here one can see that only particles bound by the spine of the filament segment itself are kept. The dataset used for this illustration is the MD1 dataset with $\sigma=1$. All units on the axes are in Mpc/h.}
+    \caption{Figure illustrating visually how the the halo catalogue is masked. On the left is a scatter plot of the halo catalogue without a mask. The right figure illustrates the masking of the catalogue where the two red dots are the start and endpoints of the filament segment. Here one can see that only particles bound by the spine of the filament segment itself are kept. The dataset used for this illustration is the MD1 dataset with $\sigma=1$. All units on the axes are in Mpc/h.}
     \label{fig:galaxy_catbbox}
 \end{figure}
 \subsection{Density profile}\label{sec:filamentdensity}
@@ -488,7 +488,7 @@ radial component. As for the density profile calculation in section
 \ref{sec:filamentdensity} let $\vec{F}_j=\vec{r}_{i+1} - \vec{r}_i$ define a given
 filament segment. After, for each filament, the particle box is masked as
 described in section \ref{sec:maskingfilament}, the radial component $d$
-perpendicular to the filament axis is calulated. This component is given by equation \ref{eq:distance_from_filament}. The length of the parallel component of the
+perpendicular to the filament axis is calculated. This component is given by equation \ref{eq:distance_from_filament}. The length of the parallel component of the
 halo positions $\vec{x}_\parallel$ is by the pythagorean theorem
 \begin{equation}
     \vert\vec{x}_\parallel\vert=\sqrt{\vert \vec{x}\vert^2-d^2}.
@@ -498,7 +498,7 @@ by multyp
 \begin{equation}
     \vec{x}_\parallel=\vert\vec{x}_\parallel\vert\frac{\vec{F}_j}{\vert\vec{F}_j\vert}.
 \end{equation}
-This allows one to easily calculatre the component perpendicular to the filament
+This allows one to easily calculate the component perpendicular to the filament
 axis 
 \begin{equation}
     \vec{x}_\perp=\vec{x}-\vec{x}_\parallel.
@@ -517,7 +517,7 @@ added to the total velocity profile for each filament. In the end the
 velocity is divided by the number of filaments to get the average radial
 velocity profile for filaments.
 \section{Parametrizing distance scales.}\label{sec:rescale_r}
-In order to implement our model we have to introduce a fiducial cosmology. We have to assign values for parameters such as $\Omega_m$ and $\Omega_\Lambda$ for the model to function. These fiducial values we assign however may differ from the true cosmology. This will introduce distortions in the distance measurements. As conducted by \cite{BeyondBAO}, the method applied to the analysis in this project wil also parametrize these distortions by introducing two dimensionless ratios. One in the perpendicular and one the parallel direction as
+In order to implement our model we have to introduce a fiducial cosmology. We have to assign values for parameters such as $\Omega_m$ and $\Omega_\Lambda$ for the model to function. These fiducial values we assign however may differ from the true cosmology. This will introduce distortions in the distance measurements. The Alcock-Paczynski effect\cite{Alcockpaczynski} provides a test that allows for calibration of the model. In the correct cosmological model one expects cosmological phenomena, such as clustering of galaxies, to appear isotropic. Observed anisotropies may be attributed to conversion of distance parameters using the wrong fiducial cosmology. Observed distances perpendicular to the line of sight scale proportional to the angular diameter distance $d_A(z)$ and distances parallel to the line of sight scale proportional to $1/H(z)$. This allows for calibration of anisotropic distortions introduced by the fiducial cosmological model itself. As conducted by \cite{BeyondBAO}, the method applied to the analysis in this project wil also parametrize these distortions by introducing two dimensionless ratios. One in the perpendicular and one the parallel direction as
 \begin{equation}\label{eq:alpha_perp}
     \alpha_\perp=\frac{d_A(z)}{d_A^{\mathrm{fid}}(z)}
 \end{equation} 
@@ -534,26 +534,26 @@ and
 \begin{equation}
     s_\perp = \alpha_\perp s_\perp^\mathrm{fid}.
 \end{equation}
-Likewise the correlation function in realspace $\xi^r(r)$ takes into account distances in realspace at a given redshift for a fixed cosmology. The corresponding distance in the real universe may vary from this distance and therefore the realspace distance is rescaled as
+Likewise the correlation function in real-space $\xi^r(r)$ takes into account distances in real-space at a given redshift for a fixed cosmology. The corresponding distance in the real universe may vary from this distance and therefore the real-space distance is rescaled as
 \begin{equation}\label{eq:r_scaling}
     r=\int_0^1\alpha_\parallel r^{\mathrm{fid}}\sqrt{1+(1+\mu^2)\Big[\frac{\alpha_\perp^2}{\alpha_\parallel^2}-1\Big]}d\mu.
 \end{equation}
 This rescaling of parameters gives an additional parameter when fitting the models to data as both $\alpha_\perp$ and $\alpha_\parallel$ has to be tested in order to determine the best fit to the distance parametrization. In simulations the fiducial cosmology is known and $\alpha_\parallel=\alpha_\perp=1$. Therefore constraining $\epsilon=\alpha_\perp/\alpha_\parallel$ for a model applied to simulation data can provide a good test of how the model performs. These parameters are one of the most important parameters of the model as these are directly linked to the cosmological parameters $\Omega_\Lambda$ and $\Omega_m$. In \cite{Nadathur_2020}, the authors show that the study of voids are important additions to other famous cosmological surveys for constraining the cosmological parameters. This is shown in \ref{fig:voidscosmoparam}
 \begin{figure}
     \includegraphics{figures/voidscosmo.png}
-    \caption{Marginalised constraints on $\Omega_m$ and $\Omega_\Lambda$ inferred from different cosmological surveys. This figure illustrates that the study of voids is a good addition to other experiments in contributing to providing constraints for these cosmological parameters. Figure is copied from \cite{Nadathur_2020}.}
+    \caption{Marginalized constraints on $\Omega_m$ and $\Omega_\Lambda$ inferred from different cosmological surveys. This figure illustrates that the study of voids is a good addition to other experiments in contributing to providing constraints for these cosmological parameters. Figure is copied from \cite{Nadathur_2020}.}
     \label{fig:voidscosmoparam}
 \end{figure}
 \subsection{Calibrating dark matter profiles.}\label{sec:dm_calibrate}
-When using a linear bias approximation we can simply approximate $\delta(r)_g=\xi_{\mathrm{vg}}^r(r)$ as the realspace correlation function between voids and galaxies and the normalized density profile $\delta(r)$ effectively traces the same quantity. The linear bias approximation itself is to just use $\delta_{\mathrm{dm}}=\delta_\mathrm{g}/b$. However when using a dark matter density profile the bias factor is not considered and instead, in linear theory, $\sigma_8$ is used to scale the amplitude of the density profile. At a given redshift $z$ we then have
+When using a linear bias approximation we can simply approximate $\delta(r)_g=\xi_{\mathrm{vg}}^r(r)$ as the real-space correlation function between voids and galaxies and the normalized density profile $\delta(r)$ effectively traces the same quantity. The linear bias approximation itself is to just use $\delta_{\mathrm{dm}}=\delta_\mathrm{g}/b$. However when using a dark matter density profile the bias factor is not considered and instead, in linear theory, $\sigma_8$ is used to scale the amplitude of the density profile. At a given redshift $z$ we then have
 \begin{equation}\label{eq:delta_dm_profile}
     \delta(r,z) = \frac{\sigma_8(z)}{\sigma_8^{\mathrm{MD}}}\delta^\mathrm{fid}(r,z),
 \end{equation}
-where $\sigma_8^{\mathrm{MD}}=0.8228$ is the value for $\sigma_8$ for the multidark simulation dataset with $z=0$. For $\sigma_8^\mathrm{fid}(r,z)$, the exact dark matter density profile for the four simulated datasets was not obtained. Instead i will use a dark matter profile for voids obtained from the BigMD mock CMASS galaxy sample \cite{Dawson_2012}. This dark matter profile will need some extra scaling in order for it to accurately represent the dark matter profile for the dataset used in the this analysis. Its amplitube is scaled by $\sigma_8$ as shown in equation \ref{eq:delta_dm_profile} however beforehand i will scale it using by eye measurement making sure its amplitube is approximately equal to the halo dark matter profile derived from the dataset $\delta_\mathrm{g}(r)$ and dividing by the bias factor for the given dataset. This will make the amplitude roughly in line with what the corresponding dark matter profile for the dataset would have looked like. However the slope may differ. Therefore when scaling the radius an extra $r_\mathrm{scale}$ parameter is multiplied with equation \ref{eq:r_scaling} when scaling the radius for the dark matter density profile. This parameter $r_\mathrm{scale}$ will be included in the likelihood analysis as a part of the model when fitting the data. This will make it so that both the amplitube and the slope of the dark matter density profile will be adjusted when fitting the parameters to the data.
+where $\sigma_8^{\mathrm{MD}}=0.8228$ is the value for $\sigma_8$ for the MultiDark simulation dataset with $z=0$. For $\sigma_8^\mathrm{fid}(r,z)$, the exact dark matter density profile for the four simulated datasets was not obtained. Instead i will use a dark matter profile for voids obtained from the BigMD mock CMASS galaxy sample \cite{Dawson_2012}. This dark matter profile will need some extra scaling in order for it to accurately represent the dark matter profile for the dataset used in the this analysis. Its amplitude is scaled by $\sigma_8$ as shown in equation \ref{eq:delta_dm_profile} however beforehand i will scale it using by eye measurement making sure its amplitude is approximately equal to the halo dark matter profile derived from the dataset $\delta_\mathrm{g}(r)$ and dividing by the bias factor for the given dataset. This will make the amplitude roughly in line with what the corresponding dark matter profile for the dataset would have looked like. However the slope may differ. Therefore when scaling the radius an extra $r_\mathrm{scale}$ parameter is multiplied with equation \ref{eq:r_scaling} when scaling the radius for the dark matter density profile. This parameter $r_\mathrm{scale}$ will be included in the likelihood analysis as a part of the model when fitting the data. This will make it so that both the amplitude and the slope of the dark matter density profile will be adjusted when fitting the parameters to the data.
 \section{Likelihood analysis.}\label{sec:maximum_likelihood_method}
-In order to test the validity of the models and to see wether the proposed improvements perform better a likelihood analysis is conducted. The likelihood analysis in this thesis largely follows the approach conducted by \cite{BeyondBAO}. The code implementing the Metropolis-hastings MCMC chain is provided by the publicly available Victor code\footnote{The code used for the likelihood analysis is provided by \url{https://github.com/seshnadathur/victor}}. Using the method described in section \ref{sec:numerical_corr} the angular cross correlation function $\xi^s(s,\mu)$ and its multipoles is calculated from a simulated halo catalogue in redshiftspace represented as discrete point particles in. For the purpose of this analysis the Multidark dataset is utilized. (Finn ut hvordan denne referes til og fortel litt mer om den.). The numerical angular cross correlation function  is measured using $80$ linearly spaced bins for $0<\mu<1$ and $30$ linearly spaced bins for $2$Mpc/h$<s<118$Mpc/h. Using the same number of bins and datapoints the corresponding angular cross correlation function in realspace $\xi^r(r)$ is also calculated using the corresponding realspace halo catalogue. Using the methods described in sections \ref{sec:voiddensity} and \ref{sec:voidvel} the density profile and velocity dispersion is calculated for each void in catalogue identified by REVOLVER. With these quantities calculated one has all the components needed to evaluate equation \ref{eq:corr_stream}.
+In order to test the validity of the models and to see wether the proposed improvements perform better a likelihood analysis is conducted. The likelihood analysis in this thesis largely follows the approach conducted by \cite{BeyondBAO}. The code implementing the Metropolis-hastings MCMC chain is provided by the publicly available Victor code\footnote{The code used for the likelihood analysis is provided by \url{https://github.com/seshnadathur/victor}}. Using the method described in section \ref{sec:numerical_corr} the angular cross correlation function $\xi^s(s,\mu)$ and its multipoles is calculated from a simulated halo catalogue in redshift-space represented as discrete point particles in. For the purpose of this analysis the MultiDark dataset, described in section \ref{sec:dataset}, is utilized. The numerical angular cross correlation function  is measured using $80$ linearly spaced bins for $0<\mu<1$ and $30$ linearly spaced bins for $2$Mpc/h$<s<118$Mpc/h. Using the same number of bins and data points the corresponding angular cross correlation function in real-space $\xi^r(r)$ is also calculated using the corresponding real-space halo catalogue. Using the methods described in sections \ref{sec:voiddensity} and \ref{sec:voidvel} the density profile and velocity dispersion is calculated for each void in catalogue identified by REVOLVER. With these quantities calculated one has all the components needed to evaluate equation \ref{eq:corr_stream}.
 \subsection{Estimating the covariance matrix}
-The covariance matrix used is calculated using patchy mocks provided by the multidark simulation\cite{MDmock1}\cite{MDmock2}. The covariance matrix used is provided together with the code used for the likelihood analysis. A mock catalogue is a galaxy or dark matter halo catalogue is a catalogue that is built from simulations designed to resemble an observed galaxy catalogue. The creation of the covariance matrix used is described in \cite{BeyondBAO}. The covariance matrix is calculated using $1000$ patchy mocks. For each patchy mock the angular cross correlation is measured and expanded into a monopole $\xi_0^s$ and a dipole $\xi_2^s$. The multipoles are then combined into a datavector $\vec{\xi}^s\equiv(\xi_0^s, \xi_2^s)$ for each patchy mock catalogue. The covariance matrix is then calculated as
+The covariance matrix used is calculated using patchy mocks provided by the MultiDark simulation\cite{MDmock1}\cite{MDmock2}. The covariance matrix used is provided together with the code used for the likelihood analysis. A mock catalogue is a galaxy or dark matter halo catalogue is a catalogue that is built from simulations designed to resemble an observed galaxy catalogue. The creation of the covariance matrix used is described in \cite{BeyondBAO}. The covariance matrix is calculated using $1000$ patchy mocks. For each patchy mock the angular cross correlation is measured and expanded into a monopole $\xi_0^s$ and a dipole $\xi_2^s$. The multipoles are then combined into a data vector $\vec{\xi}^s\equiv(\xi_0^s, \xi_2^s)$ for each patchy mock catalogue. The covariance matrix is then calculated as
 \begin{equation}
     C=\frac{1}{N-1}\sum_{k=1}^N(\vec{\xi} ^k-\vec{\xi}^k_\mu)(\vec{\xi}^k-\vec{\xi}^k_\mu),
 \end{equation} 

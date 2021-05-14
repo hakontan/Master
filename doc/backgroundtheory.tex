@@ -1,18 +1,16 @@
 \chapter{Background Theory}\label{sec:backgroundtheory}
 \section{History of cosmology and how we model the universe}
-Skrive noe generelle ting om kosmologi og astronomi historie her.
-Følgende kapittel viser grunnleggende bakgrunnsteori som tesen bygger på.\\
-
+This section aims to introduce much of the cosomology relevant to the methodology and analysis applied in this thesis.
 The following subsections are largely based on \cite[ch.7]{schneider2006extragalactic}, \cite[ch.2]{Dodelson:1282338} and \cite{ryden2017introduction} unless otherwise noted.
 \subsection{Distances in the universe and cosmological redshift}\label{sec:sec_distance}
 Distances in an expanding universe can prove hard to fathom. In our everyday
 lives we are used to measuring distances in meters and kilometers. The
 average distance from the earth to the sun however is approximately $1.49\cdot10^{11}$m.
-Allthough this distance on a cosmic scale is very short, the numbers in our
+Although this distance on a cosmic scale is very short, the numbers in our
 everyday units of measurement already start to become too big for us to have a
 reasonable idea of how long this distance actually is. We have a clear idea of
 what a meter and a kilometer is as we have to deal with them everyday. To make
-things more manageable when measuring these large distances the average distance
+things more manageable when measuring these large distances, the average distance
 from the earth to the sun has become its own distance unit known as the
 Astronomical unit (AU). This unit is a great tool for measuring relative
 distances in our own solar system, but our nearest star, Proxima Centauri, is
@@ -38,24 +36,24 @@ relation
     z = \frac{\lambda_{obs}}{\lambda_{em}} - 1,
 \end{equation}
 where $\lambda_{obs}$ is the observed wavelength we measure here on earth and
-$\lambda_{em}$ is the wavelength emitted by the observed object. by combining this with the doppler formula
+$\lambda_{em}$ is the wavelength emitted by the observed object. By combining this with the doppler formula
 $\frac{\lambda_{obs}-\lambda_{em}}{\lambda_{em}} = \frac{v}{c}$, one gets
 \begin{equation}
     z = \frac{v}{c},
 \end{equation}
 where $v$ is the velocity of the observed object relative to the observer. The
-velocity of an object due to the expansion of the universe is given by Hubbles law
+velocity of an object due to the expansion of the universe is given by Hubble's law
 \begin{equation}
     v = H_0 d_p,
 \end{equation}
 where $d_p$ is what is known as proper distance and $H_0$ is the Hubble
 parameter at present time. The Hubble parameter measures the expansion rate of
-the universe as a function of time. (Kanskje prate om verdien av H0). Proper distance can be interpreted as the length measured if one
+the universe as a function of time. Proper distance can be interpreted as the length measured if one
 was to use a ruler between two objects $a$ and $b$ at a fixed time $t$ taking
-into account the fact that our universe is expanding. Before introducing how proper distance is calculated it can be
+into account the fact that our universe is expanding. Before introducing how proper distance is calculated, it can be
 useful to talk about the concept of comoving distance first. If we choose a time
 $t=t_0$, which is present time, and introduce a coordinate system at this time,
-we can choose an arbitrary point to center ourselves in in this coordinate
+we can choose an arbitrary point to center ourselves at in this coordinate
 system. If we apply a ruler in this coordinate system and measure the distance
 from our point to another arbitrary point, this is the comoving distance $r$. The
 comoving distance is simply the distance measured in a coordinate system at
@@ -64,7 +62,7 @@ universe through the scale factor $a(t)$. The proper distance is given as
 \begin{equation}
     d_p = \int_{r_0}^{r_1}a(t)rdr,
 \end{equation}
-Where $a(t)$ is a quantity known as the scale factor. The scale factor parametrises the relative expansion of the
+where $a(t)$ is a quantity known as the scale factor. The scale factor parametrizes the relative expansion of the
 universe. It is defined in such a way that $a_0$, subscript $0$ meaning
 $a(t=t_0)$ where $t_0$ is present time, is equal to one. This definition of
 proper distance also implies that comoving distance is the proper distance at $t=t_0$.
@@ -80,23 +78,23 @@ where $L$ is the luminosity and $R$ is the distance to the object. Luminosity is
 of the absolute electromagnetic power emitted from an astronomical object. The flux however, measured in $W/m^2$, is simply the luminosity
 divided by the area of a shell with a radius at which we observe the object, assuming the radiation is isotropically emitted. Some astronomical phenomena, like a type 1a supernova, have a fixed luminosity
 due to the characteristics of the process that creates it. This is called a standard candle. By measuring the observed flux from such a phenomena, one can then
-calculate the the luminosity distance as 
+calculate the luminosity distance as 
 \begin{equation}
     d_L = \sqrt{\frac{L}{4\pi F}}.
 \end{equation}
 \indent
 Lastly we introduce the angular diameter distance as the last distance
-measurement. The angular extent of an object on the sky us another measurable quantity related to distances in the universe. The angular diameter distance is for an object with a known size
-$D$ at a large distance $d$, where $d\gg D$, is given as 
+measurement. The angular extent of an object on the sky provides us with another measurable quantity related to distances in the universe. The angular diameter distance is, for an object with a known size
+$D$ at a large distance $d$, where $d\gg D$, given as 
 \begin{equation}
-    d_A\equiv \frac{D}{\Delta\theta},
+    d_A\equiv \frac{D}{\Delta\theta}.
 \end{equation}
-where $\Delta\theta$ is the angle covered by the object measured in radians and $d_P$ is the proper distance. Taking into account the proper distance separating the two endpoints of the diameter of the observed object we have 
+Here $\Delta\theta$ is the angle covered by the object measured in radians and $d_P$ is the proper distance. Taking into account the proper distance separating the two endpoints of the diameter of the observed object we have 
 \begin{equation}
     D=a(t)r\Delta\theta,
 \end{equation}
 where $r$ is the distance from the observer to the measured object.
-This will give and expression for the angular diameter distance
+This will give an expression for the angular diameter distance
 \begin{equation}
     d_A = \frac{r}{1+z},
 \end{equation}
@@ -106,21 +104,20 @@ The cosmological principle states that on sufficiently
 large scales the universe is isotropic and homogenous. This means the universe
 looks the same in every direction for every observer at any point in space for
 sufficiently large scales. By sufficiently large scales one means
-distances roughly $100$Mpc or larger \cite[p.~12]{ryden2017introduction}. This has been proved to be a good
-assumption by surveys like the Sloan sky survey. Figure \ref{fig:sdssmap} shows a sky map from a survey released by the
-SDSS project.\\
+distances roughly $100$Mpc or larger \cite[p.~12]{ryden2017introduction}. This has proved to be a good
+assumption by surveys like the Sloan Digital Sky Survey\cite{sloanhomogenous}. Figure \ref{fig:sdssmap} shows a sky map from a survey released by the SDSS project.\\
 \begin{figure}[htbp]\label{fig:sdssmap}
     \includegraphics[scale=0.4]{orangepie.jpg}
-    \caption{The SDSS (Sloan Digital Sky survey) map of the universe. Each dot represents a galaxy and the color scale represents the local density. Downloaded from the SDSS website. Image Credit: M. Blanton and SDSS (Vet ikke hvordan jeg skal sitere denne)}
+    \caption{The SDSS (Sloan Digital Sky survey) map of the universe. Each dot represents a galaxy and the color scale represents the local density. Downloaded from the SDSS website \url{https://www.sdss.org/science/orangepie/}. Image Credit: M. Blanton and SDSS.}
 \end{figure}
 The fact that the universe was homogeneous and isotropic was an essential assumption
 for a particular solution of the Einstein field equation. 
-This particual equation, first published by Albert Einstein in $1915$ \cite{Einstein1915} in relation to his theory of general relativity, is given as
+This particular equation, first published by Albert Einstein in $1915$ \cite{Einstein1915} in relation to his theory of general relativity, is given as
 \begin{equation}\label{eq:einstein}
     G_{\mu\nu}=8\pi GT_{\mu\nu}.
 \end{equation}
 This equation relates $G_{\mu\nu}$, which is the Einstein tensor in which describes the curvature of spacetime, with the energy momentum tensor
-$T_{\mu\nu}$, which describes the energy content of the universe. During the 1920s by assuming the universe is isotropic, homogenous and expanding, the scientists Alexander Friedmann and Georges Lemaître worked independtly on finding a solution to equation \ref{eq:einstein}. In the 1930s Howard P.Robertson and Arthur Geoffrey Walker further explored the problem and proved that this is the only solution on a spacetime that is homogenous and isotropic.
+$T_{\mu\nu}$, which describes the energy content of the universe. During the 1920s, by assuming the universe is isotropic, homogenous and expanding, the scientists Alexander Friedmann and Georges Lemaître worked independently on finding a solution to equation \ref{eq:einstein}. In the 1930s Howard P.Robertson and Arthur Geoffrey Walker further explored the problem and proved that this is the only solution on a spacetime that is homogenous and isotropic.
 This solution, named after the four scientists, is known as the Friedman-Lemaître-Robertson-Walker metric
 The metric is a tool that allows us to calculate the physical distance in a coordinate system.
 For an example for the Cartesian coordinate system we have the metric 
@@ -179,14 +176,14 @@ and
 \end{equation}
 I refer the reader to \cite[ch. 2]{Dodelson:1282338} for an explanation on how to derive the Friedmann equations starting with the Friedman-Lemaître-Robertson-Walker metric.
 These differential equations relate evolution of the scale factor $a$ with the
-following properties of the universe density $\rho$, pressure $p$ and gravitational
-constant $G$. In these equations $\dot{a}$ and $\ddot{a}$ dot denotes
+following properties of the universe, namely density $\rho$, pressure $p$ and gravitational
+constant $G$. In these equations $\dot{a}$ and $\ddot{a}$ denotes
 derivative and double derivative with respect to time, meaning that $a=a(t)$ is a
 function of time. \\
 
 In modern cosmology, the standard model for describing the universe is the $\Lambda$CDM model. Its name is an abbreviation for what 
 is considered the main energy contributions governing the expansion of the universe. The cosmological constant $\Lambda$ represents dark energy, CDM is an abbrevation for cold dark matter
-and lastly we have ordinary matter which is what we interact with in our
+and lastly we have ordinary baryonic matter, which is what we interact with in our
 everyday lives. The current estimates suggest that approximately $69\%$ of the
 universe consists of dark energy while the remaining $31\%$ is attributed to
 dark matter at around 
@@ -206,7 +203,7 @@ given time is given as $\rho_c=\frac{3H(t)^2}{8\pi G}$. For a flat universe we h
     \sum_i \Omega_i = 1.
 \end{equation}
 By combining both Friedmann equations (equations \ref{eq:F1} and \ref{eq:FII}),
-one can derive a following relation for the density $\rho$
+one can derive the following relation for the density $\rho$
 \begin{equation}\label{eq:rhoevolution}
     \dot{\rho}=-3\frac{\dot{a}}{a}(\rho+\frac{p}{c^2}).
 \end{equation}
@@ -223,7 +220,7 @@ giving
 \end{equation}
 where subscript $i$ is again added to denote a specific energy contribution to
 the universe. The constant $w_i$ takes different values when considering the
-different energy contributions. Giving. For CDM and baryons we have $w=0$, for
+different energy contributions. For CDM and baryons we have $w=0$, for
 radiation $w=\frac{1}{3}$ and for the cosmological constant we have $w=-1$. By
 taking into consideration equation \ref{eq:F1} and dividing both sides by $H_0^2$,
 and recognize the critical density $\rho_{c,0}=\frac{3H_0^2}{8\pi G}$, one can
@@ -232,7 +229,7 @@ rewrite the first Friedmann equation as
     \frac{H(t)^2}{H_0^2}=\frac{\rho}{\rho_{c,0}}.
 \end{equation}
 By separating the density into its different components as $\rho=\sum_i\rho_i$
-and using \ref{eq:rho_i_evolution} for the different components, one can rewrite
+and using equation \ref{eq:rho_i_evolution} for the different components, one can rewrite
 the first Friedmann equation using equation \ref{eq:densityparameter} as
 \begin{equation}
     H(t)=H_0\sqrt{(\Omega_{CDM,0} + \Omega_{b,0})a^{-3} + \Omega_{r,0}a^{-4} + \Omega_{\Lambda,0}},
@@ -246,12 +243,12 @@ prove beneficiary for approximating and describing multiple phenomena. One of
 these models is the Einstein-de Sitter model \cite{1932PNAS...18..213E} proposed
 by Albert Einstein and Willem de Sitter in 1932. This model contains only matter
 making $\Omega_m=1$. After learning of the expansion
-of the universe from the observations of Edwin Hubble, Einstein removed the
-cosmological constant from his equation as this was first proposed to keep the
+of the universe, from the observations of Edwin Hubble, Einstein removed the
+cosmological constant from his equation as this constant was first proposed to keep the
 universe static. After the discovery that the expansion of the universe is
 accelerating \cite{Goldhaber_2009}\cite{Filippenko_1998} the cosmological
-constant was reintroduced. While this universe model is long discarded it is
-still usefull as it is easy to work with in an analytical framework and provides
+constant was reintroduced. While the Einstein-de Sitter model is long discarded, it is
+still useful as it is easy to work with in an analytical framework and provides
 good approximations for different applications. In a universe containing only
 matter, the first Friedmann equation with $w=0$ takes the form
 \begin{equation}
@@ -262,7 +259,7 @@ G}$, one gets
 \begin{equation}
     a\dot{a}^2=H_0^2\frac{\rho_{m,0}}{\rho_{c,0}}.
 \end{equation}
-Since we consider a flat universe conatining only matter we have
+Since we consider a flat universe containing only matter we have
 $\frac{\rho_{m,0}}{\rho_{c,0}}=\Omega_{m,0}=1$. Taking the square root of both
 sides, we get
 \begin{equation}
@@ -297,7 +294,7 @@ relatively small fluctuations while we today observe galaxy clusters which has a
 $200$ times larger density than the average density of an equal sphere in the
 universe \cite[p.~342]{schneider2006extragalactic}. This suggests that the original density
 perturbations grow over time. The small structure deviations at early times evolve through what is known as gravitational insatbility.
-Regions with higher density will attract more material through gravity giving a flow of material towards dense regions making them even more dense.
+Regions with higher density will attract more material through gravity giving a flow of matter towards dense regions making them even more dense.
 This makes an already irregular distribution of matter become even more irregular with time, and will evolve from the small fluctuations at time of the CMB
 to the dense sctructures we observe in our universe today.
 To describe this evolution, one defines the relative density
@@ -307,15 +304,14 @@ contrast as
 \end{equation}
 Here $\bar{\rho}(t)$ denotes the mean matter density of the whole universe at
 time $t$, while $\rho(\vec{r}, t)$ denotes the local density at position
-$\vec{r}$ at time $t$.\\
-
+$\vec{r}$ at time $t$.\\\indent
 The growth of these perturbations can, on scales substantially smaller than the
 hubble radius, which is the radius of the observable universe, be described in
 the framework of linear perturbation theory. On these scales Newtonian gravity
 is sufficient to describe the nature of structure growth. With the approximation
 that the universe only consists of pressureless matter, which is the case for
-cold dark matter in which is the main constituent of the matter in the universe, we
-will model the matter dsitribution as a pressureless fluid. The equations of
+cold dark matter, in which is the main constituent of the matter in the universe, 
+the matter distribution of the universe is modelled as a pressureless fluid. The equations of
 motion for such a fluid is governed by the equations
 \begin{equation}\label{eq:continuuity}
     \frac{\partial \rho}{\partial t} + \nabla\cdot(\rho \vec{v})=0,
@@ -329,22 +325,21 @@ and
 \end{equation}
 Here $\vec{v}=\vec{v}(\vec{r},t)$ is the velocity field of the fluid and $\Phi=\Phi(\vec{r},t)$
 is the newtonian gravitational potential. $P$ is the pressure of the fluid. Equation \ref{eq:continuuity} is the
-continuuity equation which tells us that the density changes with the flow of
+continuity equation which tells us that the density changes with the flow of
 mass. Equation \ref{eq:eulereq}, which is the Euler equation, describes the
-behaviour of the fluid under the influence of an external force. The last
+behavior of the fluid under the influence of an external force. The last
 equation, equation \ref{eq:poisson}, is the Poisson equation which relates the
 gravitational potential to the density field. These equations are solvable in
 the limit $\vert\delta\vert \ll 1$, and can then be used to derive an expression
 for relatively small density contrasts, which can be used to describe the
-evolution of density perturbations on large scales (SJekk opp om dette er
-riktig.). We can model small perturbations to first order by substituing $\rho =
+evolution of density perturbations on large scales. We can model small perturbations to first order by substituting $\rho =
 \rho_0 + \delta \rho$, $\vec{v} =\vec{v_0} + \delta \vec{v}$, $\vec{v} =\vec{v_0}
 + \delta \vec{v}$, $P = P_o + \delta P$ and $\Phi = \Phi_0 +\delta\Phi$. Here
 $\delta$ is used to assign small perturbations to the physical quantities and should not be
 confused with the previously defined density contrast. The velocity also has to
 take into account the expansion of the universe in addition to the peculiar
 velocity of the particles giving $\vec{v} = H(t)\vec{r} + \vec{v}_{pec}$. These
-equations can be reduced to 
+equations can then be reduced to 
 \begin{equation}
     \frac{\partial^2 \delta}{\partial t^2} + 2H(t) \frac{d \delta}{dt}=4\pi G\bar{\rho}\delta.
 \end{equation}
@@ -394,10 +389,10 @@ collapse of overdensites in the universe.
          x radius=\n1, y radius=\n2];
 
         \draw[->] (O) --++ (1,0,0) node[below] {$x$};
-        \draw[->] (O) --++ (0,1,0) node[below] {$y$};
+        \draw[->] (O) --++ (0,1,0) node[right] {$y$};
         \draw[->] (O) --++ (0,0,1) node[right] {$\rho$};    
     \end{tikzpicture}
-    \caption{A simple illustriation of the spherical top hat model.}
+    \caption{A simple illustration of the spherical top hat model.}
 \end{figure}
 The spherical top-hat model gets its name from how its density profile is
 defined. For the spherical top-hat model we have
@@ -437,7 +432,7 @@ $E<0$, this equation has the parametrised solution
 \cite[p.~79]{peebles1980}. By setting an initial radius $R_i$ at time $t_i$ this
 solution tells us that a shell expanding with the background evolution of the
 universe will reach eventually slow down and reach a maximum radius at
-$\theta=\pi$. This is called turn-around. This point is called turn around and now the sphere will begin to
+$\theta=\pi$. This is called turn-around. At this point the sphere will begin to
 collapse. This solution also suggests that at $\theta=2\pi$ the sphere would
 collapse to a point. This is not the case as something known as virialization
 occurs before this happens.\\\indent
@@ -450,15 +445,15 @@ shoot outwards again. The whole system will stabilize when it has virialized. Th
 \end{equation}
 where $U$ is the potential energy and $K$ is the kinetic energy.
 At the radius of turn around, the kinetic energy is zero. As the cloud collapses
-teh kinetic energy will increase and eventually it will virialize when the
+the kinetic energy will increase and eventually it will virialize when the
 conditions of equation \ref{eq:virial} is fulfilled.
 \subsection{Two point correlation functions and the matter power spectrum.} \label{sec:corrtheory}
-Matter in the universe is not randomly distributed. As a result of how structure in the universe evolves, galaxies for example,
-does spread out randomly but they gather in groups or clusters. This means that given a random point in space, the probability of finding
+Matter in the universe is not randomly distributed. As a result of how structure in the universe evolves, galaxies
+do not spread out randomly but they gather in groups or clusters. This means that for a given random point in space, the probability of finding
 a galaxy in the vicinity of that point is higher if the randomly chosen point by chance landed on a galaxy. The probability of finding a galaxy
 at point $\vec{x}$ is not independent of wether there is a galaxy at an neighbouring point $\vec{y}$. This is a statistical property of the distribution
 of galaxies and can be described by a two point correlation function. The two point correlation function for galaxies $\xi_{g}(r)$ describes the excess probability
-over random for finding two galaxies separated by a distance $r$. The correlation is related to the density contrast as
+over random for finding two galaxies separated by a distance $r$. The correlation function is related to the density contrast as
 \begin{equation}
     \xi(\vert\vec{r_1}-\vec{r_2}\vert)=\langle\delta(\vec{r_1})\delta(\vec{r_2})\rangle.
 \end{equation}
@@ -481,7 +476,7 @@ correlation function as a fourier transform given by
 Both of these quantites are statistical properties and are of high importance
 when comparing models to observations or simulations. Most of the theories describing 
 the origin of structure in our universe comes from the period of Inflation. Inflation is a rapid expansion
-of space that occured in the infancy of the universe after the big bang
+of space that occurred in the infancy of the universe after the big bang.
 Inflationary theory does not predict the exact location of the distributed matter.
 Instead it predicts how it should be statistically distributed.
 A simulation or calculation of structure growth may
@@ -492,12 +487,12 @@ note that two universes are considered identical if they inhabit the same
 statistical properties. This makes the power spectrum and two point correlation function
 important vital tools when studying the universe.
 \\\\\indent
-An important cosmological parameter is $\sigma_8$ which serves as a normalization for the matter powerspectrum. The parameter $\sigma_8$ is motivated by the observation that when averaging over spheres on scales of radius $R=8$Mpc/h it is found that
+An important cosmological parameter is $\sigma_8$ which serves as a normalization for the matter power spectrum. The parameter $\sigma_8$ is motivated by the observation that when averaging over spheres on scales of radius $R=8$Mpc/h it is found that
 \begin{equation}
     \sigma_{8,g}^2\equiv\Big\langle\Big(\frac{n-\bar{n}}{\bar{n}}\Big)^2\Big\rangle_{8\mathrm{Mpc/h}}\approx1,
 \end{equation}
 where $n$ is the local number density of galaxies and $\bar{n}$ is the average number density.
-In a similar fasion the it is defined through the dark matter density contrast as
+In a similar fashion, it is defined through the dark matter density contrast as
 \begin{equation}
     \sigma_8^2=\Big\langle\vert\delta_{8\mathrm{Mpc/h}}\vert\Big)^2\Big\rangle,
 \end{equation}
@@ -506,16 +501,16 @@ These two parameters can be related through the linear bias factor as
 \begin{equation}\label{eq:sigma_8_relation}
     \sigma_8=\frac{\sigma_{8,g}}{b}.
 \end{equation}
-Using this relation one can normalize the dark matter power spectrum by measuring the $\sigma_{8,g}$ and using the relation in equation \ref{eq:sigma_8_relation} to use scales on $8$Mpc/h as a reference for normalizing the power spectrum when the shape is known.
+Using this relation one can normalize the dark matter power spectrum by measuring the $\sigma_{8,g}$ parameter and using the relation in equation \ref{eq:sigma_8_relation} to use scales on $8$Mpc/h as a reference for normalizing the power spectrum when the shape is known.
 \subsection{The cosmic web}
 On large scales the universe is isotropic and homogenous. However this does not
 mean that every galaxy or cosmological particle is distributed randomly. As
 previously discussed matter tends to flow towards overdensities. Over time many
 of these overdensities will collapse into large dark matter halos. Dark matter
 halos contain subsctructures and sub halos where baryonic matter can form
-galaxies. The massive halos are bound together by matter in what resembles a
-web structure known as the cosmic web. The cosmic web is made up of large
-filaments of baryonic and dark matter and in between there are large voids with
+galaxies. The massive halos are bound together by gravity in what resembles a
+web-like structure known as the cosmic web. The cosmic web is made up of large
+filaments of baryonic and dark matter, and in between there are large voids with
 very low density. Figure \ref{fig:millenium} shows the Millenium simulation with
 $10^{10}$ dark matter particles at different redshifts $z=0$ and $z=18.3$ corresponding to
 $t=0.21$Gyr and $t=13.6$Gyr after the big bang respectively.
@@ -533,7 +528,7 @@ Here one can cleary see that as time evolves the matter coalesces from a
 relatively even distribution of matter into a web like structure with filaments
 and voids. The same pattern is also visible in the SDSS sky survey shown in
 figure \ref{fig:sdssmap}.\\\indent
-An important phenomena for the matter to coalesce into this weblike structure is
+An important phenomena for the matter to coalesce into this web-like structure is
 baryonic acoustic oscillations (BAO). Baryonic acoustic oscillations originate
 from the dense hot plasma that the universe consisted of after the big bang.
 During this time photons and baryonic matter was coupled together. While dark
@@ -542,42 +537,42 @@ is subject to pressure forces. Gravity will cause matter to flow towards
 overdensities. The collisionless dark matter will clump together and form
 potential wells, while the baryonic matter is subject to outward pressure as it clumps
 together. While the photons and baryons are coupled together they move with the
-sound speed which in this plasma is roughly half the speed of light. The
-outwards pressure will caus riples of baryonic matter flowing outwards from the
+sound speed, which in this plasma is roughly half the speed of light. The
+outwards pressure will cause ripples of baryonic matter flowing outwards from the
 dark matter overdensities. At approximately $z\approx 1000$ baryons and photons
 decoupled. In cosmological history this period is called the epoch of
-recombination. Due to the expansion of the universe the interaction rate between
-photons and baryonic matter experienced decreased drastically. This caused the
-rate at which photons scattered of baryonic matter to halt and neutral hydrogen was formed.
+recombination. Due to the expansion of the universe, the experienced interaction rate between
+photons and baryonic matter decreased drastically. This caused the
+rate at which photons scattered off of baryonic matter to drastically decrease. This allowed for the formation of neutral hydrogen.
 As baryonic matter was no longer bound to photons this also caused the sound
-speed to drop eventually causing the riples to stop expanding. This lead to
+speed to drop eventually causing the ripples to stop expanding. This lead to
 shells of baryonic matter eventually attracting
 portions of dark matter away from the overdensities in the center of the
-potential wells formed before recombination. These riples are not directly
+potential wells formed before recombination. These ripples are not directly
 observed but can be inferred from measuring the correlation function for
 galaxies. The correlation function contains a bump at the characteristic length
-scale $r_s$. This shows that the baryonic acoustic influential on the distribution of
+scale $r_s$. This shows that the baryonic acoustic oscillations are influential on the distribution of
 matter in the universe today.
 
-\subsection{Real- vs Redshiftspace}
+\subsection{Real- vs Redshift-space}
 As mentioned earlier in section \ref{sec:sec_distance}, due to the fact that the
-universe is expanding, galacies we observe in the universe on cosmological scales
-move away from us and appear redshifted. In addition galaxies also have peculiar
-velocities, which is their velocity when subtracting the hubble flow. This results in an effect that when observing galaxies
+universe is expanding, galaxies we observe in the universe on cosmological scales
+move away from us and appear redshifted. In addition, galaxies also have peculiar
+velocities, which is their velocity when subtracting the Hubble flow. This results in an effect that when observing galaxies
 as a function of redshift, their spatial distribution appear squashed. As most
 cosmological surveys of galaxies are done by measuring their redshift,
 understanding how this effects their spatial distribution is crucial.
-We will now denote realspace coordinates by subscript $r$ and redshiftspace
+We will now denote real-space coordinates by subscript $r$ and redshift-space
 coordinates by subscript $s$. By taking into account the peculiar velocity of
-galaxies and the hubble flow, we can express their redshift as a sum of two
+galaxies and the Hubble flow, we can express their redshift as a sum of two
 terms
 \begin{equation}\label{eq:losrs}
     cz=H_0d_p+v_{pec}.
 \end{equation}
-Here the first term represents the hubble flow and the second term is the
+Here the first term represents the Hubble flow and the second term is the
 peculiar velocity along the line of sight. For most galaxies, only the redshift
 can be measured and not the proper distance. Therefore, by dividing equation
-\ref{eq:losrs} by $H_0$, it is usefull to define
+\ref{eq:losrs} by $H_0$, it is useful to define
 the redshift distance $s$ as
 \begin{equation}
     s = \frac{cz}{H_0}=d_p+\frac{v_{pec}}{H_0}.
@@ -589,16 +584,16 @@ spatial distributions appear in redshiftspace. Matter will cluster and move
 towards overdensities. This means that the velocity component of galaxies in a
 cluster will essentialy point towards the center of the galaxy cluster. This
 will give an effect that when viewing a galaxy cluster, the galaxies closest to
-us in realspace will have their peculiar velocity move away from the observer.
+us in real-space will have their peculiar velocity move away from the observer.
 From equation \ref{eq:losrs} one can see that this will give an additional
-contribution in addition to the hubble flow and the measured redshift will be
+contribution in addition to the Hubble flow and the measured redshift will be
 higher. Galaxies on the opposite side of the cluster as seen by the observer
 will have their peculiar velocity point towards the observer. This will cause
 the peculiar velocity to contribute with a blueshift, and likewise the measured
 redshift will appear smaller than if one could only measure the redshift due to
-the hubble flow. This effect will cause galaxy cluster to appear squashed in
-redshiftspace. This effect will also cause the overdensity to appear much larger
-in the center of a collapsed object than in realspace. This is illustrated in
+the Hubble flow. This effect will cause galaxy cluster to appear squashed in
+redshift-space. This effect will also cause the overdensity to appear much larger
+in the center of a collapsed object than in real-space. This is illustrated in
 figure \ref{fig:rsddistortion}\\
 
 \begin{figure}[htbp]\label{fig:rsddistortion}
@@ -622,7 +617,7 @@ fourier space, the overdensity recieves a correction term as
 between the line of sight and the fourier wave vector. The factor $\beta$ can be
 seen as the growth factor $f$ introduced in equation \ref{eq:growthfac} from
 section \ref{sec:linpert}. However since the overdensity of galaxies does not
-necesarilly follow the overdensity of dark matter, in which linear perturbation
+necessarily follow the overdensity of dark matter, in which linear perturbation
 theory is derived, it is scaled by a bias factor
 \begin{equation}\label{eq:bias}
     b=\frac{\delta_g}{\delta_{dm}},
@@ -633,11 +628,11 @@ that
     \beta=f/b.
 \end{equation} 
 \section{Cosmological N-body simulations}
-Analytical approaches, such as linear perturbation theory has its limits.
+Analytical approaches, such as linear perturbation theory, has its limits.
 Especially when taking into consideration small scale interactions between
-galaxies. Using linear perturbation theory, gravitiational interactions on small scales can not be described in
+galaxies. Using linear perturbation theory, gravitational interactions on small scales can not be described in
 enough detail to accurately compare observational data to theoretical
-predictions. Therefore numerical simulations of structure formation is an
+predictions. Therefore, numerical simulations of structure formation is an
 important tool when studying the properties of the universe. Numerical
 simulations have been crucial for establishing $\Lambda CDM$ as the standard
 model for cosmology as through simulations it has become possible to separate
@@ -651,8 +646,7 @@ increase both the spatial and temporal dimension in the simulations.\\
 
 When simulating large scale structure formation in the universe, it is mostly
 sufficient to take into account dark matter, as this is the primary contributor
-to the mass in the univers. The size of dark matter particles, which is still an
-unobserved, and will be a lot smaller than the simulation volume. Therefore
+to the mass in the universe. The size of dark matter particles will be a lot smaller than the simulation volume. Therefore
 all the dark matter particles in the simulation is represented by point
 particles with mass $M$, where each point particle is a body of mass
 representing multiple dark matter particles. One also has to restrict the
@@ -660,12 +654,12 @@ simulation volume of the simulation. The size of the universe is too large to
 simulate in detail. It may also be infinite. Therefore one has to select a
 simulation volume that is representative for the effects one wants to model. For
 simulations where one wants to examine large scale structures, the simulation
-volume is usually a box with size $L>200$Mpc as large scale structures are hardly present on
+volume is usually a box with size $L>200$Mpc, as large scale structures are hardly present on
 scales smaller than this \cite[p.~362]{schneider2006extragalactic}. Due to
-restricting the simulation to a small box slice of the universe, problems with
+restricting the simulation to a small boxed slice of the universe, problems with
 the boundaries of the simulation volume will rise. If not treated, particles at
-the boundary of the simulation volume will not be affected by gravity as many
-neighbouring particles as particles in the middle of the simulations volum. To
+the boundary of the simulation volume will not be affected gravitationally by as many
+neighboring particles as particles in the middle of the simulations volume. To
 account for the fact the universe should be isotropic and homogenous on large
 scales one has to apply periodic boundary conditions. This means that the cube
 is extended periodically. A particle leaving the volume in one end will reappear
@@ -674,27 +668,28 @@ manner meaning that particles opposing sides of the simulation volume will
 effect each other as if the simulation volume was extended by adding an
 identical volume side by side.
 
-\subsection{pair wise summation}
+\subsection{Pairwise summation}
 The simplest and most intuitive way of performing N-body simulations is by
 modelling gravity as a force and applying Newtons second law to calculate the
 acceleration vector of the particles. For every particle one calculates the
 force acting on it from all other particles by summing over the contribution
 from all other particles. The computational cost of this approach scales as
 $N^2$, where $N$ is the number of particles in the simulation. This makes this
-approach not feasible when including $N\gtrsim10^6$ particles (kanskje siter). However
+approach not feasible when including $N\gtrsim10^6$ particles. However
 interesting problems can be studied by not exceeding this number of particles. This problem can be formulated mathematically as
 \begin{equation}\label{eq:newtongravacc}
-    \frac{d^2r_i}{dt^2}=-G\sum_{i=1}^{N}\sum_{j\neq i}^N\frac{m_j}{\vert\vec{r_j}-\vec{r_i}\vert^3}(\vec{r_j}-\vec{r_i}),
+    \frac{d^2r_i}{dt^2}=-G\sum_{i=1}^{N}\sum_{j\neq i}^N\frac{m_j}{\vert\vec{r}_j-\vec{r}_i\vert^3}(\vec{r}_j-\vec{r}_i),
 \end{equation}
-where we calculated the acceleration on the $i$th particle with position
-$\vec{r}$ by summing over all particles $j\neq i$ with position $\vec{r_j}$.
+where the acceleration of the $i$th particle with position
+$\vec{r}_i$ is calculated by summing over all particles $j\neq i$ with position $\vec{r}_j$.
 When studying equation \ref{eq:newtongravacc}, one can see that if two particles
-come very close numerical instability will occur in the form of a division by
-zero giving an unreasonably high force calculation. To counteract this problem
-force softening is introduced. A way to do this is to modify the denomenator of
+come very close to each other, numerical instability will occur in the form of a division by
+zero, which in turn will result in an unreasonably high force calculation. To counteract this problem
+force softening is introduced. A way to do this is to modify the denominator of
 equation $\ref{eq:newtongravacc}$ by including a small factor $\epsilon$
 replacing $\Delta r_{i,j}=\vert\vec{r_j}-\vec{r_i}\vert$ with $\sqrt{\Delta
-r_{i,j}^2+\epsilon^2}$(Siter klypin). We will now use the notation where the acceleration is
+r_{i,j}^2+\epsilon^2}$\cite[ch.2]{Fazio2309855}. \\\indent
+We will now use the notation where the acceleration is
 given as $a(t)=d^2r(t)/dt^2$ and the velocity $v(t)=dr(t)/dt$.
 From equation \ref{eq:newtongravacc} we now have an expression for the acceleration of each object.
 This gives us the the coupled system ODEs necessary to solve for the position as
@@ -702,7 +697,7 @@ This gives us the the coupled system ODEs necessary to solve for the position as
     v(t)=\frac{dr(t)}{dt} \quad\mathrm{and}\quad a(t)=\frac{dv(t)}{dt}.
 \end{equation}
 We now discretize the time variable where $t_n$ is the time at a specific
-time point where $t_n=t_0+n\Delta t t$ where $\Delta t$ is an incremental
+time point where $t_n=t_0+n\Delta t $ where $\Delta t$ is an incremental
 timestep. By a Taylor expansion around $t_n$, one can approximate the time
 solution at timestep $t=t_n+\Delta t$ giving
 \begin{equation}
@@ -726,13 +721,13 @@ an approximate solution to our problem as
 \end{itemize}
 \end{center}
 This is done for every particle $i$ for every timestep $t+\Delta t$. This is one
-of the simplest ways of this system of coupled ODEs and is called the forward
-Euler method. This approach however is never used in practice as the error $\epsilon$ of
-the solution, as can be seen from the taylor expansion, is of order
+of the simplest ways to numerically solve this system of coupled ODE's and is called the forward
+Euler method. This approach however is never used in practice as the error of
+the solution, denoted $\epsilon$, as can be seen from the taylor expansion, is of order
 $\epsilon\sim\mathcal{O}(\Delta t^2)$. Another significant disadvantage with this method is
 that when solving for physical systems, it will not conserve energy. A numerical
 integration scheme well suited for gravitational problems where energy is
-conserved is the Velocity verlet algorithm. This integration scheme is what is
+conserved is the Velocity Verlet algorithm. This integration scheme is what is
 known as symplectic, meaning that it conserves the energy of the system
 \cite[p.~31]{holmes2007introduction}. The Velocity Verlet scheme updates its
 velocity and position as
@@ -744,26 +739,23 @@ velocity and position as
 \end{center}
 This method, and its variations, that preserve energy over long time periods
 makes it a preferred method of choice for astrophysical gravitational problems.
-(Kanskje vise en figur som sammenlikner verlet of euler for å vise ikke konstant
-energi hos euler. Kanskje bytte ut verlet integrasjon med leapfrog istedenfor.)
 \subsection{Particle mesh}
 Another way of simulating a box with a large volume of particles is it to apply
 what is called a Particle Mesh code \cite{HockneyRW1981Csup} \cite{Fazio2309855}. This method is more computationally
-effective as the number of calculations scales as $\propto N$. However most of
+effective as the number of calculations scales proportional to the number of particles $N$. However most of
 the information is stored on a $3D$ grid covering the whole simulation volume.
-This will require more memory as the resolution of the grid increases. Poissons equation for gravity reads
+This will require more memory as the resolution of the grid increases.\\\indent
+The Poisson equation for gravity reads
 \begin{equation}\label{eq:poissongrav}
     \nabla^2\Phi=4\pi G\rho.
 \end{equation}
-(Kanskje bruke den formen av likningen alle andre bruker med rho-rho bakgrunn)This equation can be solved for the gravitational potential $\Phi$ and updates
-the force field as $\vec{F}=-\nabla\Phi$. This method is reliant on assigning a
+This equation can be solved for the gravitational potential $\Phi$ and
+the force field updated as $\vec{F}=-\nabla\Phi$. This method is reliant on assigning a
 density field to the simulation volume of individual particles as a
-representation for $\rho$ in equation \ref{eq:poissongrav}. One popular method 
-for this is what is known as cloud in cell. (Det
-er her jeg har lest om det, men det er ikke de som har funnet det opp. Er det
-riktig aa sitere slik da?). One wants to calculate the density $S$ at a given
-distance given by the coordinate point $(x, y, z)$ from the particle. The density at a given point is given as
-$S(x)S(y)S(z)$, where the cloud in cell scheme for assigning a value to $S$
+representation for the density $\rho$ in equation \ref{eq:poissongrav}. One popular method 
+for this is what is known as Cloud In Cell (CIC). One wants to calculate the density $S$ at a given
+distance, given by the coordinate point $(x, y, z)$, from the particle. The density at a given point is given as
+$S(x)S(y)S(z)$, where the CIC scheme for assigning a value to $S$
 reads
 \begin{equation}
     S(x)=\frac{1}{\Delta x}
@@ -775,23 +767,24 @@ reads
 where $\Delta x$ is the cell size. The density assigned to the grid is defined
 by a product of three weighting functions $W(\vec{r}_p -\vec{r}_{ijk}) =
 W(x_p-x_i)W(y_p-y_j)W(z_p-z_k)$. Where subscript $p$ denotes particle position
-and subscript $i,j,k$ denotes a given grid index. A given $W$ is given as
+and subscript $i,j,k$ denotes a given grid index. A given $W$ is expressed as
 \begin{equation}
-    W(x)=\int_{x_i-\Delta x/2}^{x_i-\Delta x/2} S(x_p - x^\prime)dx^\prime,
+    W(x)=\int_{x_i-\Delta x/2}^{x_i+\Delta x/2} S(x_p - x^\prime)dx^\prime,
 \end{equation}
-where $m_p$ is the mass of particle $p$. We then have that the given density assigned to a given grid point for a grid
-consisting of $N$ particles as is given as
+We then have that the density assigned to a given grid point for a grid
+consisting of $N$ particles is given by the relation
 \begin{equation}
-    \rho_{ijk}=\sum_{p=1}^Nm_pW(\vec{r}_p-\vec{r}_{ijk}).
+    \rho_{ijk}=\sum_{p=1}^Nm_pW(\vec{r}_p-\vec{r}_{ijk}),
 \end{equation}
-With the density assigned one can solve the Poisson equation for gravity given
+where $m_p$ is the mass of particle $p$.
+With the density assigned, one can then solve the Poisson equation for gravity given
 by equation \ref{eq:poissongrav}. This is done by using a fast fourier transform
 (FFT) on the whole grid giving
 \begin{align}
     \nabla^2\Phi&=4\pi G\rho\\
     -k^2 \hat{\Phi}&=4\pi G \hat{\rho},
 \end{align}
-Where $\hat{\Phi}$ and $\hat{\rho}$ denotes the fourier transform of the given
+where $\hat{\Phi}$ and $\hat{\rho}$ denotes the fourier transform of the given
 quantities. Dividing by $k^2$ and taking the inverse transform one solves the
 equation for the gravitational potential as
 \begin{equation}
@@ -807,7 +800,7 @@ method consists of three steps:
     \item Solve the Poisson equation given by equation \ref{eq:poissongrav}.\\
     \item Compute the force and apply to particles in the grid.
 \end{itemize}
-While the compuation time is significantly increased the
+While the computation time is significantly decreased the
 particle mesh method lacks in resolution. Increasing the resolution for a
 particle mesh code means increasing the number of bins in each direction. For a
 three dimensional grid this will quickly put constraints on the computer memory.
@@ -818,17 +811,17 @@ three dimensional grid this will quickly put constraints on the computer memory.
     \caption{Illustration of a Barnes-Hut tree for 100 particles in 2D space. Image downloaded from \url{https://commons.wikimedia.org/wiki/File:2D_Quad-Tree_partitioning_of_100_bodies.png}.
     The file is licenced under the following license \url{https://creativecommons.org/licenses/by-sa/3.0/deed.en}.}
 \end{figure}
-The particle mesh and the pair wise summation methods are the simplest forms of N-body simulation methods.
-In modern codes however these methods are rarely used in exclusivity and most of the time methods are based on the approach proposed
+The particle mesh and the pairwise summation methods are the simplest forms of N-body simulation methods.
+In modern codes however these methods are rarely used in exclusivity. Instead, most of the time the methods are based on the approach proposed
 by Barnes and Hut in 1986\cite{Barneshut}. This method divides the simulation volume into what is called a tree. An example of a such a tree in 2D space is 
-illustraded in figure \ref{fig:barneshut}. The volume in 2D is divided into four cells or eight cells in 3D. If the number of particles in each cell exceeds a certain
-threshold specified by the user, the given cell is then dividied into four or eight more cells depending on wether the simulation is in 2D or 3D. This dividing of cells
-into smaller cells continues until no cells contain a particle number higher than the set threshold. After creating the tree the forces has to be calculated. When calculating
-the force on a given particle the distance of particles in other cells becomes crucial. The baisc idea is that if a certain number of particles are far away from a given particle,
+illustrated in figure \ref{fig:barneshut}. The volume in 2D is divided into four cells, or eight cells in 3D. If the number of particles in each cell exceeds a certain
+threshold specified by the user, the given cell is then divided into four or eight more cells depending on wether the simulation is in 2D or 3D. This dividing of cells
+into smaller cells continues until no cells contain a particle number higher than the set threshold. After creating the tree, the forces has to be calculated. When calculating
+the force on a given particle, the distance of particles in other cells becomes crucial. The basic idea is that if a certain number of particles are far away from a given particle,
 one can calculate the center of mass for a larger cell containing more particles. This greatly reduces the amount of calculations as the force from far away particles can be approximated
 as a single force from one large body instead. The advantage with this approach is that it, instead of the calculations scaling as $\mathcal{O}(N)$ as for the regular pair wise summation,
-it scales as $\mathcal{O}(N\mathrm{log}N)$ instead. This approach briefly described here is fundemental for the approach for many high level cosmological N-body codes such as GADGET-2\cite{springel2005}
-used for the MultiDark simulations utilized for the anylysis in this thesis.
+scales as $\mathcal{O}(N\mathrm{log}N)$ instead. This approach briefly described here is fundamental for the approach for many high level cosmological N-body simulation codes.
+
 \subsection{Initial conditions}
 When setting the initial conditions for cosmological simulations, one starts at
 a high redshift. The initial distribution of the particles resembles a gaussian
@@ -839,7 +832,7 @@ interacting particles.
 
 \section{Statistics}
 For the analysis of the data statistical methods are utilized. This section
-gives a brief overview fundemental methods used for basic statistical analysis.
+gives a brief overview of the fundamental methods used for basic statistical analysis.
 This section is largely based on \cite{Probphysics} and \cite{Dataanalysiscosmology}.
 \subsection{Bayes theorem}
 When studying and comparing our observations and simulations with theory one has
