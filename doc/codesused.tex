@@ -1,11 +1,11 @@
 \chapter{Codes utilized - Identyfing voids and filaments from a particle distribution}\label{sec:codesused}
 \section{DisPerSE-"Discrete Persistent Structures Extractor"}
-In this work identification of the filamentary structure of the cosmic web in
+For the analysis conducted on filaments, the identification of the filamentary structure of the cosmic web in
 data sets is crucial. To achieve this the code
 DisPerSE\cite{2011MNRAS.414..350S}\cite{2011MNRAS.414..384S} is utilized. The
 code is publicly available at \url{http://www2.iap.fr/users/sousbie/web/html/indexd41d.html?}.
 DisPerSE is a code that was developed to identify topological features of the
-cosmic web in cosmological particle distributions. DisPerSE utilized discrete
+cosmic web in cosmological particle distributions. DisPerSE utilizes discrete
 Morse Theory to identify the topological structures of the cosmic web in data
 sets. In this section i will give a brief overview of how DisPerSE works to
 identify the filamentary structure from a particle distribution. For a thorough
@@ -16,12 +16,12 @@ references therein. Another good summary of the beforementioned paper is found i
 To identify the features of the cosmic web from the density field of our
 particle distribution, DisPerSE relies on Morse Theory \cite{Morse}. Morse
 theory is a mathematical framework used to relate the geometrical and
-topological properties of a function. In our case the topological features are quantities such as the number of galaxy clusters or dark matter halos while the geometric features are quantites related to the precise position of the galaxy cluster or dark matter halos and the local density. In our case we utilize morse theory to
+topological properties of a function. In our case the topological features are quantities such as the number of galaxy clusters or dark matter halos while the geometric features are quantities related to the precise position of the galaxy cluster or dark matter halos and the local density. In this thesis, Morse theory is utilized to
 study the relation between the density field derived from a dark matter halo catalogue and features such as
 filaments, voids and walls.
 This is done by studying the gradient of a smooth function $f$. By studying the
 gradient of the said function $f$, one can analyze the topological and geometrical features of
-the manifold. In general, to apply Morse theory one needs a smooth scalar function $f$
+the manifold. In general, to apply Morse theory, one needs a smooth scalar function $f$
 that is twice differentiable. In our case this scalar function is the density
 field of our simulation volume. In Morse theory the gradient of the function $f$
 is defined as $\nabla_xf(\vec{x})=df(\vec{x})/d\vec{x}$. This function
@@ -31,13 +31,12 @@ points can be classified by studying the Hessian matrix of $f$ given as
 \begin{equation}
     \mathcal{H}_f(\vec{x})=d^2f(\vec{x})/dx_idx_j.
 \end{equation}
-The critical points are classified by studying the eigenvalues of the Hessian
-matrix. A critical point is of order $k$ when the Hessian matrix has exactly $k$
+The critical points are classified by the eigenvalues of $\mathcal{H}_f(\vec{x})$. A critical point is of order $k$ when the Hessian matrix has exactly $k$
 negative eigenvalues. This way one can classify the critical points as maxima
 with $k=2$, saddle point with $k=1$ and a minima with $k=0$. This analysis also
 implies that for morse theory to be applicable, the function $f$ has to satisfy
-the condition $\mathcal{H}_f(\vec{x})\neq 0$ where $\nabla_xf=0$. From this it
-follows that any function that satisfies this condition is called a Morse
+the condition $\mathcal{H}_f(\vec{x})\neq 0$, where $\nabla_xf=0$. From this it
+follows that any function that satisfies this condition can be classified as a Morse
 function.\\
  
 It is previously stated that the gradient points in a preferred direction for any non-critical
@@ -48,7 +47,7 @@ points. An integral line is a parametrised curve $L(t)\in\mathbb{R}^n$ that sati
 \end{equation}
 These integral lines will always have critical points as their origin and
 destination. An important property of these integral lines is that they cover
-all of $\mathbb{R}^d$, but they never intersect eachother. They can however
+all of $\mathbb{R}^d$, but they never intersect each other. They can however
 share the same origin or destination. With these integral lines one can define
 ascending and descending n-manifolds. If one consider a critical point $P$ of
 order $k$ on the Morse function living in $\mathbb{R}^d$, we have an ascending manifold of
@@ -131,8 +130,8 @@ of all continuous gradient pairs through the simplicial complex $K$.
 With V-paths one can define discrete n-manifolds that make up the discrete
 morse-complex. A discrete n-manifold is the set of k-simplices that belongs to a
 V-path with either origin or destination at the critical simplex $\sigma_k$.
-The n-manifolds are either ascending if their origin is $\sigma_k$. Likewise,
-the n-manifolds are descending if ther destionation is $\sigma_k$. These
+The n-manifolds are ascending if their origin is $\sigma_k$. Likewise,
+the n-manifolds are descending if their destination is $\sigma_k$. These
 manifolds make up what is called the discrete Morse-complex.
 
 \subsection{Delaunay Tesselation Field Estimator}
@@ -142,10 +141,8 @@ Delaunay-tesselation\cite{2000A&A...363L..29S}. The Delaunay Tesselation Field
 Estimator (DTFE) uses Delaunay triangulation. The Delaunay triangulation
 divides the volume containing the particles into a set of triangles in 2D or
 tetrahedrons 3D. The volume is divided such that no particle resides inside the
-circumcircle of the assigned triangles. The vertices of the triangles are made
-up of the point distribution and no particles reside inside the area or volume
-of the triangles. This triangulation captures the density of the field in such a
-way that if the triangles are small there are many particles close to eachother
+circumcircle of the assigned triangles. This triangulation captures the density of the field in such a
+way that if the triangles are small, there are many particles close to each other
 and the density is high. Likewise larger triangles are made up of a point
 distribution with a larger distance between the particles and the density is
 lower. After assigning a density to each triangle, one can use linear
@@ -155,8 +152,8 @@ a density to all bins in the assigned computational grid.
 \subsection{Topological Persistence}\label{sec:persistence}
 When identifying the structures of the cosmic web from a density field derived
 from a point distribution, one may
-encounter noise. Structures not supposed to be significant may be inerpreted as
-so and provide noise for later analysis. To deal with noise DisPerSE utilzies
+encounter noise. Structures not supposed to be significant may be interpreted as
+so and provide noise for later analysis. To deal with noise DisPerSE utilizies
 persistence theory \cite{persistence}. Persistence theory studies the evolution
 of what is called excursion sets. An excursion set, or a sub level set, is given as
 \begin{equation}
@@ -175,8 +172,8 @@ the water level $\rho_0$ decrease the first highest peak of the function will
 eventually become visible and a new component of the excursion set will start to
 grow. Eventually the second peak will appear and a new independent component
 will start to grow. These two components are independent of each other because,
-as seen from above the surface of the water they are still separated. These two
-components will grow untill the through separating the two peaks will become
+as seen from above the surface of the water, they are still separated. These two
+components will grow until the through separating the two peaks will become
 visible. If the persistence of the pair is lower than a given threshold the two independent components of the excursion set will now merge
 together and form a persistence pair. When two components merge one is
 destroyed. In this case the lowest maximum is destroyed by the minimum as is
@@ -203,17 +200,17 @@ threshold will be cancelled.
 
 
 \begin{figure}\label{fig:persistence}
-   \includegraphics[scale=0.6]{figures/persistence.png}
+   \includegraphics[scale=0.6]{persistence.pdf}
    \caption{Example on how DisPerSE uses persistence pairs to simplify topological features. On the left is the unmodified function where the two leftmost critical points forms a persistence pair. The value of the minima is increased while the value of the maxima is increased. This is done untill the value of the minima surpasses that of the maximum and thus the persistence pair is cancelled. This effectively smoothes out features of the function.}
 \end{figure}
 
 \section{REVOLVER-REal-space VOid Locations from surVEy Reconstruction}
 For much of the void analysis conducted in this thesis the code
 REVOLVER-REal-space VOid Locations from surVEy Reconstruction is utilized. This
-code is publicly available on \url{https://github.com/seshnadathur/Revolver}.
-In the scope of this project the code provides two important utilites for the
-analysis. It provides code for finding voids in a galaxy or halo catalogue and
-the ability to reconstruct realspace positions for redshiftspace positions.
+code is publicly available at \url{https://github.com/seshnadathur/Revolver}.
+In the scope of this project the code provides an important utility for the
+analysis. It provides code for finding voids in a galaxy or halo catalogue. It also has the ability
+to reconstruct real space positions for redshift space positions.
 \subsection{ZOBOV-ZOnes BOrdering on Voidness}
 The void finding method provided by REVOLVER utilized in this project is based
 on the ZOBOV-ZOnes BOrdering on Voidness algorithm . The ZOBOV algorithm was
@@ -221,19 +218,19 @@ first presented in \cite{Neyrinck_2008}, in which this subsection is based on. I
 order to assign a density to the grid from the point particle distribution ZOBOV
 takes use of Voronoi-tesselation. Voronoi tesselation divides the space into
 individual cells where each cell belongs to a single particle from the point
-distribution. Each cell is divided so that a cell around particle $i$ is the
+distribution. Each cell is divided so that a cell around particle $i$ is made up of all
 points in space closer to that particle than any other particle. One can imagine
 individual bubbles at each particle in the distribution expanding at at an equal
-rate. Where these bubbles collide defines the edges of each voronoi cell. The
-density of each cell is then $\rho_i=1/V_i$, where index $i$ represents the
+rate. Where these bubbles collide defines the edges of each Voronoi cell. The
+density of each cell is then $\rho_i=1/V_i$, where index subscript $i$ represents the
 density and volume at each cell respectively.\\
 
 After density has been assigned to
-the grid through Voronoi-tesselation the particles are divied into zones. The
+the grid through Voronoi tesselation the particles are divided into zones. The
 zones are divided around each density minimum. The center of each zone is a
-voronoi cell with a density lower than all of its neighbours. These centers are
-found by tracing each particles neighbours until one reaches such a particle with
-density lower than all its neighbours. A zone is defined as the set of particles
+Voronoi cell with a density lower than all of its neighbors. These centers are
+found by tracing each particles neighbors until one reaches such a particle with
+density lower than all its neighbors. A zone is defined as the set of particles in
 which density flows downwards towards the minimum. Due to noise present in the
 dataset, multiple zones may make up one void. Therefore some of them may need to
 be joined together. The way zones are joined is considering, for a 2D density
@@ -241,11 +238,11 @@ field and imagining the density function as a scalar function representing a
 landscape, individual zones and imagine filling them with water. For each zone
 the water level is set to the density at the core of each zone. Gradually
 raising the water level other zones will get filled. The process stops when a
-zone with a lower core density gets filled, or if the current zone is the one
+zone with a lower core density gets filled, or, if the current zone is the one
 with the lowest density, when the whole field is filled with water. The water
-level in which the water flows into a depper zone is recorded as $\rho(z)$, where $z$ denotes i given zone. This will lead to
-a very large void (the zone with lowest density at the center), and many
-subvoids. Now one has to define the edges of the voids to determine which zones
+level in which the water flows into a deeper zone is recorded as $\rho(z)$, where $z$ denotes a given zone. This will lead to
+a very large void (the zone with the lowest density at the center), and many
+sub-voids. Now one has to define the edges of the voids to determine which zones
 should be counted as voids.
 \\\indent
 One method is to determine the statistical significance of voids. The
@@ -255,11 +252,11 @@ comparing this to a poisson particle distribution one can get the estimate for a
 likelihood function $P$ which determines the probability that a void with a
 given density contrast could arise from poisson noise. One can then choose to
 cut all voids exceeding a given significance level from the dataset.
-\subsection{Redshiftspace reconstruction}\label{sec:reconstruction}
-Due to all observational data being measured in redshiftspace, in order to study
-the realspace positions of observed quantities one has to apply reconstruction. REVOLVER contains a numerical implementation of
-the algorithm described in \cite{Nadathur_2018} in which describes the details
-of REVOLVER reconstructs realspace positions from redshiftspace. I will give a
+\subsection{Redshift space reconstruction}\label{sec:reconstruction}
+Due to all observational data being measured in redshift space, in order to study
+the real space positions of observed quantities one has to apply reconstruction. REVOLVER contains a numerical implementation of
+the algorithm described in \cite{Nadathur_2018}, in which describes the details
+of how REVOLVER reconstructs real space positions from redshift space. I will give a
 short recap of this method here.\\\indent
 The algorithm of reconstruction is derived in the framework of Lagrangian
 perturbation theory. In this framework the eularian position $\vec{x}(t)$ is
@@ -286,13 +283,13 @@ express $(\vec{\Psi}\cdot\hat{r})\hat{r}$ as a divergence and a curl component g
 By approximating $(\vec{\Psi}\cdot\hat{r})\hat{r}$ to be irrotational one can neglect
 the curl component.
 Using this and rewriting $\vec{\Psi}$ as the gradient of a
-potential $\vec{\Psi}=\nabla\phi$ one can rewrite equation \ref{eq:reconeq} as
+potential $\vec{\Psi}=\nabla\phi$, one can rewrite equation \ref{eq:reconeq} as
 \begin{equation}
     \nabla^2(\phi+\beta A)=-\frac{\delta_g}{b}.
 \end{equation}
 The previous assumption that $(\vec{\Psi}\cdot\hat{r})\hat{r}$ is irrotational
-allows us to write $(\vec{\Psi}\cdot\hat{r})\hat{r}\approx\nabla A$ and
-substiting back $\Psi$ for $\nabla\phi$ one can approximate equation
+allows us to write $(\vec{\Psi}\cdot\hat{r})\hat{r}\approx\nabla A$.
+substituting back $\Psi$ for $\nabla\phi$ one can approximate equation
 \ref{eq:reconeq} as 
 \begin{equation}
     \vec{\Psi}+(\vec{\Psi}\cdot\hat{r})\hat{r}=-\nabla\nabla^{-2}\frac{\delta_g}{b}.
