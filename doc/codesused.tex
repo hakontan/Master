@@ -1,73 +1,73 @@
 \chapter{Codes utilized - Identyfing voids and filaments from a particle distribution}\label{sec:codesused}
 \section{DisPerSE-"Discrete Persistent Structures Extractor"}
 For the analysis conducted on filaments, the identification of the filamentary structure of the cosmic web in
-data sets is crucial. To achieve this the code
+data sets is crucial. To achieve this, the code
 DisPerSE\cite{2011MNRAS.414..350S}\cite{2011MNRAS.414..384S} is utilized. The
 code is publicly available at \url{http://www2.iap.fr/users/sousbie/web/html/indexd41d.html?}.
 DisPerSE is a code that was developed to identify topological features of the
 cosmic web in cosmological particle distributions. DisPerSE utilizes discrete
 Morse Theory to identify the topological structures of the cosmic web in data
-sets. In this section i will give a brief overview of how DisPerSE works to
+sets. In this section, I will give a brief overview of how DisPerSE works to
 identify the filamentary structure from a particle distribution. For a thorough
-review i recommend the paper \cite{2011MNRAS.414..350S}, in which the following
+review I recommend the paper \cite{2011MNRAS.414..350S}, in which the following
 chapter is based and much notation is borrowed, describing the theory behind DisPerSE and the
-references therein. Another good summary of the beforementioned paper is found in \cite{Alexhothesis}, in which the following chapter also has drawn information from.
-\subsection{Morse-Theory}
+references therein. Another good summary of the beforementioned paper is found in \cite{Alexhothesis}, from which the following chapter also has drawn information.
+\subsection{Morse Theory}
 To identify the features of the cosmic web from the density field of our
 particle distribution, DisPerSE relies on Morse Theory \cite{Morse}. Morse
 theory is a mathematical framework used to relate the geometrical and
-topological properties of a function. In our case the topological features are quantities such as the number of galaxy clusters or dark matter halos while the geometric features are quantities related to the precise position of the galaxy cluster or dark matter halos and the local density. In this thesis, Morse theory is utilized to
+topological properties of a function. In our case, the topological features are quantities such as the number of galaxy clusters or dark matter halos, while the geometric features are quantities related to the precise position of the galaxy cluster or dark matter halos and the local density. In this thesis, Morse theory is utilized to
 study the relation between the density field derived from a dark matter halo catalogue and features such as
 filaments, voids and walls.
 This is done by studying the gradient of a smooth function $f$. By studying the
 gradient of the said function $f$, one can analyze the topological and geometrical features of
 the manifold. In general, to apply Morse theory, one needs a smooth scalar function $f$
 that is twice differentiable. In our case, this scalar function is the density
-field of our simulation volume. In Morse theory the gradient of the function $f$
+field of our simulation volume. In Morse theory, the gradient of the function $f$
 is defined as $\nabla_xf(\vec{x})=df(\vec{x})/d\vec{x}$. This function
-specifies the direction of steepest ascent for our scalar density function. The
-points where $\nabla_xf=0$ are called critical points. These critical
+specifies the direction of the steepest ascent for our scalar density function. The
+points where $\nabla_xf=0$, are called critical points. These critical
 points can be classified by studying the Hessian matrix of $f$ given as
 \begin{equation}
     \mathcal{H}_f(\vec{x})=d^2f(\vec{x})/dx_idx_j.
 \end{equation}
 The critical points are classified by the eigenvalues of $\mathcal{H}_f(\vec{x})$. A critical point is of order $k$ when the Hessian matrix has exactly $k$
 negative eigenvalues. This way one can classify the critical points as maxima
-with $k=2$, saddle point with $k=1$ and a minima with $k=0$. This analysis also
+with $k=2$, saddle point with $k=1$ and minima with $k=0$. This analysis also
 implies that for morse theory to be applicable, the function $f$ has to satisfy
-the condition $\mathcal{H}_f(\vec{x})\neq 0$, where $\nabla_xf=0$. From this it
+the condition $\mathcal{H}_f(\vec{x})\neq 0$, where $\nabla_xf=0$. From this, it
 follows that any function that satisfies this condition can be classified as a Morse
 function.\\
  
 It is previously stated that the gradient points in a preferred direction for any non-critical
-point. From the gradient one can therefore define integral lines between the critical
-points. An integral line is a parametrised curve $L(t)\in\mathbb{R}^n$ that satisfies
+point. From the gradient, one can therefore define integral lines between the critical
+points. An integral line is a parametrised curve $L(t)\in\mathbb{R}^d$ that satisfies
 \begin{equation}
     \frac{dL(t)}{dt}=\nabla_xf(\vec{x}).
 \end{equation}
 These integral lines will always have critical points as their origin and
 destination. An important property of these integral lines is that they cover
 all of $\mathbb{R}^d$, but they never intersect each other. They can however
-share the same origin or destination. With these integral lines one can define
-ascending and descending n-manifolds. If one consider a critical point $P$ of
-order $k$ on the Morse function living in $\mathbb{R}^d$, we have an ascending manifold of
-$d-k$ dimensions. This ascending manifold is constructed by the set of points reached by
-all integral lines with origin at the critical point $P$. The descending
-manifold is a $k-$dimensional region of space defined by all integral lines with
-destination at point $P$. An ascending $3-$manifold associated with minimas trace underdense regions represented by voids. Ascending $2-$manifolds trace walls and the filaments themselves are traced by ascending $1-$manifolds. This leads to the definition of the Morse-complex.
+share the same origin or destination. With these integral lines, one can define
+ascending and descending n-manifolds. If one considers a critical point $P$ of
+order $k$ on the Morse function living in $\mathbb{R}^d$, an ascending manifold of
+$d-k$ dimensions is constructed by the set of points reached by
+all integral lines with origin at the critical point $P$. A descending
+manifold is a $k-$dimensional region of space defined by all integral lines with their
+destination at point $P$. An ascending $3-$manifold associated with minimas trace underdense regions represented by voids. Ascending $2-$manifolds trace walls and the filaments themselves are traced by ascending $1-$manifolds. This leads to the definition of the Morse complex.
 The Morse complex is simply the set of all the ascending or descending
 manifolds. The Morse complex establishes the link between the geometrical properties such as the location of critical points and the paths of the gradients with the topological feature such as how the critical points are connected and how many there are of each type.\\
-\subsection{Discrete Morse-theory}
+\subsection{Discrete Morse theory}
 The formality currently introduced deals with smooth continuous functions. This
-however is rarely applicable to measured data or simulations. For an example the density field
+however is rarely applicable to measured data or simulations. For example, the density field
 of our simulation volume is derived from a discrete set of
 point particles. Therefore discrete
-Morse-theory\cite{FORMAN199890} is applied as to utilize Morse-theory on
-discrete data. Instead of working on smooth functions discrete Morse-theory is
+Morse theory\cite{FORMAN199890} is applied in order to utilize Morse theory on
+discrete data. Instead of working on smooth functions, discrete Morse theory is
 applied to what is called a simplicial complex. A simplicial complex is a space made up
 of simplices. A simplex is a generalization of
 a triangle to an arbitrary number of dimensions. For example a k-dimensional
-simplex, reffered to as k-simplex, is represented as
+simplex, referred to as a k-simplex, is represented as
 \begin{itemize}
     \item a $0$-simplex is a point
     \item a $1$-simplex is a line segment
@@ -75,19 +75,19 @@ simplex, reffered to as k-simplex, is represented as
     \item a $3$-simplex is a tetrahedron/pyramid etc.
 \end{itemize}
 A k-simplex will be denoted as $\sigma_k$ defined by the set of points
-$\sigma_k=\{p_0, \dots,p_k\}$. Similarily one can define the face of a simplex
+$\sigma_k=\{p_0, \dots,p_k\}$. Similarly, one can define the face of a simplex
 to be a subset of the original k-simplex. We can define the face as an
 l-simplex $\gamma_l=\{p_0,\dots,p_l\}$ with $l\leq k$. If $\gamma_l$ is a face
 of $\sigma_k$, then $\sigma_k$ is called a coface of $\gamma_l$. When $k$ and
 $l$ only differs by one, a face is called a facet and a coface is called a cofacet. These simplices make up
-what is called a simplicial complex in which a discrete Morse-function is
-defined and discrete Morse-theory is applied. A simplicial complex $K$ is made
+what is called a simplicial complex in which a discrete Morse function is
+defined and discrete Morse theory is applied. A simplicial complex $K$ is made
 up of a finite set of simplices such that $\sigma_k\in K$. With this one can
-define a discrete Morse-function $f$ as a function that maps a real value
+define a discrete Morse function $f$ as a function that maps a real value
 $f(\sigma_k)$ for each simplex in the simplicial complex $K$. As for the
-Morse-function defined in regular Morse-theory, the discrete counterpart also has
+Morse function defined in regular Morse theory, the discrete counterpart also has
 to be differentiable and the gradient can only flow towards one preferred direction
-locally. For this to occur and a Morse-function to be defined on the simplicial
+locally. For this to occur and a Morse function to be defined on the simplicial
 complex it has to satisfy the following criteria
 \begin{itemize}
     \item there exists at most one facet $\xi_{k-1}$ of $\sigma_{k}$ such
@@ -95,8 +95,8 @@ complex it has to satisfy the following criteria
     \item there exists at most one cofacet $\chi_{k+1}$ of $\sigma_{k}$ such
     that $f(\sigma_k)\geq f(\chi_{k+1})$.
 \end{itemize}
-This criteria states that locally a simplex has a lower value than its facet and
-a higher value than its cofacet. On a discrete morse function one defines a
+These criteria states that locally a simplex has a lower value than its facet and
+a higher value than its cofacet. On a discrete morse function, one defines a
 gradient field. This is done by comparing a K-simplex with its facets or
 cofacets. One can couple a K-simplex with its facets or cofacet and identify a
 preferential flow direction through gradient pairs
@@ -107,7 +107,7 @@ preferential flow direction through gradient pairs
           $\{\xi_{k-1},\sigma_{k}\}$ defines a gradient pair.
 \end{itemize}
 Gradient pairs define gradient arrows and define the preferred flow direction in
-the discrete vector field. As for the regular Morse-theory, the discrete
+the discrete vector field. As for the regular Morse theory, the discrete
 counterpart also requires an analogy to a critical point. These are called
 critical k-simplices. A k-simplex $\sigma_k$ is critical if the following
 critera are satisfied
@@ -117,33 +117,33 @@ critera are satisfied
     \item there exists no cofacet $\chi_{k+1}$ of $\sigma_{k}$ such
     that $f(\sigma_k)\geq f(\chi_{k+1})$.
 \end{itemize}
-In regular morse theory the integral lines were crucial in representing the
+In regular morse theory, the integral lines were crucial in representing the
 manifolds in which the morse complex is defined. Their discrete counterpart
 is what is called a V-path. If one considers k-simplexes $\alpha^i_k$ and
-$(k+1)$ simplexes $\beta^j_{k+1}$, where $\alpha a^{i+1}_k$ is a facet of $\beta^i_{k+1}$, a
+$(k+1)$ simplexes $\beta^j_{k+1}$, where $\alpha^{i+1}_k$ is a facet of $\beta^i_{k+1}$, a
 V-path is a strictly decreasing an alternating sequence such that
 \begin{equation}
     \alpha^0_k, \beta^0_{k+1},\alpha^1_k,\beta^1_{k+1},\dots,\alpha^n_k,\alpha^n_{k+1}.
 \end{equation}
-Each pair ${\alpha^i_k,\beta^i_{k+1}}$ forms a gradient pair. A V-path is a set
+Each pair $\{\alpha^i_k,\beta^i_{k+1}\}$ forms a gradient pair. A V-path is a set
 of all continuous gradient pairs through the simplicial complex $K$.
 With V-paths one can define discrete n-manifolds that make up the discrete
-morse-complex. A discrete n-manifold is the set of k-simplices that belongs to a
+Morse complex. A discrete n-manifold is the set of k-simplices that belongs to a
 V-path with either origin or destination at the critical simplex $\sigma_k$.
 The n-manifolds are ascending if their origin is $\sigma_k$. Likewise,
 the n-manifolds are descending if their destination is $\sigma_k$. These
-manifolds make up what is called the discrete Morse-complex.
+manifolds make up what is called the discrete Morse complex.
 
 \subsection{Delaunay Tesselation Field Estimator}
 In order to compute a density field from a set of point particles, in which one
-can compute the discrete Morse-complex, DisPerSE utilizes
+can compute the discrete Morse complex, DisPerSE utilizes
 Delaunay-tesselation\cite{2000A&A...363L..29S}. The Delaunay Tesselation Field
 Estimator (DTFE) uses Delaunay triangulation. The Delaunay triangulation
 divides the volume containing the particles into a set of triangles in 2D or
 tetrahedrons 3D. The volume is divided such that no particle resides inside the
 circumcircle of the assigned triangles. This triangulation captures the density of the field in such a
 way that if the triangles are small, there are many particles close to each other
-and the density is high. Likewise larger triangles are made up of a point
+and the density is high. Likewise, larger triangles are made up of a point
 distribution with a larger distance between the particles and the density is
 lower. After assigning a density to each triangle, one can use linear
 interpolation, assuming the density changes linearly between each bin, to assign
@@ -153,15 +153,15 @@ a density to all bins in the assigned computational grid.
 When identifying the structures of the cosmic web from a density field derived
 from a point distribution, one may
 encounter noise. Structures not supposed to be significant may be interpreted as
-so and provide noise for later analysis. To deal with noise DisPerSE utilizies
+so and provide noise for later analysis. To deal with noise DisPerSE utilizes
 persistence theory \cite{persistence}. Persistence theory studies the evolution
-of what is called excursion sets. An excursion set, or a sub level set, is given as
+of what is called excursion sets. An excursion set, or a sub-level set, is given as
 \begin{equation}
     (x_1,\dots, x_n)\vert\rho(x_1,\dots, x_n)\geq\rho_0.
 \end{equation}
 This is the set of points $(x_1,\dots, x_n)$ where $\rho(x_1,\dots, x_n)$ is
-larger than some threshold value $\rho_0$. Persistence theory measures the so
-called lifetime of the excursion set. This is a measure of the absolute
+larger than some threshold value $\rho_0$. Persistence theory measures the so-called
+lifetime of the excursion set. This is a measure of the absolute
 difference in value between a pair of two critical points. By cycling through
 values for $\rho_0$ one may measure the lifetime of the topological features.
 One can imagine a function of one variable $\rho(x)$ with peaks and throughs as
@@ -179,7 +179,7 @@ together and form a persistence pair. When two components merge one is
 destroyed. In this case the lowest maximum is destroyed by the minimum as is
 illustrated in figure \ref{fig:persistence}.\\
 
-DisPerSE cancels noise in the dataset by computing the persistance pairs
+DisPerSE cancels noise in the dataset by computing the persistence pairs
 in the discrete morse complex. Given a persistence pair composed of two
 simplicial complexes $q_k=\{\sigma_k,\sigma_{k+1}\}$ on the discrete morse
 function $f$, a persistence ratio $r$ is given as
@@ -194,8 +194,8 @@ pairs. The significance given in "number of sigmas" reads
 where Erf is the error function and $P_k(r(q_k))$ is the cumulative probability
 that a persistence pair with persistence ratio $r\geq r_0$ exists in the
 dataset. The code takes a $\sigma$ input for specifying a threshold for cutting
-persistence pairs. The argument specifies the persistance threshold in number of
-sigmas and any persistance pair with probability lower than the given sigma
+persistence pairs. The argument specifies the persistence threshold in number of
+sigmas and any persistence pair with a probability lower than the given sigma
 threshold will be cancelled.
 
 
@@ -255,7 +255,7 @@ cut all voids exceeding a given significance level from the dataset.
 \subsection{Redshift space reconstruction}\label{sec:reconstruction}
 Due to all observational data being measured in redshift space, in order to study
 the real space positions of observed quantities one has to apply reconstruction. REVOLVER contains a numerical implementation of
-the algorithm described in \cite{Nadathur_2018}, in which describes the details
+the algorithm described in \cite{Nadathur_2018} and \cite{Burden_reconstruction}, in which describes the details
 of how REVOLVER reconstructs real space positions from redshift space. I will give a
 short recap of this method here.\\\indent
 The algorithm of reconstruction is derived in the framework of Lagrangian
@@ -273,7 +273,7 @@ To first order, the displacement field $\Psi$ can be modelled together with the
 overdensity as $\nabla\Psi^{(1)}(\vec{q},t)=-\delta(\vec{x,t})$, where
 $\delta(\vec{x},t)$ is the usual overdensity parameter given in equation \ref{eq:overdensity}.
 In order to extract the displacement field from $\vec{\Psi}(\vec{q},t)$ from a
-redshifted density distribution one has to solve \cite{recondisplace}
+redshifted density distribution, one has to solve \cite{recondisplace}
 \begin{equation}\label{eq:reconeq}
     \nabla\cdot\vec{\Psi}+\beta\nabla\cdot(\vec{\Psi}\cdot\hat{r})\hat{r}=-\frac{\delta_g}{b},
 \end{equation}
