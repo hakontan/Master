@@ -20,7 +20,7 @@ topological properties of a function. In our case, the topological features are 
 study the relation between the density field derived from a dark matter halo catalogue and features such as
 filaments, voids and walls.
 This is done by studying the gradient of a smooth function $f$. By studying the
-gradient of the said function $f$, one can analyze the topological and geometrical features of
+gradient of the function $f$, one can analyze the topological and geometrical features of
 the manifold. In general, to apply Morse theory, one needs a smooth scalar function $f$
 that is twice differentiable. In our case, this scalar function is the density
 field of our simulation volume. In Morse theory, the gradient of the function $f$
@@ -34,7 +34,7 @@ points can be classified by studying the Hessian matrix of $f$ given as
 The critical points are classified by the eigenvalues of $\mathcal{H}_f(\vec{x})$. A critical point is of order $k$ when the Hessian matrix has exactly $k$
 negative eigenvalues. This way one can classify the critical points as maxima
 with $k=2$, saddle point with $k=1$ and minima with $k=0$. This analysis also
-implies that for morse theory to be applicable, the function $f$ has to satisfy
+implies that for Morse theory to be applicable, the function $f$ has to satisfy
 the condition $\mathcal{H}_f(\vec{x})\neq 0$, where $\nabla_xf=0$. From this, it
 follows that any function that satisfies this condition can be classified as a Morse
 function.\\
@@ -96,9 +96,9 @@ complex it has to satisfy the following criteria
     that $f(\sigma_k)\geq f(\chi_{k+1})$.
 \end{itemize}
 These criteria states that locally a simplex has a lower value than its facet and
-a higher value than its cofacet. On a discrete morse function, one defines a
-gradient field. This is done by comparing a K-simplex with its facets or
-cofacets. One can couple a K-simplex with its facets or cofacet and identify a
+a higher value than its cofacet. On a discrete Morse function, one defines a
+gradient field. This is done by comparing a k-simplex with its facets or
+cofacets. One can couple a k-simplex with its facets or cofacet and identify a
 preferential flow direction through gradient pairs
 \begin{itemize}
     \item If a simplex $\sigma_k$ has exactly one lower valued cofacet $\chi_{k+1}$, then
@@ -117,8 +117,8 @@ critera are satisfied
     \item there exists no cofacet $\chi_{k+1}$ of $\sigma_{k}$ such
     that $f(\sigma_k)\geq f(\chi_{k+1})$.
 \end{itemize}
-In regular morse theory, the integral lines were crucial in representing the
-manifolds in which the morse complex is defined. Their discrete counterpart
+In regular Morse theory, the integral lines were crucial in representing the
+manifolds in which the Morse complex is defined. Their discrete counterpart
 is what is called a V-path. If one considers k-simplexes $\alpha^i_k$ and
 $(k+1)$ simplexes $\beta^j_{k+1}$, where $\alpha^{i+1}_k$ is a facet of $\beta^i_{k+1}$, a
 V-path is a strictly decreasing an alternating sequence such that
@@ -166,7 +166,7 @@ difference in value between a pair of two critical points. By cycling through
 values for $\rho_0$ one may measure the lifetime of the topological features.
 One can imagine a function of one variable $\rho(x)$ with peaks and throughs as
 mountains submerged under a water level set by $\rho_0$. This is illustrated in
-figure \ref{fig:persistence}
+figure \ref{fig:persistence}.
 When the whole function is submerged under water the excursion set is empty. As
 the water level $\rho_0$ decrease the first highest peak of the function will
 eventually become visible and a new component of the excursion set will start to
@@ -180,8 +180,8 @@ destroyed. In this case the lowest maximum is destroyed by the minimum as is
 illustrated in figure \ref{fig:persistence}.\\
 
 DisPerSE cancels noise in the dataset by computing the persistence pairs
-in the discrete morse complex. Given a persistence pair composed of two
-simplicial complexes $q_k=\{\sigma_k,\sigma_{k+1}\}$ on the discrete morse
+in the discrete Morse complex. Given a persistence pair composed of two
+simplicial complexes $q_k=\{\sigma_k,\sigma_{k+1}\}$ on the discrete Morse
 function $f$, a persistence ratio $r$ is given as
 \begin{equation}
     r(q_k)=\frac{f(\sigma_{k+1})}{f(\sigma_k)}.
@@ -199,9 +199,10 @@ sigmas and any persistence pair with a probability lower than the given sigma
 threshold will be cancelled.
 
 
-\begin{figure}\label{fig:persistence}
+\begin{figure}
    \includegraphics[scale=0.6]{persistence.pdf}
    \caption{Example on how DisPerSE uses persistence pairs to simplify topological features. On the left is the unmodified function where the two leftmost critical points forms a persistence pair. The value of the minima is increased while the value of the maxima is increased. This is done untill the value of the minima surpasses that of the maximum and thus the persistence pair is cancelled. This effectively smoothes out features of the function.}
+   \label{fig:persistence}
 \end{figure}
 
 \section{REVOLVER-REal-space VOid Locations from surVEy Reconstruction}
@@ -220,7 +221,7 @@ takes use of Voronoi-tesselation. Voronoi tesselation divides the space into
 individual cells where each cell belongs to a single particle from the point
 distribution. Each cell is divided so that a cell around particle $i$ is made up of all
 points in space closer to that particle than any other particle. One can imagine
-individual bubbles at each particle in the distribution expanding at at an equal
+individual bubbles at each particle in the distribution expanding at an equal
 rate. Where these bubbles collide defines the edges of each Voronoi cell. The
 density of each cell is then $\rho_i=1/V_i$, where index subscript $i$ represents the
 density and volume at each cell respectively.\\
@@ -231,7 +232,7 @@ zones are divided around each density minimum. The center of each zone is a
 Voronoi cell with a density lower than all of its neighbors. These centers are
 found by tracing each particles neighbors until one reaches such a particle with
 density lower than all its neighbors. A zone is defined as the set of particles in
-which density flows downwards towards the minimum. Due to noise present in the
+which the density flows downwards towards the minimum. Due to noise present in the
 dataset, multiple zones may make up one void. Therefore some of them may need to
 be joined together. The way zones are joined is considering, for a 2D density
 field and imagining the density function as a scalar function representing a
@@ -248,9 +249,9 @@ should be counted as voids.
 One method is to determine the statistical significance of voids. The
 probability of wether a zone should be considered as real is determined by the
 ratio of the density contrast of a zone with the minimum density of the zone. By
-comparing this to a poisson particle distribution one can get the estimate for a
+comparing this to a Poisson particle distribution one can get the estimate for a
 likelihood function $P$ which determines the probability that a void with a
-given density contrast could arise from poisson noise. One can then choose to
+given density contrast could arise from Poisson noise. One can then choose to
 cut all voids exceeding a given significance level from the dataset.
 \subsection{Redshift space reconstruction}\label{sec:reconstruction}
 Due to all observational data being measured in redshift space, in order to study
@@ -259,16 +260,16 @@ the algorithm described in \cite{Nadathur_2018} and \cite{Burden_reconstruction}
 of how REVOLVER reconstructs real space positions from redshift space. I will give a
 short recap of this method here.\\\indent
 The algorithm of reconstruction is derived in the framework of Lagrangian
-perturbation theory. In this framework the eularian position $\vec{x}(t)$ is
+perturbation theory. In this framework the Eularian position $\vec{x}(t)$ is
 given as
 \begin{equation}
     \vec{x}(t)=\vec{q}+\vec{\Psi}(\vec{q},t),
 \end{equation}
 where $\vec{q}$ is the initial Lagrangian position and $\vec{\Psi}(t)$ is the
-displacement field. The eularian position separates itself from the lagrangian
-position in the sense that the eularian position is a specific point in space
-while the lagrangian position is the position of a parcel where the observer
-follows an individual parcel with the velocity field through space and time.
+displacement field. The Eularian position separates itself from the Lagrangian
+position in the sense that the Eularian position is a specific point in space
+while the Lagrangian position is the position of a parcel where the observer
+follows that individual parcel with the velocity field through space and time.
 To first order, the displacement field $\Psi$ can be modelled together with the
 overdensity as $\nabla\Psi^{(1)}(\vec{q},t)=-\delta(\vec{x,t})$, where
 $\delta(\vec{x},t)$ is the usual overdensity parameter given in equation \ref{eq:overdensity}.
@@ -278,8 +279,8 @@ redshifted density distribution, one has to solve \cite{recondisplace}
     \nabla\cdot\vec{\Psi}+\beta\nabla\cdot(\vec{\Psi}\cdot\hat{r})\hat{r}=-\frac{\delta_g}{b},
 \end{equation}
 where $\beta$ and the bias $b$ is defined in equations
-\ref{eq:beta} and \ref{eq:bias}. Using a Helmholtz decomposition one can
-express $(\vec{\Psi}\cdot\hat{r})\hat{r}$ as a divergence and a curl component giving $(\vec{\Psi}\cdot\hat{r})\hat{r}=\nabla A + \nabla \times \vec{B}$.
+\ref{eq:beta} and \ref{eq:bias}. Using a Helmholtz decomposition, one can
+express $(\vec{\Psi}\cdot\hat{r})\hat{r}$ as a divergence and a curl component, giving $(\vec{\Psi}\cdot\hat{r})\hat{r}=\nabla A + \nabla \times \vec{B}$.
 By approximating $(\vec{\Psi}\cdot\hat{r})\hat{r}$ to be irrotational one can neglect
 the curl component.
 Using this and rewriting $\vec{\Psi}$ as the gradient of a
@@ -294,14 +295,15 @@ substituting back $\Psi$ for $\nabla\phi$ one can approximate equation
 \begin{equation}
     \vec{\Psi}+(\vec{\Psi}\cdot\hat{r})\hat{r}=-\nabla\nabla^{-2}\frac{\delta_g}{b}.
 \end{equation}
-Using fast fourier transforms this equation can be solved as \cite{Burden_reconstruction}
+Using fast Fourier transforms this equation can be solved as \cite{Burden_reconstruction}
 \begin{equation}\label{eq:revolversolve}
     \vec{\Psi}=\mathrm{IFFT}\Big[-\frac{i\vec{k}\delta(\vec{k})}{k^2b}\Big]-\frac{f}{1+f}\Big[\mathrm{IFFT}\Big[-\frac{i\vec{k}\delta(\vec{k})}{k^2b}\Big]\cdot\hat{r}\Big]\hat{r}.
 \end{equation}
+Due to redshift space distortions only appearing along the line of sight direction, the component of displacement field responsible for redshift space distortions is given by $\vec{\Psi}_{RSD}=-f(\vec{\Psi}\cdot\hat{r})\hat{r}$.
 \\\indent
-REVOLVER solves equation \ref{eq:revolversolve} using fast fourier transforms.
+REVOLVER solves equation \ref{eq:revolversolve} using fast Fourier transforms.
 Using a Voronoi tesselation for estimating the density field $\delta(\vec{x})$ of
-the simulation volume, this field is then transformed to fourier space as
+the simulation volume, this field is then transformed to Fourier space as
 $\delta(\vec{k})$. By then dividing by $bk^2$ and multiplying by $i\vec{k}$, one
 will retrieve the expression inside the braces in the equation above. The
-inverse fourier transform is then taken.
+inverse Fourier transform is then taken.

@@ -16,11 +16,12 @@ For this analysis, I will use The Big MultiDark Planck simulation (BigMDPL)\cite
         $\sigma_8(z=0)$ & $0.8228$ \\
         \hline
     \end{tabular}
-    \caption{\label{tab:cosmosimparameters}Parameters of the BigMDPL simulation extracted from the website \url{https://www.cosmosim.org/cms/simulations/bigmdpl/}.}
+    \caption{Parameters of the BigMDPL simulation extracted from the website \url{https://www.cosmosim.org/cms/simulations/bigmdpl/}.}
+    \label{tab:cosmosimparameters}
 \end{table}
 This simulation has been carried out utilizing the L-GADGET-2 code. This code is a modification of the treeSPH\cite{treesph} code GADGET-2\cite{springel2005} in order to account for a very large amount of particles. The simulation data utilized in this analysis is taken at $z=1$. After simulating the evolution of the dark matter particle field from $z=100$ to $z=1$ a halo finder is used to identify dark matter halos in the particle field.
 \section{Halo finding using Rockstar}
-In order to identify dark matter halos from the dark matter particle field, the rockstar halo finder\cite{rockstar} is utilized. In short, this halo finder is comprised of six steps in which I will recap here.
+In order to identify dark matter halos from the dark matter particle field, the Rockstar halo finder\cite{rockstar} is utilized. In short, this halo finder is comprised of six steps in which I will recap here.
 \begin{enumerate}
     \item The first step is to group particles in the simulation volume using a friends of friends (FOF) algorithm. In short a FOF algorithm groups particles by using a linking length $l$ and for every particle it groups it together with all other particles within the linking length $l$.
     \item For each group the particles are normalized by the group position and velocity dispersions.
@@ -30,7 +31,7 @@ In order to identify dark matter halos from the dark matter particle field, the 
     \item Once particles are assigned to a seed halo unbound particles are removed and the properties of the halo itself is calcuated (i.e mass, velocity, position etc).
 \end{enumerate}
 \section{Applying mass cuts to the dataset.}
-After the halo finder algorithm has been applied to the dataset we are left with a catalogue of dark matter halos with $x$, $y$ and $z$ positions, $v_x$, $v_y$ and $v_z$ velocity components and the mass of each individual halo. This dataset will be pruned into four different catalogues by applying different mass cuts. Future and present observational missions will be able to locate a different number galaxies in their surveys. It is therefore important to test the performance of the methods on datasets of different sizes to see how this affects the final results. The mass cuts are done by removing all haloes below a certain mass threshold from the catalogue. These will be referred to later in the thesis as MultiDark 1 (MD1), MultiDark 2 (MD2), MultiDark 3 (MD3) and MultiDark 4 (MD4) respectively. Their individual properties are listed in table \ref{tab:MDproperties}.
+After the halo finder algorithm has been applied to the dataset we are left with a catalogue of dark matter halos with $x$, $y$ and $z$ positions, $v_x$, $v_y$ and $v_z$ velocity components and the mass of each individual halo. This dataset will be pruned into four different catalogues by applying different mass cuts. Future and present observational missions will be able to locate a different number galaxies in their surveys. It is therefore important to test the performance of the methods on datasets of different sizes to see how this affects the final results. The mass cuts are done by removing all halos below a certain mass threshold from the catalogue. These will be referred to later in the thesis as MultiDark 1 (MD1), MultiDark 2 (MD2), MultiDark 3 (MD3) and MultiDark 4 (MD4) respectively. Their individual properties are listed in table \ref{tab:MDproperties}.
 \begin{table}\label{tab:MDproperties}
     \begin{tabular}{| c | c | c | c | c | }
         \hline

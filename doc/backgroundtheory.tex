@@ -11,9 +11,9 @@ everyday units of measurement already start to become too big for us to have a
 reasonable idea of how long this distance actually is. We have a clear idea of
 what a meter and a kilometer is as we have to deal with them every day. To make
 things more manageable when measuring these large distances, the average distance
-from the earth to the sun has become its own distance unit known as the
-Astronomical unit (AU). This unit is a great tool for measuring relative
-distances in our own solar system, but our nearest star, Proxima Centauri, is
+from the earth to the sun has been assigned its own unit of distance measurement known as the
+Astronomical unit (AU). This unit is a useful tool for measuring relative
+distances in our own solar system, but the star nearest to our solar system, Proxima Centauri, is
 located at approximately $268394$AU away from our closest star the Sun.
 Therefore it is convenient to introduce another unit of distance measurement known as a light-year. This unit with a value of $9.4607\cdot10^{15}$m is the distance at
 which light travels in vacuum during one Julian year equal to $365.25$ days.
@@ -64,12 +64,12 @@ universe through the scale factor $a(t)$. The proper distance is given as
 \end{equation}
 where $a(t)$ is a quantity known as the scale factor. The scale factor parametrizes the relative expansion of the
 universe. It is defined in such a way that $a_0$, subscript $0$ meaning
-$a(t=t_0)$ where $t_0$ is present time, is equal to one. This definition of
+$a(t=t_0)$, is equal to one. This definition of
 proper distance also implies that comoving distance is the proper distance at $t=t_0$.
-With these properties in place, we can now see how redshift, which is a
-measurable quantity can be used to measure the real distance to objects in our universe.\\
+With these properties in place we can now see how redshift, which is a
+measurable quantity, can be used to measure the real distance to objects in our universe.\\
 
-Another measurable measurable quantity is flux emitted from an astronomical object.
+Another measurable quantity is flux emitted from an astronomical object.
 The flux $F$ is defined as
 \begin{equation}
     F = \frac{L}{4\pi R^2},
@@ -83,8 +83,7 @@ calculate the luminosity distance as
     d_L = \sqrt{\frac{L}{4\pi F}}.
 \end{equation}
 \indent
-Lastly, we introduce the angular diameter distance as the last distance
-measurement. The angular extent of an object in the sky provides us with another measurable quantity related to distances in the universe. The angular diameter distance is, for an object with a known size
+Lastly, we introduce the angular diameter distance. The angular extent of an object in the sky provides us with another measurable quantity related to distances in the universe. The angular diameter distance is, for an object with a known size
 $D$ at a large distance $d$, where $d\gg D$, given as 
 \begin{equation}
     d_A\equiv \frac{D}{\Delta\theta}.
@@ -106,9 +105,10 @@ looks the same in every direction for every observer at any point in space for
 sufficiently large scales. By sufficiently large scales one means
 distances roughly $100$Mpc or larger \cite[p.~12]{ryden2017introduction}. This has proved to be a good
 assumption by surveys like the Sloan Digital Sky Survey\cite{sloanhomogenous}. Figure \ref{fig:sdssmap} shows a sky map from a survey released by the SDSS project.\\
-\begin{figure}[htbp]\label{fig:sdssmap}
+\begin{figure}[htbp]
     \includegraphics[scale=0.4]{orangepie.jpg}
     \caption{The SDSS (Sloan Digital Sky survey) map of the universe. Each dot represents a galaxy and the color scale represents the local density. Downloaded from the SDSS website \url{https://www.sdss.org/science/orangepie/}. Image Credit: M. Blanton and SDSS.}
+    \label{fig:sdssmap}
 \end{figure}
 The fact that the universe was homogeneous and isotropic was an essential assumption
 for a particular solution of the Einstein field equation. 
@@ -117,7 +117,7 @@ This particular equation, first published by Albert Einstein in $1915$ \cite{Ein
     G_{\mu\nu}=8\pi GT_{\mu\nu}.
 \end{equation}
 This equation relates $G_{\mu\nu}$, which is the Einstein tensor in which describes the curvature of spacetime, with the energy momentum-tensor
-$T_{\mu\nu}$, which describes the energy content of the universe. During the 1920s, by assuming the universe is isotropic, homogenous and expanding, the scientist's Alexander Friedmann and Georges Lemaître worked independently on finding a solution to equation \ref{eq:einstein}. In the 1930s Howard P.Robertson and Arthur Geoffrey Walker further explored the problem and proved that this is the only solution on a spacetime that is homogenous and isotropic.
+$T_{\mu\nu}$, which describes the energy content of the universe. During the 1920s, by assuming the universe is isotropic, homogenous and expanding, the scientists Alexander Friedmann and Georges Lemaître worked independently on finding a solution to equation \ref{eq:einstein}. In the 1930s Howard P.Robertson and Arthur Geoffrey Walker further explored the problem and proved that this is the only solution on a spacetime that is homogenous and isotropic.
 This solution, named after the four scientists, is known as the Friedman-Lemaître-Robertson-Walker metric
 The metric is a tool that allows us to calculate the physical distance in a coordinate system.
 For example, for the Cartesian coordinate system, we have the metric 
@@ -186,8 +186,8 @@ is considered the main energy contributions governing the expansion of the unive
 and lastly, we have ordinary baryonic matter, which is what we interact with in our
 everyday lives. The current estimates suggest that approximately $69\%$ of the
 universe consists of dark energy while the remaining $31\%$ is attributed to
-dark matter at around 
-$27\%$ and $4\%$ for regular matter leaving only trace contributions from other
+matter. The matter contribution is made up of
+$27\%$ dark matter and $4\%$ is regular baryonic matter. This leaves only trace contributions from other
 energy contributing factors such as photons ($\gamma$) and neutrinos ($\nu$)
 \cite{planckparameters}. When modelling the universe these quantities
 enter into 
@@ -239,7 +239,7 @@ Where $b$ represents baryonic matter and $r$ represents radiation.
 \subsection{Einstein-de Sitter model}
 While the $\Lambda$CDM model is the leading model for describing the evolution
 of our universe, other universe models, being simpler to work with, will also
-prove beneficial for approximating and describing multiple phenomena. One of
+prove beneficial as approximations for different applications. One of
 these models is the Einstein-de Sitter model \cite{1932PNAS...18..213E} proposed
 by Albert Einstein and Willem de Sitter in 1932. This model contains only matter
 making $\Omega_m=1$. After learning of the expansion
@@ -249,7 +249,8 @@ universe static. After the discovery that the expansion of the universe is
 accelerating \cite{Goldhaber_2009}\cite{Filippenko_1998} the cosmological
 constant was reintroduced. While the Einstein-de Sitter model is long discarded, it is
 still useful as it is easy to work with in an analytical framework and provides
-good approximations for different applications. In a universe containing only
+good approximations for different applications.\\\indent
+In a universe containing only
 matter, the first Friedmann equation with $w=0$ takes the form
 \begin{equation}
     \frac{\dot{a}^2}{a^2} = \frac{8\pi G}{3}\rho_{m,0}a^{-3}.
@@ -265,7 +266,7 @@ sides, we get
 \begin{equation}
     a^{1/2}\dot{a}=H_0.
 \end{equation}
-This gives us a differential equation in which we can integrate as
+This gives us a differential equation which can be integrated as
 \begin{equation}
     \int_{a_0}^a a^{1/2}\mathrm{d}a=H_0\int_{t_0}^t \mathrm{d}t,
 \end{equation}
@@ -284,7 +285,7 @@ By imposing this boundary condition we find that
 
 \subsection{Growth of matter perturbations in linear perturbation theory.}\label{sec:linpert}
 As I have previously stated, observational data suggest that the universe is isotropic and homogenous. This
-however was for sufficiently large scales at around $100$ Mpc and larger. On
+however was for sufficiently large scales at around $100$ Mpc or larger. On
 smaller scales, the universe is not isotropic and homogenous. A single galaxy,
 for example, is denser than the intergalactic medium that separates it from other
 galaxies. The anisotropy in temperature of the cosmic microwave background (CMB), as measured by
@@ -293,7 +294,7 @@ around $\Delta T/T=10^{-5}$. This shows that at around redshift $z=1000$, we had
 relatively small fluctuations while we today observe galaxy clusters which has around
 $200$ times larger density than the average density of an equal sphere in the
 universe \cite[p.~342]{schneider2006extragalactic}. This suggests that the original density
-perturbations grow over time. The small structure deviations at early times evolve through what is known as gravitational instability.
+perturbations grows over time. The small structure deviations at early times evolve through what is known as gravitational instability.
 Regions with higher density will attract more material through gravity giving a flow of matter towards dense regions making them even denser.
 This makes an already irregular distribution of matter become even more irregular with time and will evolve from the small fluctuations at the time of the CMB
 to the dense sctructures we observe in our universe today.
@@ -343,8 +344,8 @@ equations can then be reduced to
 \begin{equation}
     \frac{\partial^2 \delta}{\partial t^2} + 2H(t) \frac{d \delta}{dt}=4\pi G\bar{\rho}\delta.
 \end{equation}
-\cite[p.~345]{schneider2006extragalactic}. This equation only contains time derivatives, and all the coefficients does not
-depend on $\vec{x}$. Therefore $\delta(\vec{x}, t)$ can then be expressed as a spatial and time-dependent expression on the form 
+\cite[p.~345]{schneider2006extragalactic}. This equation only contains time derivatives, and none of the coefficients is dependent
+on $\vec{x}$. Therefore $\delta(\vec{x}, t)$ can then be expressed as a spatial and time-dependent expression on the form 
 \begin{equation}
     \delta(\vec{x}, t) = D(t)g(\vec{x}).
 \end{equation}
@@ -371,7 +372,7 @@ clusters. The evolution of density contrasts of order higher than unity requires
 different techniques to model in a reasonable way. The spherical top-hat model
 is one of the most fundamental frameworks to analytically model the non-linear
 collapse of overdensities in the universe.
-\begin{figure}\label{fig:tophat}
+\begin{figure}
     \tdplotsetmaincoords{80}{20}
     \begin{tikzpicture}[tdplot_main_coords]
         \coordinate (O) at (0,0,0);
@@ -392,6 +393,7 @@ collapse of overdensities in the universe.
         \draw[->] (O) --++ (0,0,1) node[right] {$\rho$};    
     \end{tikzpicture}
     \caption{A simple illustration of the spherical top hat model.}
+    \label{fig:tophat}
 \end{figure}
 The spherical top-hat model gets its name from how its density profile is
 defined. For the spherical top-hat model we have
@@ -430,7 +432,7 @@ $E<0$, this equation has the parametrised solution
 \end{align}
 \cite[p.~79]{peebles1980}. By setting an initial radius $R_i$ at time $t_i$ this
 solution tells us that a shell expanding with the background evolution of the
-universe will reach eventually slow down and reach a maximum radius at
+universe will eventually slow down and reach a maximum radius at
 $\theta=\pi$. This is called turn-around. At this point, the sphere will begin to
 collapse. This solution also suggests that at $\theta=2\pi$ the sphere would
 collapse to a point. This is not the case as something known as virialization
@@ -475,7 +477,7 @@ correlation function as a Fourier transform given by
 Both of these quantities are statistical properties and are of high importance
 when comparing models to observations or simulations. Most of the theories describing 
 the origin of structure in our universe are coupled to the period of Inflation. Inflation is a rapid expansion
-of space that occurred in the infancy of the universe after the big bang.
+of space that occurred in the infancy of the universe after The Big Bang.
 Inflationary theory does not predict the exact location of the distributed matter.
 Instead, it predicts how it should be statistically distributed.
 A simulation or calculation of structure growth may
@@ -504,7 +506,7 @@ Using this relation one can normalize the dark matter power spectrum by measurin
 \subsection{The cosmic web}
 On large scales the universe is isotropic and homogenous. However this does not
 mean that every galaxy or cosmological particle is distributed randomly. As
-previously discussed matter tends to flow towards overdensities. Over time many
+previously discussed, matter tends to flow towards overdensities. Over time many
 of these overdensities will collapse into large dark matter halos. Dark matter
 halos contain subsctructures and sub halos where baryonic matter can form
 galaxies. The massive halos are bound together by gravity in what resembles a
@@ -513,7 +515,7 @@ filaments of baryonic and dark matter, and in between there are large voids with
 very low density. Figure \ref{fig:millenium} shows the Millenium simulation with
 $10^{10}$ dark matter particles at different redshifts $z=0$ and $z=18.3$ corresponding to
 $t=0.21$Gyr and $t=13.6$Gyr after the big bang respectively.
-\begin{figure}[htbp]\label{fig:millenium}
+\begin{figure}[htbp]
     \subfigure[]{\includegraphics[width=0.5\textwidth]{figures/milleniumz0.jpg}}\hspace{1em}%
     \subfigure[]{\includegraphics[width=0.5\textwidth]{figures/milleniumzoomz0.jpg}}
     \subfigure[]{\includegraphics[width=0.5\textwidth]{figures/milleniumz18.jpg}}\hspace{1em}%
@@ -522,6 +524,7 @@ $t=0.21$Gyr and $t=13.6$Gyr after the big bang respectively.
     for two different redshifts. Figures a) and b) is taken at $z=0$ while
     figures c) and d) is taken at $z=18.3$. Image credit: Downloaded from the
     website of the Millennium Simulation\cite{Millennium} (\url{https://wwwmpa.mpa-garching.mpg.de/galform/virgo/millennium/}).}
+    \label{fig:millenium}
 \end{figure}
 Here one can clearly see that as time evolves the matter coalesces from a
 relatively even distribution of matter into a web-like structure with filaments
@@ -557,7 +560,7 @@ matter in the universe today.
 As mentioned earlier in section \ref{sec:sec_distance}, due to the fact that the
 universe is expanding, galaxies we observe in the universe on cosmological scales
 move away from us and appear redshifted. In addition, galaxies also have peculiar
-velocities, which is their velocity when subtracting the Hubble flow. This results in an effect that when observing galaxies
+velocities, which is their velocity when subtracting the Hubble flow. This results in an effect, that when observing galaxies
 as a function of redshift, their spatial distribution appears squashed. As most
 cosmological surveys of galaxies are done by measuring their redshift,
 understanding how this affects their spatial distribution is crucial.
@@ -595,7 +598,7 @@ redshift space. This effect will also cause the overdensity to appear much large
 in the center of a collapsed object than in real space. This is illustrated in
 figure \ref{fig:rsddistortion}.\\
 
-\begin{figure}[htbp]\label{fig:rsddistortion}
+\begin{figure}[htbp]
     \begin{tikzpicture}
         \draw (5,0) circle (3cm) node[above] {Realspace};
         \draw (13,0) ellipse (3cm and 1cm) node[above] {Redshiftspace};
@@ -605,6 +608,7 @@ figure \ref{fig:rsddistortion}.\\
         \draw[line width=0.5mm][->] (5+7.8cm,0) -- (5+5.8cm,0);
     \end{tikzpicture}
     \caption{Figure illustrating a collapsing halo in realspace and redshiftspace. The vector pointers represent the direction of the peculiar velocity. In this illustration both circles are meant to contain the same number density of galaxies thereby giving the apparent overdensity appear much higher in redshiftspace than in realspace. The observer sitting at the bottom of the page with the line of sight direction being parallell to the plane spanned by the circle and the ellipse.}
+    \label{fig:rsddistortion}
 \end{figure}
 The effect of redshift space distortions causes the correlation function and thereby
 matter power spectrum to be slightly altered when observed in redshift space. In
@@ -634,7 +638,7 @@ enough detail to accurately compare observational data to theoretical
 predictions. Therefore, numerical simulations of structure formation is an
 important tool when studying the properties of the universe. Numerical
 simulations have been crucial for establishing $\Lambda CDM$ as the standard
-model for cosmology as through simulations it has become possible to separate
+model for cosmology. Only through simulations has it become possible to separate
 the predictions of different models when comparing models to observations
 \cite[p.~361]{schneider2006extragalactic}. The first cosmological N-body
 simulation was conducted by \cite{PeeblesPJE1970SotC}, where the equations of
@@ -663,7 +667,7 @@ account for the fact the universe should be isotropic and homogenous on large
 scales one has to apply periodic boundary conditions. This means that the cube
 is extended periodically. A particle leaving the volume in one end will reappear
 in the other end. Particles will also interact gravitationally in the same
-manner meaning that particles opposing sides of the simulation volume will
+manner meaning that particles on opposing sides of the simulation volume will
 affect each other as if the simulation volume was extended by adding an
 identical volume side by side.
 
@@ -709,7 +713,7 @@ and
 By discretizing the spatial variables in the same way as the time variable, one can
 write $r(t_n)=r_n$, $v(t_n)=v_n$ and $a(t_n)=a_n$ respectively for every particle.
 Similarly we have $r_{n+1}=r(t_n + \Delta t)$ etc.
-By truncating the taylor expansion at the second order term one can then write
+By truncating the Taylor expansion at the second order term one can then write
 an approximate solution to our problem as
 \begin{center}
 \begin{itemize}
@@ -764,11 +768,11 @@ reads
       \end{cases}
 \end{equation}
 where $\Delta x$ is the cell size. The density assigned to the grid is defined
-by a product of three weighting functions $W(\vec{r}_p -\vec{r}_{ijk}) =
+by a product of three weight functions $W(\vec{r}_p -\vec{r}_{ijk}) =
 W(x_p-x_i)W(y_p-y_j)W(z_p-z_k)$. Where subscript $p$ denotes particle position
 and subscript $i,j,k$ denotes a given grid index. A given $W$ is expressed as
 \begin{equation}
-    W(x)=\int_{x_i-\Delta x/2}^{x_i+\Delta x/2} S(x_p - x^\prime)dx^\prime,
+    W(x)=\int_{x_i-\Delta x/2}^{x_i+\Delta x/2} S(x_p - x^\prime)dx^\prime.
 \end{equation}
 We then have that the density assigned to a given grid point for a grid
 consisting of $N$ particles is given by the relation
@@ -805,21 +809,21 @@ particle mesh code means increasing the number of bins in each direction. For a
 three dimensional grid, this will quickly put constraints on the computer memory.
 \subsection{Tree codes and Barnes-Hut simulations}\label{sec:barneshut}
 \begin{figure}
-    \label{fig:barneshut}
     \includegraphics[scale=0.6]{figures/barneshut.png}
     \caption{Illustration of a Barnes-Hut tree for 100 particles in 2D space. Image downloaded from \url{https://commons.wikimedia.org/wiki/File:2D_Quad-Tree_partitioning_of_100_bodies.png}.
     The file is licenced under the following license \url{https://creativecommons.org/licenses/by-sa/3.0/deed.en}.}
+    \label{fig:barneshut}
 \end{figure}
 The particle mesh and the pairwise summation methods are the simplest forms of N-body simulation methods.
-In modern codes however these methods are rarely used in exclusivity. Instead, most of the time the methods are based on the approach proposed
+In modern codes however these methods are rarely used in exclusivity. Instead, in many modern codes, the methods are based on the approach proposed
 by Barnes and Hut in 1986\cite{Barneshut}. This method divides the simulation volume into what is called a tree. An example of such a tree in 2D space is 
 illustrated in figure \ref{fig:barneshut}. The volume in 2D is divided into four cells or eight cells in 3D. If the number of particles in each cell exceeds a certain
 threshold specified by the user, the given cell is then divided into four or eight more cells depending on whether the simulation is in 2D or 3D. This dividing of cells
 into smaller cells continues until no cells contain a particle number higher than the set threshold. After creating the tree, the forces have to be calculated. When calculating
-the force on a given particle, the distance of particles in other cells becomes crucial. The basic idea is that if a certain number of particles are far away from a given particle,
+the force on a given particle, the distances of particles in other cells becomes crucial. The basic idea is that if a certain number of particles are far away from a given particle,
 one can calculate the center of mass for a larger cell containing more particles. This greatly reduces the number of calculations as the force from far away particles can be approximated
-as a single force from one large body instead. The advantage with this approach is that it, instead of the calculations scaling as $\mathcal{O}(N)$ as for the regular pairwise summation,
-scales as $\mathcal{O}(N\mathrm{log}N)$ instead. This approach briefly described here is fundamental for the approach for many high-level cosmological N-body simulation codes.
+as a single force from one large body instead. The advantage with this approach is that, instead of the calculations scaling as $\mathcal{O}(N^2)$ as for the regular pairwise summation,
+it scales as $\mathcal{O}(N\mathrm{log}N)$ instead. This approach briefly described here is fundamental for the approach for many high-level cosmological N-body simulation codes.
 
 \subsection{Initial conditions}
 When setting the initial conditions for cosmological simulations, one starts at
@@ -929,7 +933,8 @@ but it is usually a Gaussian or any other function enclosing the parameter space
 of the target function. The target function is the function one wants to
 represent, but it may be computationally ineffective to use a brute force grid
 approach if the model contains a multitude of parameters. In our case, the
-target distribution is the likelihood or the posterior distribution. One of the
+target distribution is the likelihood or the posterior distribution.\\\indent
+One of the
 most popular Markov chain Monte Carlo algorithms is the Metropolis-Hastings
 algorithm. The basic idea behind the Metropolis-Hastings algorithm is to draw a
 point $\theta^*$ from the proposal distribution $Q(\theta)$ based on the
@@ -959,6 +964,6 @@ explore all of the parameter space where the target distribution has its highest
 accepted the next step without comparing it to a random pick from the normal
 distribution, the algorithm would just converge to the closest peak. By
 comparing the acceptance criterion to a pick from the normal distribution, one
-would also in some cases accept picks with a less probable state. this makes the
+would also in some cases accept picks with a less probable state. This makes the
 algorithm map the whole distribution, but it will quickly drift away from
-spending too much time where the target density distribution is negligible. 
+spending too much time exploring parameter space where the target distribution is negligible. 
