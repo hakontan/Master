@@ -1,7 +1,7 @@
 \chapter{Background Theory}\label{sec:backgroundtheory}
 \section{History of cosmology and how we model the universe}
-This section aims to introduce much of the cosomology relevant to the methodology and analysis applied in this thesis.
-The following subsections are largely based on \cite[ch.7]{schneider2006extragalactic}, \cite[ch.2]{Dodelson:1282338} and \cite{ryden2017introduction} unless otherwise noted.
+This section aims to introduce much of the cosmology relevant to the methodology and analysis applied in this thesis.
+The following subsections are largely based on \cite{schneider2006extragalactic}, \cite{Dodelson:1282338} and \cite{ryden2017introduction} unless otherwise noted.
 \subsection{Distances in the universe and cosmological redshift}\label{sec:sec_distance}
 Distances in an expanding universe can prove hard to fathom. In our everyday
 lives, we are used to measuring distances in meters and kilometers. The
@@ -117,7 +117,7 @@ This particular equation, first published by Albert Einstein in $1915$ \cite{Ein
     G_{\mu\nu}=8\pi GT_{\mu\nu}.
 \end{equation}
 This equation relates $G_{\mu\nu}$, which is the Einstein tensor in which describes the curvature of spacetime, with the energy momentum-tensor
-$T_{\mu\nu}$, which describes the energy content of the universe. During the 1920s, by assuming the universe is isotropic, homogenous and expanding, the scientists Alexander Friedmann and Georges Lemaître worked independently on finding a solution to equation \ref{eq:einstein}. In the 1930s Howard P.Robertson and Arthur Geoffrey Walker further explored the problem and proved that this is the only solution on a spacetime that is homogenous and isotropic.
+$T_{\mu\nu}$, which describes the energy content of the universe. During the 1920s, by assuming the universe is isotropic, homogenous and expanding, the scientists Alexander Friedmann and Georges Lemaître worked on finding a solution to equation \ref{eq:einstein}. In the 1930s Howard P.Robertson and Arthur Geoffrey Walker further explored the problem and proved that this is the only solution on a spacetime that is homogenous and isotropic.
 This solution, named after the four scientists, is known as the Friedman-Lemaître-Robertson-Walker metric
 The metric is a tool that allows us to calculate the physical distance in a coordinate system.
 For example, for the Cartesian coordinate system, we have the metric 
@@ -449,12 +449,9 @@ At the radius of turn around, the kinetic energy is zero. As the cloud collapses
 the kinetic energy will increase and eventually it will virialize when the
 conditions of equation \ref{eq:virial} is fulfilled.
 \subsection{Two point correlation functions and the matter power spectrum.} \label{sec:corrtheory}
-Matter in the universe is not randomly distributed. As a result of how structure in the universe evolves, galaxies
-do not spread out randomly but they gather in groups or clusters. This means that for a given random point in space, the probability of finding
-a galaxy in the vicinity of that point is higher if the randomly chosen point by chance landed on a galaxy. The probability of finding a galaxy
-at point $\vec{x}$ is not independent of whether there is a galaxy at a neighbouring point $\vec{y}$. This is a statistical property of the distribution
-of galaxies and can be described by a two-point correlation function. The two-point correlation function for galaxies $\xi_{g}(r)$ describes the excess probability
-over random for finding two galaxies separated by a distance $r$. The correlation function is related to the density contrast as
+Matter in the universe is not randomly distributed in a uniform fashion. Starting with the initial perturbations, matter clumped together and formed galaxies and clusters as a result of gravitational instability. This means that for a given random point in space, the probability of finding
+a galaxy in the vicinity of that point is not independent of the surrounding galaxy distribution. The statistical distribution
+of galaxies is described by the two-point correlation function. The two-point correlation function for galaxies $\xi_{g}(r)$ describes the probability of two galaxies are separated by a distance $r$. The correlation function is related to the density contrast as
 \begin{equation}
     \xi(\vert\vec{r_1}-\vec{r_2}\vert)=\langle\delta(\vec{r_1})\delta(\vec{r_2})\rangle.
 \end{equation}
@@ -475,7 +472,7 @@ correlation function as a Fourier transform given by
     \label{fig:matterpowerspec}
 \end{figure}
 Both of these quantities are statistical properties and are of high importance
-when comparing models to observations or simulations. Most of the theories describing 
+when comparing models to observations or simulations. The initial conditions for 
 the origin of structure in our universe are coupled to the period of Inflation. Inflation is a rapid expansion
 of space that occurred in the infancy of the universe after The Big Bang.
 Inflationary theory does not predict the exact location of the distributed matter.
@@ -502,7 +499,14 @@ These two parameters can be related through the linear bias factor as
 \begin{equation}\label{eq:sigma_8_relation}
     \sigma_8=\frac{\sigma_{8,g}}{b}.
 \end{equation}
-Using this relation one can normalize the dark matter power spectrum by measuring the $\sigma_{8,g}$ parameter and using the relation in equation \ref{eq:sigma_8_relation} to use scales on $8$Mpc/h as a reference for normalizing the power spectrum when the shape is known.
+Since the overdensity of galaxies does not
+necessarily follow the overdensity of dark matter, in which is used for the derivation of linear perturbation
+theory, it is scaled by a bias factor
+\begin{equation}\label{eq:bias}
+    b=\frac{\delta_g}{\delta_{dm}},
+\end{equation}
+where subscript $g$ is for galaxies and $dm$ is for dark matter.
+This way, one can normalize the dark matter power spectrum by measuring the $\sigma_{8,g}$ parameter and using the relation in equation \ref{eq:sigma_8_relation} to use scales on $8$Mpc/h as a reference for normalizing the power spectrum when the shape is known.
 \subsection{The cosmic web}
 On large scales the universe is isotropic and homogenous. However this does not
 mean that every galaxy or cosmological particle is distributed randomly. As
@@ -619,14 +623,7 @@ Fourier space, the overdensity receives a correction term as\cite[p.~279]{Dodels
 Here $\mu=\vec{z}\cdot\vec{k}$ is the angle
 between the line of sight and the Fourier wave vector. The factor $\beta$ can be
 seen as the growth factor $f$ introduced in equation \ref{eq:growthfac} from
-section \ref{sec:linpert}. However since the overdensity of galaxies does not
-necessarily follow the overdensity of dark matter, in which linear perturbation
-theory is derived, it is scaled by a bias factor
-\begin{equation}\label{eq:bias}
-    b=\frac{\delta_g}{\delta_{dm}},
-\end{equation}
-where subscript $g$ is for galaxies and $dm$ is for dark matter. We then have
-that
+section \ref{sec:linpert}. However, it is scaled by the linear bias factor given in equation \ref{eq:bias} as
 \begin{equation}\label{eq:beta}
     \beta=f/b.
 \end{equation} 
@@ -942,7 +939,7 @@ previous draw, and compare the draw with an acceptance criterion. The probabilit
 from a uniform distribution. The acceptance criterion in
 Metropolis-Hastings is given by
 \begin{equation}\label{eq:acceptance}
-    \alpha = min(1, \frac{P(\theta^*)Q(\theta^*\vert \theta)}{P(\theta)Q(\theta\vert\theta^*)}),
+    \alpha = \mathrm{min}\big[1, \frac{P(\theta^*)Q(\theta^*\vert \theta)}{P(\theta)Q(\theta\vert\theta^*)}\big],
 \end{equation}
 where $Q(\theta^*\vert\theta)$ represents the proposal distribution for a new
 pick of parameters $\theta^*$ based on previous parameters. $P(\theta)$ is

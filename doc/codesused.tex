@@ -164,6 +164,8 @@ larger than some threshold value $\rho_0$. Persistence theory measures the so-ca
 lifetime of the excursion set. This is a measure of the absolute
 difference in value between a pair of two critical points. By cycling through
 values for $\rho_0$ one may measure the lifetime of the topological features.
+The summary of DisPerSE presented by \cite{Alexhothesis} provides an analogy for this using
+an example with a function represented as a landscape submerged under water. I will borrow this analogy here.
 One can imagine a function of one variable $\rho(x)$ with peaks and throughs as
 mountains submerged under a water level set by $\rho_0$. This is illustrated in
 figure \ref{fig:persistence}.
@@ -200,7 +202,7 @@ threshold will be cancelled.
 
 
 \begin{figure}
-   \includegraphics[scale=0.6]{persistence.pdf}
+   \includegraphics[scale=0.6, trim={0 14cm 0 0},clip]{persistence.png}
    \caption{Example on how DisPerSE uses persistence pairs to simplify topological features. On the left is the unmodified function where the two leftmost critical points forms a persistence pair. The value of the minima is increased while the value of the maxima is increased. This is done untill the value of the minima surpasses that of the maximum and thus the persistence pair is cancelled. This effectively smoothes out features of the function.}
    \label{fig:persistence}
 \end{figure}
@@ -279,7 +281,7 @@ redshifted density distribution, one has to solve \cite{recondisplace}
     \nabla\cdot\vec{\Psi}+\beta\nabla\cdot(\vec{\Psi}\cdot\hat{r})\hat{r}=-\frac{\delta_g}{b},
 \end{equation}
 where $\beta$ and the bias $b$ is defined in equations
-\ref{eq:beta} and \ref{eq:bias}. Using a Helmholtz decomposition, one can
+\ref{eq:beta} and \ref{eq:bias}. The vector $\hat{r}$ is the unit vector in the radial direction. Using a Helmholtz decomposition, one can
 express $(\vec{\Psi}\cdot\hat{r})\hat{r}$ as a divergence and a curl component, giving $(\vec{\Psi}\cdot\hat{r})\hat{r}=\nabla A + \nabla \times \vec{B}$.
 By approximating $(\vec{\Psi}\cdot\hat{r})\hat{r}$ to be irrotational one can neglect
 the curl component.
@@ -288,10 +290,18 @@ potential $\vec{\Psi}=\nabla\phi$, one can rewrite equation \ref{eq:reconeq} as
 \begin{equation}
     \nabla^2(\phi+\beta A)=-\frac{\delta_g}{b}.
 \end{equation}
+This equation can be transformed to Fourier space allowing us to write
+\begin{equation}
+    \hat{\phi}+\beta\hat{A}=\frac{1}{k^2}\frac{\hat{\delta_g}}{b}.
+\end{equation}
+In this equation, $\hat{\phi}$, $\hat{A}$ and $\hat{\delta_g}$ denotes the Fourier transform of the quantities.
+Remembering that $\vec{\Psi}=\nabla\phi$, one can multiply by $i\vec{k}$ and get
+\begin{equation}\label{eq:recontempeq}
+    \hat{\Psi}+i\vec{k}\hat{A}=\frac{1}{k^2}i\vec{k}\frac{\hat{\delta_g}}{b}.
+\end{equation}
 The previous assumption that $(\vec{\Psi}\cdot\hat{r})\hat{r}$ is irrotational
-allows us to write $(\vec{\Psi}\cdot\hat{r})\hat{r}\approx\nabla A$.
-substituting back $\Psi$ for $\nabla\phi$ one can approximate equation
-\ref{eq:reconeq} as 
+allows us to write $(\vec{\Psi}\cdot\hat{r})\hat{r}\approx\nabla A$. By taking the inverse Fourier transform of equation \ref{eq:recontempeq},
+one can aprroximate equation \ref{eq:reconeq} as 
 \begin{equation}
     \vec{\Psi}+(\vec{\Psi}\cdot\hat{r})\hat{r}=-\nabla\nabla^{-2}\frac{\delta_g}{b}.
 \end{equation}

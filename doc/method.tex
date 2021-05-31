@@ -271,7 +271,7 @@ get the average void velocity dispersion profile.
 As mentioned in section \ref{sec:corrtheory} correlation functions are
 essential tools in cosmology for measuring the statistical properties of
 observables in the universe. In this analysis, the cross-correlation function that
-will be looked into is the cross-correlation between void centers and dark matter halos. Since dark matter halos in practice trace the galaxy distribution, as galaxies are often located in the center of dark matter halos, this particular correlation function will be referred to by its usual name, namely the void-galaxy cross-correlation function. Following the approach of \cite{Nadathur_corr}, the following
+will be looked into is the cross-correlation between void centers and dark matter halos. Since dark matter halos in practice traces the galaxy distribution, as galaxies are often located in the center of dark matter halos, this particular correlation function will be referred to by its usual name, namely the void-galaxy cross-correlation function. Following the approach of \cite{Nadathur_corr}, the following
 subsection will describe how to derive the void-galaxy cross-correlation
 function. 
 \\\indent
@@ -284,10 +284,11 @@ is given as
 \end{equation}
 where $\vec{v}_{pec}$ is the peculiar velocity of a galaxy or halo particle and
 $\hat{r}_{void}=\vec{r}_{void}/ \vert \vec{r}_{void}\vert$. Here it is assumed
-that the velocity of void centers are negligible. In redshift space the distribution of galaxies or halos gets distorted and therefore the number of voids in
-real space may not be preserved in redshift space. Since, for this project, data from simulations are utilized one has access to both a catalogue with real space and redshift space positions. If one utilizes observational data, only the redshift space positions are observed. Therefore reconstruction,
+that the velocity of void centers are negligible. This is partially due the modelling of the velocity of the void centers being complicated. It is also assumed that the positions of the void centers themselves are invariant under transformation from real space to redshift space.  Since, for this project, data from simulations are utilized one has access to both a catalogue with real space and redshift space positions.
+In redshift space the distribution of galaxies or halos gets distorted and therefore the number of voids in
+real space may not be preserved in redshift space. If one utilizes observational data, only the redshift space positions are observed. Therefore reconstruction,
 described here in section \ref{sec:reconstruction}, has to be applied to regain
-the field in real space from redshift space. By using the real space and redshift space catalogues provided by the MultiDark simulations\cite{Multidark_dataset}, as I will do in this thesis, one eliminates errors introduced by the additional step of performing reconstruction on the redshift space data. However, for future work, it is important to study the effect of performing this extra step on simulation data to better quantify the potential error introduced as this step has to be done for this method to be applied on observational data.\\\indent
+the field in real space from redshift space. By using the real space and redshift space catalogues provided by the MultiDark simulations\cite{Multidark_dataset}, as I will do in this thesis, one eliminates errors introduced by the additional step of performing reconstruction on the redshift space data. Cross correlating real space voids with the redshift space galaxy catalogue will satisfy the conditions from the abovementioned assumptions. However, for future work, it is important to study the effect of performing this extra step on simulation data to better quantify the potential error introduced as this step has to be done for this method to be applied on observational data.\\\indent
 The basic assumption when calculating the cross-correlation function
 required is that the number of void-galaxy pairs in the simulation volume is
 unchanged during the transformation from real space to redshift space. This is stated
@@ -310,6 +311,7 @@ as
 \begin{equation}\label{eq:s_tp_r}
     \vec{s}=\vec{r}+\frac{v_rz}{aHr}\hat{z}.
 \end{equation}
+Here $z$ is the $z-$component of $\hat{r}$.
 The coordinate transformation will then have the
 following jacobian determinant
 \begin{equation}
@@ -349,7 +351,7 @@ $\Delta_{v}^2$ and $\delta\Delta_v$ terms are not considered. This leaves us wit
 of order $\delta$ and  $\delta\xi^r$. Equation
 \ref{eq:corr_temp2} then reduces to
 \begin{equation}\label{eq:corr_no_stream}
-    \xi^{s,base}_{\mathrm{vg}}(\vec{s},\mu)=\xi^r(r)+\frac{f}{3}\Delta_v(r)(1+\xi^r(r))+f\mu^2[\delta(r)-\Delta_v(r)](1+\xi^r(r)).
+    \xi^{s}_{\mathrm{vg}}(s,\mu)=\xi^r(r)+\frac{f}{3}\Delta_v(r)(1+\xi^r(r))+f\mu^2[\delta(r)-\Delta_v(r)](1+\xi^r(r)).
 \end{equation}
 This is an approximation to equation \ref{eq:corr_temp}. Although the approximations give
 the model sufficient validity on a range of scales \cite{BeyondBAO}, testing during the development of the methodology showed that the full expression given by equation \ref{eq:corr_temp} proved to correspond better with numerical calculations described in section \ref{sec:corrtheory}. Since the equations are implemented numerically there should therefore be no reason to not use the full expression for the sake of this analysis.\\\indent
@@ -361,9 +363,10 @@ perform reconstruction on the data and then perform the correlation function
 calculation, described in section \ref{sec:numerical_corr}, in order to obtain
 $\xi^r(r)$. When working with simulation data one possesses both the real space and redshift space catalogues. In this analysis $\xi^r(r)$ is therefore calculated by cross-correlating the real space catalogue with real space voids using pyCUTE and no reconstruction is performed. 
 \\\indent
+
 The correlation function in redshift space $\xi^s_{\mathrm{vg}}(\vec{s},\mu)$
 relies on the real space length of the separation vector $\vert\vec{r}\vert$, as
-can be seen from equation \ref{eq:corr_no_stream}. For every distance from the void center $s$ in
+can be seen from equations \ref{eq:corr_no_stream} and \ref{eq:corr_temp}. For every distance from the void center $s$ in
 redshift space, we want the corresponding length from the void center $r$ in
 real space to calculate $\xi^r_{\mathrm{vg}}(r)$, $\delta(r)$ and $\Delta_v(r)$.
 To achieve this we start by decomposing $s$ into a parallel and perpendicular
@@ -408,9 +411,9 @@ sight direction, we can take $\sigma_{v_{\parallel}}$ to measured by equation
 \ref{eq:sigma_v}. If this method is to be used on observations, one cannot necessarily extract the velocities of each particle and gain information about $\sigma_v$. Therefore simulations have to be utilized in order to calculate this quantity. This will however introduce free parameters when doing parameters estimations as this profile has to be scaled differently when derived from another dataset. Using equation \ref{eq:gaussian_prop_corr}, one will get an integral for calculating the improved
 model taking into account dispersion in the velocity of halos \cite{BeyondBAO}
 \begin{equation}\label{eq:corr_stream}
-    1+\xi^{s,streaming}(s,\mu)=\int_{-\infty}^\infty\frac{1+\xi^{s,base}(s)}{\sqrt{2\pi}\sigma_{v_{\parallel}(r)}}\mathrm{exp}\Big[-\frac{v_\parallel^2}{2\sigma_{v_\parallel}^2(r)}\Big]dv_\parallel.
+    1+\xi^{s,streaming}(s,\mu)=\int_{-\infty}^\infty\frac{1+\xi^{s,base}(\vec{s})}{\sqrt{2\pi}\sigma_{v_{\parallel}}(r)}\mathrm{exp}\Big[-\frac{v_\parallel^2}{2\sigma_{v_\parallel}^2 (r)}\Big]dv_\parallel.
 \end{equation}
-In this equation, $\xi^{s,base}(s)$ can be represented by equations \ref{eq:corr_no_stream} or \ref{eq:corr_temp2}, dependent on whether one uses the aforementioned approximations or not. In this thesis, I will use the full expression given by equation \ref{eq:corr_temp2}.
+In this equation, $\xi^{s,base}(s)$ can be represented by equations \ref{eq:corr_no_stream} or \ref{eq:corr_temp}, dependent on whether one uses the aforementioned approximations or not. In this thesis, I will use the full expression given by equation \ref{eq:corr_temp}.
 \section{Filament Analysis}
 \subsection{Masking the simulation volume}\label{sec:maskingfilament}
 When applying the DisPerSE code on the particle distribution the output will be,
@@ -550,7 +553,7 @@ In order to test the validity of the models and to see whether the proposed impr
 \subsection{Estimating the covariance matrix}
 The covariance matrix used is calculated using patchy mocks provided by the MultiDark simulation\cite{MDmock1}\cite{MDmock2}. The covariance matrix is provided together with the code used for the likelihood analysis. A mock catalogue is a galaxy or dark matter halo catalogue that is built from simulations designed to resemble an observed galaxy catalogue. The creation of the covariance matrix used is described in \cite{BeyondBAO}. The covariance matrix is calculated using $1000$ patchy mocks. For each patchy mock the angular-cross correlation is measured and expanded into a monopole $\xi_0^s$ and a dipole $\xi_2^s$. The multipoles are then combined into a data vector $\vec{\xi}^s\equiv(\xi_0^s, \xi_2^s)$ for each patchy mock catalogue. The covariance matrix is then calculated as
 \begin{equation}
-    C=\frac{1}{N-1}\sum_{k=1}^N(\vec{\xi} ^k-\bar{\vec{\xi}^k})(\vec{\xi}^k-\bar{\vec{\xi}^k}),
+    C=\frac{1}{N-1}\sum_{k=1}^N(\vec{\xi} ^k-\bar{\vec{\xi}^k})(\vec{\xi}^k-\bar{\vec{\xi}^k})^T,
 \end{equation} 
 where $\bar{\vec{\xi}^k}$ is the mean over all the mocks used and $k$ is the index for a given mock. $N$ is the number of mocks used to calculate the covariance matrix itself. In this case, we have $N=1000$.
 \subsection{Fitting parameters to data.}

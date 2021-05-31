@@ -21,7 +21,7 @@ For this analysis, I will use The Big MultiDark Planck simulation (BigMDPL)\cite
 \end{table}
 This simulation has been carried out utilizing the L-GADGET-2 code. This code is a modification of the treeSPH\cite{treesph} code GADGET-2\cite{springel2005} in order to account for a very large amount of particles. The simulation data utilized in this analysis is taken at $z=1$. After simulating the evolution of the dark matter particle field from $z=100$ to $z=1$ a halo finder is used to identify dark matter halos in the particle field.
 \section{Halo finding using Rockstar}
-In order to identify dark matter halos from the dark matter particle field, the Rockstar halo finder\cite{rockstar} is utilized. In short, this halo finder is comprised of six steps in which I will recap here.
+In order to identify dark matter halos from the dark matter particle field, the Rockstar halo finder\cite{rockstar} is utilized. In short, this halo finder is comprised of six steps which are summarized in the beforementioned paper. I will recap these steps here.
 \begin{enumerate}
     \item The first step is to group particles in the simulation volume using a friends of friends (FOF) algorithm. In short a FOF algorithm groups particles by using a linking length $l$ and for every particle it groups it together with all other particles within the linking length $l$.
     \item For each group the particles are normalized by the group position and velocity dispersions.
